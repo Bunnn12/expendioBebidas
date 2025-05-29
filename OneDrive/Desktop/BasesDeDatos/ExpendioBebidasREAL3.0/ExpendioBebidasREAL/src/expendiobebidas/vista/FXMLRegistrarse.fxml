@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="827.0" prefWidth="815.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLRegistrarseController">
+   <children>
+      <ImageView fitHeight="425.0" fitWidth="455.0" layoutX="345.0" layoutY="238.0" opacity="0.58" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/agregar-usuario.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="194.0" fitWidth="364.0" layoutX="201.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="159.0" layoutY="286.0" text="Nombre de usuario" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="159.0" layoutY="521.0" text="Rol" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="159.0" layoutY="402.0" text="Contraseña" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfUsuario" layoutX="160.0" layoutY="309.0" prefHeight="47.0" prefWidth="446.0" promptText="Ingrese el nombre de usuario" />
+      <TextField fx:id="tfRol" layoutX="159.0" layoutY="544.0" prefHeight="47.0" prefWidth="446.0" promptText="Ingrese el rol (administrador/usuario)" />
+      <PasswordField fx:id="pfPassword" layoutX="159.0" layoutY="427.0" prefHeight="47.0" prefWidth="446.0" promptText="Ingrese la contraseña del usuario" />
+      <Button layoutX="229.0" layoutY="656.0" mnemonicParsing="false" onAction="#clicRegistrarse" prefHeight="67.0" prefWidth="306.0" style="-fx-background-color: #065290;" text="REGISTRAR USUARIO" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="22.0" />
+         </font>
+      </Button>
+      <Label fx:id="lbErrorUsuario" layoutX="160.0" layoutY="356.0" textFill="#ee1f1f" />
+      <Label fx:id="lbErrorPassword" layoutX="160.0" layoutY="474.0" textFill="#ee1f1f" />
+      <Label fx:id="lbErrorRol" layoutX="160.0" layoutY="591.0" textFill="#ee1f1f" />
+      <Button contentDisplay="TOP" layoutX="24.0" layoutY="34.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="41.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="REGRESAR" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/anteriorIcono.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

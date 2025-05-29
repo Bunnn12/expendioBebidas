@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1261.0" style="-fx-background-color: #9ed4f1; -fx-border-color: #065290;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLAdministrarClientesController">
+   <children>
+      <Label fx:id="lbTitulo" layoutX="359.0" layoutY="49.0" text="ADMINISTRACIÓN DE CLIENTES" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="34.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="139.0" fitWidth="252.0" layoutX="982.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="1019.0" layoutY="182.0" mnemonicParsing="false" onAction="#clicInsertar" prefHeight="39.0" prefWidth="150.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Insertar" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/agregar-usuario.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button layoutX="1019.0" layoutY="264.0" mnemonicParsing="false" onAction="#clicModificar" prefHeight="39.0" prefWidth="150.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Modificar" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="41.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/editar.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button layoutX="1019.0" layoutY="346.0" mnemonicParsing="false" onAction="#clicEliminar" prefHeight="48.0" prefWidth="150.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Eliminar" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/eliminar.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Label layoutX="174.0" layoutY="144.0" text="Buscar clientes:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="290.0" layoutY="204.0" text="Razón social:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="288.0" layoutY="324.0" text="Teléfono:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="284.0" layoutY="378.0" text="Dirección:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="88.0" layoutY="428.0" text="Lista de clientes registrados" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="25.0" />
+         </font></Label>
+      <TextField fx:id="tfBuscarCliente" layoutX="337.0" layoutY="140.0" onKeyReleased="#buscarClientePorRazonSocial" prefHeight="22.0" prefWidth="625.0" promptText="Razón social" />
+      <TextField fx:id="tfTelefono" layoutX="413.0" layoutY="319.0" prefHeight="31.0" prefWidth="436.0" />
+      <TextField fx:id="tfDireccion" layoutX="413.0" layoutY="374.0" prefHeight="22.0" prefWidth="436.0" />
+      <TextField fx:id="tfCorreo" layoutX="413.0" layoutY="261.0" prefHeight="14.0" prefWidth="436.0" />
+      <TableView fx:id="tvClientes" layoutX="88.0" layoutY="472.0" onMouseClicked="#seleccionarCliente" prefHeight="274.0" prefWidth="1111.0">
+        <columns>
+          <TableColumn fx:id="colRazonSocial" prefWidth="309.0" text="Razón Social" />
+          <TableColumn fx:id="colTelefono" prefWidth="248.0" text="Teléfono" />
+            <TableColumn fx:id="colCorreo" prefWidth="271.0" text="Correo" />
+            <TableColumn fx:id="colDireccion" prefWidth="282.0" text="Dirección" />
+        </columns>
+      </TableView>
+      <Label layoutX="290.0" layoutY="266.0" text="Correo:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfRazonSocial" layoutX="413.0" layoutY="199.0" prefHeight="14.0" prefWidth="436.0" />
+      <Label fx:id="lbErrorRazonSocial" layoutX="413.0" layoutY="232.0" prefHeight="22.0" prefWidth="353.0" textFill="#d60808" />
+      <Button contentDisplay="TOP" layoutX="23.0" layoutY="34.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="39.0" prefWidth="150.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="REGRESAR" textFill="#065290">
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/anteriorIcono.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="198.0" fitWidth="211.0" layoutX="51.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/ajustes.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="544.0" prefWidth="908.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLProductoMasVendidoController">
+   <children>
+      <ImageView fitHeight="161.0" fitWidth="332.0" layoutX="357.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lbTitulo" layoutX="244.0" layoutY="201.0" text="PRODUCTO(S) MÁS VENDIDO(S)" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="33.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvProductoMasVendido" layoutX="265.0" layoutY="279.0" prefHeight="152.0" prefWidth="487.0">
+        <columns>
+          <TableColumn fx:id="colIdProducto" prefWidth="127.0" text="ID Producto" />
+          <TableColumn fx:id="colNombreProducto" prefWidth="227.0" text="Nombre del producto" />
+            <TableColumn fx:id="colTotal" prefWidth="132.0" text="Total Vendido" />
+        </columns>
+      </TableView>
+      <AnchorPane prefHeight="544.0" prefWidth="127.0" style="-fx-background-color: #ffffffff;">
+         <children>
+            <ImageView fitHeight="134.0" fitWidth="116.0" layoutX="11.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/flecha.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Button contentDisplay="TOP" layoutX="146.0" layoutY="29.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="39.0" prefWidth="140.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="REGRESAR" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="27.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/anteriorIcono.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

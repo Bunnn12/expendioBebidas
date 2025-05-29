@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="1050.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLProductoMasVendidoAClienteController">
+   <children>
+      <ImageView fitHeight="223.0" fitWidth="265.0" layoutX="84.0" layoutY="503.0" opacity="0.38" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/altas-ventas.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="184.0" fitWidth="347.0" layoutX="352.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="69.0" layoutY="243.0" text="PRODUCTO(S) MÁS VENDIDO(S) A UN CLIENTE EN ESPECIFICO" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="29.0" />
+         </font>
+      </Label>
+      <Label layoutX="71.0" layoutY="412.0" text="Seleccione el cliente a consultar:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cbCliente" layoutX="69.0" layoutY="445.0" prefHeight="34.0" prefWidth="289.0" />
+      <TableView fx:id="tvProductosMasVendidos" layoutX="383.0" layoutY="321.0" prefHeight="405.0" prefWidth="629.0">
+        <columns>
+          <TableColumn fx:id="colNombreProducto" prefWidth="441.0" text="Nombre producto" />
+            <TableColumn fx:id="colCantidadCompra" prefWidth="187.0" text="Cantidad comprada" />
+        </columns>
+      </TableView>
+      <Button contentDisplay="TOP" layoutX="27.0" layoutY="40.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="44.0" prefWidth="147.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="REGRESAR" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/anteriorIcono.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

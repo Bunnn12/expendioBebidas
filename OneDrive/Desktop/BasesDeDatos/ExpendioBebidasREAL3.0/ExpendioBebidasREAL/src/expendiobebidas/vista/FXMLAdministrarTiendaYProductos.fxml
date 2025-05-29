@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="806.0" prefWidth="999.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLAdministrarTiendaYProductosController">
+   <children>
+      <ImageView fitHeight="534.0" fitWidth="650.0" layoutX="-4.0" layoutY="274.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/monstruo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="186.0" fitWidth="436.0" layoutX="324.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lbTitulo" layoutX="179.0" layoutY="214.0" text="ADMINISTRAR TIENDA Y PRODUCTOS" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="34.0" />
+         </font>
+      </Label>
+      <Label layoutX="287.0" layoutY="266.0" text="Seleccione la opción que desea realizar">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="22.0" />
+         </font>
+      </Label>
+      <Button layoutX="141.0" layoutY="403.0" mnemonicParsing="false" onAction="#clicAdministrarClientes" prefHeight="59.0" prefWidth="292.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Administrar Clientes" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="529.0" layoutY="403.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="292.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Administrar Productos" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="530.0" layoutY="601.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="292.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Realizar pedidos de productos" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="528.0" layoutY="499.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="292.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Realizar compra productos" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Button>
+      <Label layoutX="226.0" layoutY="341.0" text="CLIENTES">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="597.0" layoutY="341.0" text="PRODUCTOS">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="24.0" />
+         </font>
+      </Label>
+      <Button contentDisplay="TOP" layoutX="27.0" layoutY="32.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="39.0" prefWidth="157.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="REGRESAR" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/anteriorIcono.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>
