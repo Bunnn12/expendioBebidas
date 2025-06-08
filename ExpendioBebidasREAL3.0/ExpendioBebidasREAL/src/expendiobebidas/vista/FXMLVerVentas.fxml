@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="861.0" prefWidth="1129.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLVerVentasController">
+   <children>
+      <ImageView fitHeight="361.0" fitWidth="375.0" layoutY="81.0" opacity="0.57" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/analisis-de-los-datos.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="180.0" fitWidth="343.0" layoutX="395.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lbTitulo" layoutX="365.0" layoutY="216.0" prefHeight="59.0" prefWidth="400.0" text="CONSULTA DE VENTAS" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="33.0" />
+         </font>
+      </Label>
+      <Button layoutX="31.0" layoutY="358.0" mnemonicParsing="false" onAction="#clicVentasPorSemana" prefHeight="50.0" prefWidth="238.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Ventas por semana" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="31.0" layoutY="448.0" mnemonicParsing="false" onAction="#clicVentasPorMes" prefHeight="50.0" prefWidth="238.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Ventas por mes" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="31.0" layoutY="639.0" mnemonicParsing="false" onAction="#clicVentasPorAnio" prefHeight="50.0" prefWidth="238.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Ventas por año" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="31.0" layoutY="540.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="238.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Ventas por producto" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tvVentas" layoutX="289.0" layoutY="315.0" prefHeight="505.0" prefWidth="811.0" style="-fx-background-color: #ffffff;">
+        <columns>
+            <TableColumn fx:id="colSemana" prefWidth="161.0" text="Semana" />
+            <TableColumn fx:id="colMes" prefWidth="147.0" text="Mes" />
+            <TableColumn fx:id="colAnio" prefWidth="146.0" text="Año" />
+            <TableColumn fx:id="colTotalVentas" prefWidth="169.0" text="Total Ventas" />
+            <TableColumn fx:id="colTotalRecaudado" prefWidth="187.0" text="Total recaudado" />
+        </columns>
+      </TableView>
+      <Label layoutX="350.0" layoutY="275.0" text="Haz click sobre la opción deseada para visualizar los datos">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Label>
+      <Button contentDisplay="TOP" layoutX="25.0" layoutY="36.0" mnemonicParsing="false" onAction="#clicRegresar" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="REGRESAR" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/anteriorIcono.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button contentDisplay="TOP" layoutX="894.0" layoutY="66.0" mnemonicParsing="false" onAction="#clicExportarExcel" prefHeight="50.0" prefWidth="198.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Exportar a XLS" textFill="#065290">
+         <graphic>
+            <ImageView fitHeight="37.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/xlsx.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button contentDisplay="TOP" layoutX="894.0" layoutY="144.0" mnemonicParsing="false" onAction="#clicExportarPDF" prefHeight="50.0" prefWidth="198.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Exportar a PDF" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="38.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/descargar-pdf.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLBuscarClienteVentaController">
+   <children>
+      <Label layoutX="236.0" layoutY="157.0" text="Seleccione un cliente para realizar venta:" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="22.0" />
+         </font></Label>
+      <Label layoutX="249.0" layoutY="228.0" text="Nombre:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfBuscarCliente" layoutX="332.0" layoutY="220.0" onKeyReleased="#buscarClientePorRazonSocial" prefHeight="37.0" prefWidth="339.0" promptText="Razon social" />
+      <TableView fx:id="tvClientes" layoutX="36.0" layoutY="282.0" onMouseClicked="#seleccionarCliente" prefHeight="268.0" prefWidth="842.0">
+        <columns>
+          <TableColumn fx:id="colRazonSocial" prefWidth="193.0" text="Razón social" />
+          <TableColumn fx:id="colTelefono" prefWidth="175.0" text="Teléfono" />
+            <TableColumn fx:id="colCorreo" prefWidth="199.0" text="Correo" />
+            <TableColumn fx:id="colDireccion" prefWidth="274.0" text="Dirección" />
+        </columns>
+      </TableView>
+      <Button alignment="BOTTOM_CENTER" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnRegresar" prefHeight="60.0" prefWidth="165.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="REGRESAR" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="13.0" />
+         </font></Button>
+      <ImageView fitHeight="119.0" fitWidth="235.0" layoutX="345.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="27.0" fitWidth="35.0" layoutX="88.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/anteriorIcono.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

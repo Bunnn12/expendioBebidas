@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1100.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLProductoMasVendidoAClienteController">
+   <children>
+      <ImageView fitHeight="184.0" fitWidth="347.0" layoutX="377.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="94.0" layoutY="207.0" text="PRODUCTO(S) MÁS VENDIDO(S) A UN CLIENTE EN ESPECÍFICO" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="29.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvProductosMasVendidos" layoutX="70.0" layoutY="632.0" prefHeight="223.0" prefWidth="913.0">
+        <columns>
+          <TableColumn fx:id="colNombreProducto" prefWidth="441.0" text="Nombre producto" />
+            <TableColumn fx:id="colCantidadCompra" prefWidth="471.0" text="Cantidad comprada" />
+        </columns>
+      </TableView>
+      <Button contentDisplay="TOP" layoutX="27.0" layoutY="40.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="44.0" prefWidth="147.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="REGRESAR" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/anteriorIcono.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="272.0" layoutY="270.0" text="Buscar cliente:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="21.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfBuscarRazon" layoutX="435.0" layoutY="268.0" onKeyReleased="#buscarClientePorRazonSocial" prefHeight="31.0" prefWidth="347.0" promptText="Razon social" />
+      <Label layoutX="70.0" layoutY="596.0" text="Productos que no se le han vendido">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="70.0" layoutY="328.0" text="Lista de clientes">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="21.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvClientes" layoutX="70.0" layoutY="373.0" onMouseClicked="#seleccionarCliente" prefHeight="200.0" prefWidth="913.0">
+        <columns>
+          <TableColumn fx:id="colRazonSocial" prefWidth="216.0" text="Razón social" />
+          <TableColumn fx:id="colTelefono" prefWidth="246.0" text="Teléfono" />
+            <TableColumn fx:id="colCorreo" prefWidth="209.0" text="Correo" />
+            <TableColumn fx:id="colDireccion" prefWidth="241.0" text="Dirección" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

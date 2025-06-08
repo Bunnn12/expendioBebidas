@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="878.0" prefWidth="1129.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLProductoNoVendidoAClienteController">
+   <children>
+      <ImageView fitHeight="160.0" fitWidth="250.0" layoutX="204.0" layoutY="52.0" opacity="0.53" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/no-se-vende.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="187.0" fitWidth="356.0" layoutX="388.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="117.0" layoutY="219.0" text="PRODUCTO(S) NO VENDIDO(S) A UN CLIENTE EN ESPECIFICO" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="29.0" />
+         </font>
+      </Label>
+      <Label layoutX="284.0" layoutY="285.0" prefHeight="26.0" prefWidth="160.0" text="Buscar Cliente:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="21.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfBuscarRazon" layoutX="444.0" layoutY="283.0" onKeyReleased="#buscarClientePorRazonSocial" prefHeight="31.0" prefWidth="353.0" promptText="Razon Social" />
+      <TableView fx:id="tvClientes" layoutX="106.0" layoutY="384.0" onMouseClicked="#seleccionarCliente" prefHeight="200.0" prefWidth="894.0">
+        <columns>
+          <TableColumn fx:id="colRazonSocial" prefWidth="227.0" text="Razón Social" />
+            <TableColumn fx:id="colTelefono" prefWidth="196.0" text="Teléfono" />
+            <TableColumn fx:id="colCorreo" prefWidth="212.0" text="Correo" />
+            <TableColumn fx:id="colDireccion" prefWidth="258.0" text="Dirección" />
+        </columns>
+      </TableView>
+      <Label layoutX="117.0" layoutY="350.0" text="Lista de clientes">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="106.0" layoutY="601.0" text="Productos que no se le han vendido">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="21.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvProductos" layoutX="106.0" layoutY="634.0" prefHeight="200.0" prefWidth="894.0">
+        <columns>
+          <TableColumn fx:id="colNombreProducto" prefWidth="376.0" text="Nombre del producto" />
+            <TableColumn fx:id="colDescripcion" prefWidth="371.0" text="Descripción" />
+            <TableColumn fx:id="colPrecio" prefWidth="146.0" text="Precio" />
+        </columns>
+      </TableView>
+      <Button contentDisplay="TOP" layoutX="33.0" layoutY="39.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="34.0" prefWidth="153.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="REGRESAR" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="29.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/anteriorIcono.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

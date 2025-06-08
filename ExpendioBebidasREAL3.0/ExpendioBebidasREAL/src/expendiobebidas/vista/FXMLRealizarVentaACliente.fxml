@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="837.0" prefWidth="1300.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLRealizarVentaAClienteController">
+   <children>
+      <ImageView fitHeight="409.0" fitWidth="352.0" layoutX="524.0" layoutY="415.0" opacity="0.54" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/monstruoTrab.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="970.0" layoutY="37.0" text="Realizar venta" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="43.0" />
+         </font>
+      </Label>
+      <Label layoutX="700.0" layoutY="126.0" text="Buscar producto:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="19.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfBuscarProducto" layoutX="869.0" layoutY="122.0" onKeyReleased="#buscarProductoPorNombre" prefHeight="31.0" prefWidth="400.0" promptText="Nombre" />
+      <TableView fx:id="tvProductos" layoutX="700.0" layoutY="163.0" onMouseClicked="#seleccionarProducto" prefHeight="310.0" prefWidth="569.0">
+        <columns>
+          <TableColumn fx:id="colNombreProd" prefWidth="197.0" text="Nombre" />
+          <TableColumn fx:id="colDescripcion" prefWidth="236.0" text="Descripción" />
+          <TableColumn fx:id="colPrecio" minWidth="0.0" prefWidth="135.0" text="Precio" />
+        </columns>
+      </TableView>
+      <Label layoutX="1020.0" layoutY="491.0" text="Cantidad:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="17.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvProductosElegidos" layoutX="14.0" layoutY="159.0" onMouseClicked="#seleccionarProductoYaELegido" prefHeight="310.0" prefWidth="651.0">
+        <columns>
+          <TableColumn fx:id="colNombreProdEleg" prefWidth="187.0" text="Nombre" />
+          <TableColumn fx:id="colDescripcionEleg" prefWidth="257.0" text="Descripción" />
+          <TableColumn fx:id="colCantidad" prefWidth="83.0" text="Cantidad" />
+          <TableColumn fx:id="colSubtotal" prefWidth="123.0" text="Subtotal" />
+        </columns>
+      </TableView>
+      <TextField fx:id="tfCantidad" layoutX="1120.0" layoutY="486.0" prefHeight="31.0" prefWidth="146.0" promptText="#" />
+      <AnchorPane layoutX="14.0" layoutY="646.0" prefHeight="169.0" prefWidth="651.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Label layoutX="55.0" layoutY="38.0" text="Total:">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="23.0" />
+               </font>
+            </Label>
+            <Button layoutX="76.0" layoutY="98.0" mnemonicParsing="false" onAction="#btnCobrar" prefHeight="51.0" prefWidth="500.0" style="-fx-background-color: #41d318; -fx-background-radius: 19;" text="Cobrar" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="24.0" />
+               </font>
+            </Button>
+            <Label fx:id="lbTotal" layoutX="501.0" layoutY="34.0">
+               <font>
+                  <Font size="25.0" />
+               </font></Label>
+            <ImageView fitHeight="50.0" fitWidth="81.0" layoutX="47.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/logoBDExpendio.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Button layoutX="798.0" layoutY="701.0" mnemonicParsing="false" onAction="#btnAgregarArticuloPedido" prefHeight="60.0" prefWidth="400.0" style="-fx-background-color: #2797de; -fx-background-radius: 19;" text="Agregar producto de pedido de cliente" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="17.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tvPromociones" layoutX="14.0" layoutY="514.0" prefHeight="132.0" prefWidth="651.0">
+        <columns>
+          <TableColumn fx:id="colNombreProdDesc" prefWidth="188.0" text="Nombre producto" />
+            <TableColumn fx:id="colDescuento" prefWidth="121.0" text="\% Descuento" />
+          <TableColumn fx:id="colPrecioDescuento" prefWidth="161.0" text="Precio con descuento" />
+            <TableColumn fx:id="colFechaVencimiento" prefWidth="180.0" text="Fecha vencimiento" />
+        </columns>
+      </TableView>
+      <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="146.0" prefWidth="651.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Button alignment="BOTTOM_CENTER" layoutX="23.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnRegresar" prefHeight="70.0" prefWidth="195.0" style="-fx-background-radius: 19; -fx-background-color: #ffffff; -fx-border-color: #065290; -fx-border-radius: 19;" text="REGRESAR" textFill="#065290">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="15.0" />
+               </font>
+            </Button>
+            <Label layoutX="232.0" layoutY="38.0" text="Cliente:">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbNombreCliente" layoutX="338.0" layoutY="44.0" prefHeight="26.0" prefWidth="285.0">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="111.0" text="Lista de productos elegidos:" textFill="#065290">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font></Label>
+            <ImageView fitHeight="36.0" fitWidth="33.0" layoutX="104.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/anteriorIcono.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="14.0" layoutY="466.0" prefHeight="50.0" prefWidth="651.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Lista de promociones activas: " textFill="#065290">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <Button layoutX="998.0" layoutY="565.0" mnemonicParsing="false" onAction="#btnQuitarProducto" prefHeight="109.0" prefWidth="244.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Quitar producto" textFill="#065290">
+         <graphic>
+            <ImageView fitHeight="90.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/quitarCarro.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="726.0" layoutY="565.0" mnemonicParsing="false" onAction="#btnAgregarProducto" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Agregar producto" textFill="#065290">
+         <graphic>
+            <ImageView fitHeight="99.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/agregarCarro.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

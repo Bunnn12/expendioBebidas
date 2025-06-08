@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLAdministrarProveedoresController">
+   <children>
+      <ImageView fitHeight="286.0" fitWidth="235.0" layoutX="47.0" layoutY="164.0" opacity="0.77" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/monstruoProv.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="364.0" layoutY="41.0" prefHeight="40.0" prefWidth="593.0" text="ADMINISTRACIÓN DE PROVEEDORES" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="31.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="120.0" fitWidth="258.0" layoutX="1055.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="199.0" layoutY="134.0" text="Buscar proveedor:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font></Label>
+      <Button layoutX="1055.0" layoutY="222.0" mnemonicParsing="false" onAction="#clicInsertar" prefHeight="46.0" prefWidth="165.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Insertar" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/agregar-usuario.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button layoutX="1055.0" layoutY="312.0" mnemonicParsing="false" onAction="#clicModificar" prefHeight="46.0" prefWidth="165.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Modificar " textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="34.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/editar.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <TableView fx:id="tvProveedores" layoutX="110.0" layoutY="512.0" onMouseClicked="#seleccionarProveedor" prefHeight="256.0" prefWidth="1138.0">
+        <columns>
+          <TableColumn fx:id="colRazonSocial" prefWidth="271.0" text="Razón Social" />
+          <TableColumn fx:id="colTelefono" prefWidth="258.0" text="Teléfono" />
+            <TableColumn fx:id="colCorreo" prefWidth="265.0" text="Correo" />
+            <TableColumn fx:id="colDireccion" prefWidth="343.0" text="Dirección" />
+        </columns>
+      </TableView>
+      <Label layoutX="306.0" layoutY="207.0" text="Razón social:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="335.0" layoutY="269.0" text="Teléfono:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="348.0" layoutY="333.0" text="Correo:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="325.0" layoutY="389.0" text="Dirección:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font></Label>
+      <TextField fx:id="tfBuscarProveedor" layoutX="370.0" layoutY="129.0" onKeyReleased="#buscarProveedorPorRazonSocial" prefHeight="31.0" prefWidth="618.0" promptText="Razón social" />
+      <TextField fx:id="tfRazonSocial" layoutX="441.0" layoutY="203.0" prefHeight="31.0" prefWidth="440.0" />
+      <TextField fx:id="tfTelefono" layoutX="441.0" layoutY="264.0" prefHeight="31.0" prefWidth="440.0" />
+      <TextField fx:id="tfCorreo" layoutX="441.0" layoutY="328.0" prefHeight="31.0" prefWidth="440.0" />
+      <TextField fx:id="tfDireccion" layoutX="441.0" layoutY="386.0" prefHeight="31.0" prefWidth="440.0" />
+      <Label layoutX="110.0" layoutY="462.0" text="Lista de proveedores registrados:" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbErrorRazonSocial" layoutX="441.0" layoutY="234.0" prefHeight="21.0" prefWidth="440.0" />
+      <Button layoutX="34.0" layoutY="26.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="40.0" prefWidth="165.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="REGRESAR" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/anteriorIcono.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

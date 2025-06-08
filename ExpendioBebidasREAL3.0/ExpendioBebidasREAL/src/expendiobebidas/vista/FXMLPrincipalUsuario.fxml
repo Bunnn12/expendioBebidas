@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="845.0" prefWidth="913.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLPrincipalUsuarioController">
+   <children>
+      <ImageView fitHeight="403.0" fitWidth="386.0" layoutX="33.0" layoutY="413.0" opacity="0.26" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/UsuarioLogo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="183.0" fitWidth="364.0" layoutX="284.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="677.0" layoutY="51.0" mnemonicParsing="false" onAction="#btnClicCerrarSesion" prefHeight="46.0" prefWidth="190.0" style="-fx-background-color: #065290;" text="CERRAR SESIÓN" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Button>
+      <Label fx:id="lbSaludoUsuario" alignment="CENTER" contentDisplay="CENTER" layoutX="285.0" layoutY="206.0" prefHeight="46.0" prefWidth="344.0" textAlignment="CENTER" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="235.0" layoutY="265.0" text="BIENVENIDO(A) DE NUEVO" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="33.0" />
+         </font>
+      </Label>
+      <Button layoutX="220.0" layoutY="355.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="479.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Realizar venta" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="30.0" />
+         </font>
+      </Button>
+      <Button layoutX="220.0" layoutY="449.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="479.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Realizar pedido" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="30.0" />
+         </font>
+      </Button>
+      <Button layoutX="217.0" layoutY="548.0" mnemonicParsing="false" onAction="#clicAdministrarClientes" prefHeight="58.0" prefWidth="479.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Administrar clientes" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="29.0" />
+         </font>
+      </Button>
+      <Button layoutX="220.0" layoutY="643.0" mnemonicParsing="false" onAction="#clickProductosConStockMinimo" prefHeight="58.0" prefWidth="479.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Productos con stock minimo" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="30.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
