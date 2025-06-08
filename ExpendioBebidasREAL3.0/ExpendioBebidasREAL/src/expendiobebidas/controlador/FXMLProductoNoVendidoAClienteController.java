@@ -30,7 +30,7 @@ import javafx.stage.Stage;
 
 /**
  * FXML Controller class
- *hola esta es una prueba
+ *
  * @author reino
  */
 public class FXMLProductoNoVendidoAClienteController implements Initializable {
@@ -56,7 +56,6 @@ public class FXMLProductoNoVendidoAClienteController implements Initializable {
     @FXML
     private TableColumn colPrecio;
     private ObservableList<Cliente> clientes;
-    private int prueba;
     /**
      * Initializes the controller class.
      */
