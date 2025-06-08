@@ -18,6 +18,30 @@ import java.util.List;
  * @author reino
  */
 public class ProductoDAO {
+
+    public static List<Producto> obtenerTodosLosProductos() throws SQLException{
+        List<Producto> productos = new ArrayList<>();
+        Connection conexionBD = Conexion.abrirConexion();
+        if(conexionBD != null){
+            String consulta= "SELECT idProducto, nombreProducto, precio, descripcion FROM producto"; 
+            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+            ResultSet resultado = sentencia.executeQuery();
+            
+            while(resultado.next()){
+               Producto producto = convertirRegistroProductoBasico(resultado);
+               productos.add(producto);
+            }
+            
+            resultado.close();
+            sentencia.close();
+            conexionBD.close();
+        }
+        else{
+             throw new SQLException("Sin conexion con la base de datos");
+        }
+        return productos;
+    }
+   
    public static Producto obtenerProductoMasVendido() throws SQLException{
         Producto productoMasVendido = null;
         Connection conexionBD = Conexion.abrirConexion();
