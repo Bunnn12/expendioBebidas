@@ -29,6 +29,7 @@ public class Producto {
         this.stockActual = stockActual;
         this.totalVendido = totalVendido;
     }
+    
     public Producto(String nombreProducto, String descripcion, double precio){
         this.descripcion= descripcion;
         this.nombreProducto= nombreProducto;

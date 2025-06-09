@@ -8,19 +8,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="905.0" prefWidth="1306.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLPrincipalController">
+<AnchorPane id="AnchorPane" prefHeight="906.0" prefWidth="1313.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLPrincipalController">
    <children>
-      <ImageView fitHeight="872.0" fitWidth="702.0" layoutX="14.0" layoutY="204.0" opacity="0.26" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="593.0" fitWidth="580.0" layoutX="41.0" layoutY="45.0" opacity="0.26" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../recurso/AdminLogo.png" />
          </image>
       </ImageView>
+      <AnchorPane layoutX="14.0" layoutY="306.0" opacity="0.7" prefHeight="575.0" prefWidth="317.0" style="-fx-background-color: #ffffff;" />
+      <AnchorPane layoutX="348.0" layoutY="306.0" opacity="0.6" prefHeight="575.0" prefWidth="311.0" style="-fx-background-color: #065290;" />
+      <AnchorPane layoutX="669.0" layoutY="306.0" opacity="0.7" prefHeight="575.0" prefWidth="317.0" style="-fx-background-color: #ffffff;" />
+      <AnchorPane layoutX="995.0" layoutY="306.0" opacity="0.6" prefHeight="575.0" prefWidth="301.0" style="-fx-background-color: #065290;" />
       <Label fx:id="lbSaludoUsuario" alignment="CENTER" layoutX="506.0" layoutY="204.0" prefHeight="46.0" prefWidth="344.0" textAlignment="CENTER" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="434.0" layoutY="261.0" prefHeight="46.0" prefWidth="489.0" text="BIENVENIDO(A) DE NUEVO" textFill="#065290">
+      <Label layoutX="433.0" layoutY="233.0" prefHeight="46.0" prefWidth="489.0" text="BIENVENIDO(A) DE NUEVO" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="36.0" />
          </font>
@@ -47,7 +51,7 @@
             <Font name="Arial Rounded MT Bold" size="15.0" />
          </font>
       </Button>
-      <Button contentDisplay="TOP" layoutX="14.0" layoutY="545.0" mnemonicParsing="false" onAction="#clicVerVentas" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Consultar ventas" textFill="WHITE">
+      <Button contentDisplay="TOP" layoutX="1004.0" layoutY="382.0" mnemonicParsing="false" onAction="#clicVerVentas" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Consultar ventas" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -58,7 +62,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button contentDisplay="TOP" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" onAction="#clicAdminProveedores" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Administrar proveedores" textFill="#065290">
+      <Button contentDisplay="TOP" layoutX="366.0" layoutY="382.0" mnemonicParsing="false" onAction="#clicAdminProveedores" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Administrar proveedores" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -70,7 +74,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button contentDisplay="TOP" layoutX="1013.0" layoutY="538.0" mnemonicParsing="false" onAction="#clicEstadisticasProductos" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Estadísticas de productos" textFill="#065290">
+      <Button contentDisplay="TOP" layoutX="1004.0" layoutY="555.0" mnemonicParsing="false" onAction="#clicEstadisticasProductos" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Estadísticas de productos" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -82,7 +86,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button contentDisplay="TOP" layoutX="1013.0" layoutY="342.0" mnemonicParsing="false" onAction="#clicAdminPromociones" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Administrar promociones" textFill="WHITE">
+      <Button contentDisplay="TOP" layoutX="366.0" layoutY="726.0" mnemonicParsing="false" onAction="#clicAdminPromociones" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Administrar promociones" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -93,7 +97,7 @@
                </image></ImageView>
          </graphic>
       </Button>
-      <Button contentDisplay="TOP" layoutX="678.0" layoutY="342.0" mnemonicParsing="false" onAction="#clicAdminProductos" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Administrar productos" textFill="#065290">
+      <Button contentDisplay="TOP" layoutX="367.0" layoutY="555.0" mnemonicParsing="false" onAction="#clicAdminProductos" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Administrar productos" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -104,7 +108,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button contentDisplay="TOP" layoutX="344.0" layoutY="342.0" mnemonicParsing="false" onAction="#clicAdminClientes" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Administrar Clientes" textFill="WHITE">
+      <Button contentDisplay="TOP" layoutX="30.0" layoutY="726.0" mnemonicParsing="false" onAction="#clicAdminClientes" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Administrar Clientes" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -116,7 +120,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button contentDisplay="TOP" layoutX="344.0" layoutY="538.0" mnemonicParsing="false" onAction="#clicVentaACliente" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Realizar Venta a cliente" textFill="#065290">
+      <Button contentDisplay="TOP" layoutX="30.0" layoutY="382.0" mnemonicParsing="false" onAction="#clicVentaACliente" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Realizar Venta a cliente" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -128,7 +132,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button contentDisplay="TOP" layoutX="205.0" layoutY="721.0" mnemonicParsing="false" onAction="#clickPedidoDeCliente" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Realizar Pedido de cliente" textFill="WHITE">
+      <Button contentDisplay="TOP" layoutX="30.0" layoutY="555.0" mnemonicParsing="false" onAction="#clickPedidoDeCliente" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Realizar Pedido de cliente" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -140,7 +144,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button contentDisplay="TOP" layoutX="850.0" layoutY="714.0" mnemonicParsing="false" onAction="#clickPedidoDeProductos" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Hacer pedido de productos" textFill="#065290">
+      <Button contentDisplay="TOP" layoutX="688.0" layoutY="382.0" mnemonicParsing="false" onAction="#clickPedidoDeProductos" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Hacer pedido de productos" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -152,7 +156,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button contentDisplay="TOP" layoutX="678.0" layoutY="538.0" mnemonicParsing="false" onAction="#clickComprarProductos" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Comprar Productos" textFill="WHITE">
+      <Button contentDisplay="TOP" layoutX="688.0" layoutY="555.0" mnemonicParsing="false" onAction="#clickComprarProductos" prefHeight="143.0" prefWidth="279.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Comprar Productos" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -164,5 +168,25 @@
             </ImageView>
          </graphic>
       </Button>
+      <Label layoutX="82.0" layoutY="335.0" text="Atención a cliente">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="433.0" layoutY="335.0" text="Administración" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="778.0" layoutY="335.0" text="Inventario">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="1062.0" layoutY="335.0" text="Detalles negocio" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

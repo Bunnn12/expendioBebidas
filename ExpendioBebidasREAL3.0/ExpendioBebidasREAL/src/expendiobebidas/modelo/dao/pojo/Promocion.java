@@ -14,19 +14,18 @@ public class Promocion {
     private int descuento;
     private String fechaEmision;
     private String fechaVencimiento;
-    private double precioConDescuento;
-    private String idProducto;
-    private String nombreProducto;
+    private Producto producto;
 
     public Promocion() {
     }
 
-    public Promocion(int idPromocion, String descripcion, int descuento, String fechaEmision, String fechaVencimiento) {
+    public Promocion(int idPromocion, String descripcion, int descuento, String fechaEmision, String fechaVencimiento, Producto producto) {
         this.idPromocion = idPromocion;
         this.descripcion = descripcion;
         this.descuento = descuento;
         this.fechaEmision = fechaEmision;
         this.fechaVencimiento = fechaVencimiento;
+        this.producto = producto;
     }
 
     public int getIdPromocion() {
@@ -69,28 +68,28 @@ public class Promocion {
         this.fechaVencimiento = fechaVencimiento;
     }
     
-    public double getPrecioConDescuento() {
-        return precioConDescuento;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setPrecioConDescuento(double precioConDescuento) {
-        this.precioConDescuento = precioConDescuento;
-    }
-    
-    public String getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(String idProducto) {
-        this.idProducto = idProducto;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
     
     public String getNombreProducto() {
-        return nombreProducto;
+        return producto != null ? producto.getNombreProducto() : "";
     }
-
-    public void setNombreProducto(String nombreProducto) {
-        this.nombreProducto = nombreProducto;
+    
+    public double getPrecioConDescuento() {
+        if (producto != null) {
+            double precioConGanancia = producto.getPrecioConGanancia();
+            return precioConGanancia * (1 - descuento / 100.0);
+        }
+        return 0.0;
+    }
+    
+    public String getPrecioConDescuentoDosDecimales() {
+        return String.format("%.2f", getPrecioConDescuento());
     }
     
 }

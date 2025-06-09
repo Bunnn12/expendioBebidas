@@ -83,8 +83,8 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
     private Cliente clienteElegido; 
     
     ObservableList<Producto> productos;
-    ObservableList<ProductoElegidoVenta> productosElegidos = FXCollections.observableArrayList();    
-    private List <Promocion> promocionesCliente;    
+    ObservableList<ProductoElegidoVenta> productosElegidos = FXCollections.observableArrayList();  
+    private List<Promocion> promocionesActivasCliente;
 
     /**
      * Initializes the controller class.
@@ -171,29 +171,26 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
     }
     
     private void configurarTablaPromociones() {
-        colNombreProdDesc.setCellValueFactory(new PropertyValueFactory<Promocion, String>("nombreProducto"));
-        colDescuento.setCellValueFactory(new PropertyValueFactory<Promocion, Double>("descuento"));
-        colPrecioDescuento.setCellValueFactory(new PropertyValueFactory<Promocion, Double>("precioConDescuento"));
-        colFechaVencimiento.setCellValueFactory(new PropertyValueFactory<Promocion, LocalDate>("fechaVencimiento"));
+        colNombreProdDesc.setCellValueFactory(new PropertyValueFactory<>("nombreProducto"));
+        colDescuento.setCellValueFactory(new PropertyValueFactory<>("descuento"));
+        colPrecioDescuento.setCellValueFactory(new PropertyValueFactory<>("precioConDescuentoDosDecimales"));
+        colFechaVencimiento.setCellValueFactory(new PropertyValueFactory<>("fechaVencimiento"));
     }
        
     private void cargarPromocionesTabla(int idCliente) {
         try {
-            promocionesCliente = PromocionDAO.obtenerPromocionesDeCliente(idCliente);
-                for (Promocion promocion : promocionesCliente) {
-                    Producto producto = ProductoDAO.obtenerProductoPorId(Integer.parseInt(promocion.getIdProducto()));
-                    double precioConGanancia = producto.getPrecioConGanancia();
-                    double precioFinal = precioConGanancia * (1 - promocion.getDescuento() / 100.0);
-                    promocion.setPrecioConDescuento(precioFinal);
-                }
-            if (promocionesCliente != null && !promocionesCliente.isEmpty()) {
-                tvPromociones.setItems(FXCollections.observableArrayList(promocionesCliente));
-            }
-            else {
-                tvPromociones.getItems().clear();
+            List<Promocion> listaPromociones = PromocionDAO.obtenerPromocionesDeCliente(idCliente);
+            promocionesActivasCliente = listaPromociones;
+            if (listaPromociones != null && !listaPromociones.isEmpty()) {
+                ObservableList<Promocion> promociones = FXCollections.observableArrayList(listaPromociones);
+                tvPromociones.setItems(promociones);
+            } else {
+                tvPromociones.setItems(FXCollections.emptyObservableList());
             }
         } catch (SQLException e) {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error al cargar promociones", "No se pudieron cargar las promociones activas.");
+            e.printStackTrace();
+            Utilidad.mostrarAlertaSimple(
+                Alert.AlertType.ERROR, "Error al cargar promociones", "No se pudieron cargar las promociones del cliente. Intente más tarde.");
         }
     }
     
@@ -204,57 +201,12 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
         colSubtotal.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
 
         tvProductosElegidos.setItems(productosElegidos);
-        
     }
        
     private void cargarProductosElegidosTabla(int idProducto) {
-        Producto productoSeleccionado = tvProductos.getSelectionModel().getSelectedItem();
-        String cantidadTexto = tfCantidad.getText();
-
-        if (productoSeleccionado == null || cantidadTexto.isEmpty()) {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Cantidad no ingresada", "Selecciona un producto y escribe la cantidad.");
-            return;
-        }
-
-        try {
-            int cantidad = Integer.parseInt(cantidadTexto);
-            if (cantidad <= 0) throw new NumberFormatException();
-
-            double precioFinal = productoSeleccionado.getPrecioConGanancia();
-
-            // Buscar si hay una promoción para este producto
-            List<Promocion> promociones = PromocionDAO.obtenerPromocionesDeCliente(clienteElegido.getIdCliente());
-            if (promociones != null) {
-                for (Promocion promo : promociones) {
-                    if (promo.getIdProducto() == productoSeleccionado.getIdProducto()) {
-                        precioFinal = promo.getPrecioConDescuento();
-                        break;
-                    }
-                }
-            }
-
-            ProductoElegidoVenta elegido = new ProductoElegidoVenta(
-                productoSeleccionado.getNombreProducto(),
-                productoSeleccionado.getDescripcion(),
-                cantidad,
-                precioFinal
-            );
-
-            productosElegidos.add(elegido);
-            tfCantidad.clear();
-            actualizarTotal();
-
-        } catch (NumberFormatException e) {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Cantidad inválida", "La cantidad debe ser un número entero positivo.");
-        }
     }
     
     private void actualizarTotal() {
-        float total = 0;
-        for (ProductoElegidoVenta p : productosElegidos) {
-            total += p.getSubtotal();
-        }
-        lbTotal.setText("$" + String.format("%.2f", total));
     }
     
     @FXML

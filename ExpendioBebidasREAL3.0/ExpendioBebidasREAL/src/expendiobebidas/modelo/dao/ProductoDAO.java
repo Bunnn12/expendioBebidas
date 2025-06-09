@@ -125,8 +125,8 @@ public class ProductoDAO {
                 rs.getString("descripcion"),
                 rs.getDouble("precio")
             ));
-            conexionBD.close();
         }
+        conexionBD.close();
         }else{
             throw new SQLException("Sin conexión con la base de datos");
         }

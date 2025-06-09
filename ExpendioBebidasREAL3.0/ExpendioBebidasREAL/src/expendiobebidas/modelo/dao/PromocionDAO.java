@@ -6,6 +6,7 @@ package expendiobebidas.modelo.dao;
 
 import expendiobebidas.modelo.Conexion;
 import expendiobebidas.modelo.dao.pojo.Cliente;
+import expendiobebidas.modelo.dao.pojo.Producto;
 import expendiobebidas.modelo.dao.pojo.Promocion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,11 +26,10 @@ public class PromocionDAO {
         List<Promocion> promociones = new ArrayList<>();
         Connection conexionBD = Conexion.abrirConexion();
         if (conexionBD != null){
-            String consulta = "SELECT p.idPromocion, p.descripcion, p.descuento, p.fechaEmision, p.fechaVencimiento, pd.idProducto, pd.nombreProducto " +
-                              "FROM promocion p " +
-                              "INNER JOIN cliente_promocion cp ON p.idPromocion = cp.idPromocion " +
-                              "INNER JOIN producto pd ON p.idProducto = pd.idProducto " +
-                              "WHERE cp.idCliente = ? AND CURRENT_DATE BETWEEN p.fechaEmision AND p.fechaVencimiento";
+            String consulta = "SELECT p.*, prod.idProducto, prod.nombreProducto, prod.precio " +
+                              "FROM promocion p " +                          
+                              "INNER JOIN producto prod ON p.Producto_idProducto = prod.idProducto " +
+                              "WHERE p.Cliente_idCliente = ? AND CURRENT_DATE BETWEEN p.fechaEmision AND p.fechaVencimiento";
             PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
             sentencia.setInt(1, idCliente);
             ResultSet resultado = sentencia.executeQuery();
@@ -53,8 +53,13 @@ public class PromocionDAO {
         promocion.setDescuento(resultado.getInt("descuento"));
         promocion.setFechaEmision(resultado.getDate("fechaEmision").toString());
         promocion.setFechaVencimiento(resultado.getDate("fechaVencimiento").toString());
-        promocion.setIdProducto(resultado.getString("idProducto"));
-        promocion.setNombreProducto(resultado.getString("nombreProducto"));
+        
+        //Crea el producto relacionado
+        Producto producto = new Producto();
+        producto.setIdProducto(resultado.getInt("idProducto"));
+        producto.setNombreProducto(resultado.getString("nombreProducto"));
+        producto.setPrecio(resultado.getDouble("precio"));
+        promocion.setProducto(producto);
 
         return promocion;
         
