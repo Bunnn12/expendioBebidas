@@ -1,7 +1,8 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
+*/
+
 package expendiobebidas.controlador;
 
 import expendiobebidas.ExpendioBebidas;
@@ -41,6 +42,7 @@ import javafx.stage.Stage;
  *
  * @author acrca
  */
+
 public class FXMLRealizarVentaAClienteController implements Initializable {
 
     @FXML
@@ -89,6 +91,7 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
     /**
      * Initializes the controller class.
      */
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTablaProductos();
@@ -149,7 +152,7 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
     }
     
     @FXML
-    private void seleccionarProducto(MouseEvent event) {
+    private void seleccionarProducto(MouseEvent event) throws SQLException {
         Producto seleccionado = tvProductos.getSelectionModel().getSelectedItem();
         if (seleccionado != null) {
             cargarProductosElegidosTabla(seleccionado.getIdProducto());
@@ -157,7 +160,7 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
     }
     
     @FXML
-    private void btnAgregarProducto(ActionEvent event) {
+    private void btnAgregarProducto(ActionEvent event) throws SQLException {
         Producto productoSeleccionado = tvProductos.getSelectionModel().getSelectedItem();
         if (productoSeleccionado != null) {
             cargarProductosElegidosTabla(productoSeleccionado.getIdProducto());

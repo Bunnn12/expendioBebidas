@@ -105,7 +105,6 @@ public class FXMLBuscarClienteVentaController implements Initializable {
         Cliente clienteElegido = tvClientes.getSelectionModel().getSelectedItem();
         irPantallaPrincipal(clienteElegido);
     }
-    
     private void irPantallaPrincipal(Cliente clienteElegido){
         try {
             Stage escenarioBase = (Stage) tvClientes.getScene().getWindow();
