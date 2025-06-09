@@ -1,8 +1,7 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
-*/
-
+ */
 package expendiobebidas.controlador;
 
 import expendiobebidas.ExpendioBebidas;
@@ -28,6 +27,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -42,7 +42,6 @@ import javafx.stage.Stage;
  *
  * @author acrca
  */
-
 public class FXMLRealizarVentaAClienteController implements Initializable {
 
     @FXML
@@ -87,11 +86,12 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
     ObservableList<Producto> productos;
     ObservableList<ProductoElegidoVenta> productosElegidos = FXCollections.observableArrayList();  
     private List<Promocion> promocionesActivasCliente;
+    @FXML
+    private Button btnIdQuitarProducto;
 
     /**
      * Initializes the controller class.
      */
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTablaProductos();
@@ -152,15 +152,14 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
     }
     
     @FXML
-    private void seleccionarProducto(MouseEvent event) throws SQLException {
+    private void seleccionarProducto(MouseEvent event) {
         Producto seleccionado = tvProductos.getSelectionModel().getSelectedItem();
         if (seleccionado != null) {
-            cargarProductosElegidosTabla(seleccionado.getIdProducto());
         }
     }
     
     @FXML
-    private void btnAgregarProducto(ActionEvent event) throws SQLException {
+    private void btnAgregarProducto(ActionEvent event) {
         Producto productoSeleccionado = tvProductos.getSelectionModel().getSelectedItem();
         if (productoSeleccionado != null) {
             cargarProductosElegidosTabla(productoSeleccionado.getIdProducto());
@@ -169,9 +168,6 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
         }
     }
     
-    @FXML
-        private void btnAgregarProductoPedido(ActionEvent event) {
-    }
     
     private void configurarTablaPromociones() {
         colNombreProdDesc.setCellValueFactory(new PropertyValueFactory<>("nombreProducto"));
@@ -207,15 +203,110 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
     }
        
     private void cargarProductosElegidosTabla(int idProducto) {
+        //Validar que la cantidad ingresada sea un entero válido y mayor que 0
+        String cantidadTexto = tfCantidad.getText().trim();
+        int cantidad = 0;
+        try {
+            cantidad = Integer.parseInt(cantidadTexto);
+            if (cantidad <= 0) {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Cantidad inválida", "Ingresa una cantidad válida mayor que 0.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Cantidad inválida", "Ingresa un dato numérico.");
+            return;
+        }
+
+        Producto producto = null;
+        for (Producto p : productos) {
+            if (p.getIdProducto() == idProducto) {
+                producto = p;
+                break;
+            }
+        }
+        if (producto == null) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "No se encontró el producto seleccionado.");
+            return;
+        }
+
+        // Determinar si hay promoción activa para ese producto para el cliente
+        double precioUnitario = producto.getPrecioConGanancia(); // precio base con ganancia (sin descuento)
+        if (promocionesActivasCliente != null) {
+            for (Promocion promo : promocionesActivasCliente) {
+                if (promo.getProducto() != null && promo.getProducto().getIdProducto() == idProducto) {
+                    precioUnitario = promo.getPrecioConDescuento();
+                    break;
+                }
+            }
+        }
+
+        // Buscar si el producto ya está en la lista de productos elegidos
+        ProductoElegidoVenta productoExistente = null;
+        for (ProductoElegidoVenta pev : productosElegidos) {
+            if (pev.getNombreProducto().equals(producto.getNombreProducto())) {
+                productoExistente = pev;
+                break;
+            }
+        }
+
+        if (productoExistente != null) {
+            // Si ya está en la lista, actualizar cantidad y subtotal
+            int nuevaCantidad = productoExistente.getCantidad() + cantidad;
+            productoExistente.setCantidad(nuevaCantidad);
+            productoExistente.setPrecioUnitario(precioUnitario);
+            tvProductosElegidos.refresh();
+        } else {
+            ProductoElegidoVenta nuevoProductoElegido = new ProductoElegidoVenta(
+                producto.getNombreProducto(),
+                producto.getDescripcion(),
+                cantidad,
+                precioUnitario
+            );
+            productosElegidos.add(nuevoProductoElegido);
+        }  
+        
+        actualizarTotal();
     }
     
-    private void actualizarTotal() {
+    @FXML
+    private void btnAgregarArticuloPedido(ActionEvent event) {
+    }
+    
+    @FXML
+    private void seleccionarProductoYaELegido(MouseEvent event) {
+        ProductoElegidoVenta productoSeleccionado = tvProductosElegidos.getSelectionModel().getSelectedItem();
+        if (productoSeleccionado != null) {
+            btnIdQuitarProducto.setDisable(false); 
+        } 
     }
     
     @FXML
     private void btnQuitarProducto(ActionEvent event) {
+         ProductoElegidoVenta productoSeleccionado = tvProductosElegidos.getSelectionModel().getSelectedItem();
+
+        if (productoSeleccionado != null) {
+            int cantidad = productoSeleccionado.getCantidad();
+
+            if (cantidad > 1) {
+                productoSeleccionado.setCantidad(cantidad - 1);  
+                tvProductosElegidos.refresh(); 
+            } else {
+                productosElegidos.remove(productoSeleccionado);
+            }
+            // Desactiva el botón si no hay selección
+            btnIdQuitarProducto.setDisable(true);
+        }
+        actualizarTotal();
     }
 
+    private void actualizarTotal() {
+        double total = 0;
+        for(ProductoElegidoVenta pev : productosElegidos){
+            total += pev.getPrecioUnitario() * pev.getCantidad();
+        }
+        lbTotal.setText(String.format("$ %.2f", total));
+    }
+    
     @FXML
     private void btnCobrar(ActionEvent event) {
     }   
@@ -235,17 +326,8 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
     }
     
     @FXML
-    private void btnAgregarArticuloPedido(ActionEvent event) {
-    }
-    
-    @FXML
     private void btnRegresar(ActionEvent event) {
         irBusquedaCliente();
-    }
-
-
-    @FXML
-    private void seleccionarProductoYaELegido(MouseEvent event) {
     }
     
 }
