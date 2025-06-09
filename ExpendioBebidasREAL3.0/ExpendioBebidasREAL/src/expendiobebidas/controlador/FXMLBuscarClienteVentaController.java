@@ -99,13 +99,12 @@ public class FXMLBuscarClienteVentaController implements Initializable {
         }
         tvClientes.setItems(clientesFiltrados);
     }
-
+/*
     @FXML
     private void seleccionarCliente(MouseEvent event) {
         Cliente clienteElegido = tvClientes.getSelectionModel().getSelectedItem();
         irPantallaPrincipal(clienteElegido);
     }
-    
     private void irPantallaPrincipal(Cliente clienteElegido){
         try {
             Stage escenarioBase = (Stage) tvClientes.getScene().getWindow();
@@ -125,7 +124,7 @@ public class FXMLBuscarClienteVentaController implements Initializable {
             cerrarVentana();
         }
     }
-    
+    */
     private void cerrarVentana(){
         ((Stage) tvClientes.getScene().getWindow()).close();
     }
