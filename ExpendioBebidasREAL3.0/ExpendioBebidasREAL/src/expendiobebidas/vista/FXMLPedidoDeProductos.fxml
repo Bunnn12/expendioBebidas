@@ -1,11 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLPedidoDeProductosController">
-    
+<AnchorPane id="AnchorPane" prefHeight="884.0" prefWidth="1256.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLPedidoDeProductosController">
+   <children>
+      <Button layoutX="34.0" layoutY="29.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="40.0" prefWidth="165.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="REGRESAR" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/anteriorIcono.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="432.0" layoutY="45.0" prefHeight="49.0" prefWidth="394.0" text="GESTOR DE PEDIDOS" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="36.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="98.0" fitWidth="180.0" layoutX="1062.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="59.0" layoutY="178.0" text="Lista de proveedores:" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="25.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvProveedores" layoutX="59.0" layoutY="209.0" onMouseClicked="#seleccionarProveedor" prefHeight="226.0" prefWidth="1138.0">
+         <columns>
+            <TableColumn fx:id="colRazonSocial" prefWidth="271.0" text="Razón Social" />
+            <TableColumn fx:id="colTelefono" prefWidth="258.0" text="Teléfono" />
+            <TableColumn fx:id="colCorreo" prefWidth="265.0" text="Correo" />
+            <TableColumn fx:id="colDireccion" prefWidth="343.0" text="Dirección" />
+         </columns>
+      </TableView>
+      <Label layoutX="95.0" layoutY="97.0" text="Primero, seleccione un proveedor al cuál se le desea hacer el producto, seleccione los productos deseados y de click en &quot;Realizar pedido&quot;">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvProductosStockMinimo" layoutX="60.0" layoutY="512.0" prefHeight="262.0" prefWidth="345.0">
+        <columns>
+          <TableColumn fx:id="colNombreSM" prefWidth="90.0" text="Nombre" />
+          <TableColumn fx:id="colStockActualSM" prefWidth="153.0" text="Stock Actual" />
+            <TableColumn fx:id="colPrecioSM" prefWidth="101.0" text="Precio" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tvTodosProductos" layoutX="458.0" layoutY="512.0" prefHeight="262.0" prefWidth="345.0">
+        <columns>
+          <TableColumn fx:id="colNombreT" prefWidth="123.0" text="Nombre" />
+          <TableColumn fx:id="colStockActualT" prefWidth="114.0" text="Stock Actual" />
+            <TableColumn fx:id="colPrecioT" prefWidth="107.0" text="Precio" />
+        </columns>
+      </TableView>
+      <Label layoutX="60.0" layoutY="469.0" text="Productos con stock mínimo" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="504.0" layoutY="469.0" text="Todos los productos" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="25.0" />
+         </font>
+      </Label>
+      <Button layoutX="890.0" layoutY="827.0" mnemonicParsing="false" onAction="#clicRealizarPedido" prefHeight="31.0" prefWidth="345.0" style="-fx-background-color: #065290; -fx-background-radius: ;" text="Realizar pedido" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="19.0" />
+         </font>
+      </Button>
+      <Label layoutX="874.0" layoutY="469.0" text="Productos seleccionados" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="25.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvProductosSeleccionados" layoutX="855.0" layoutY="512.0" prefHeight="262.0" prefWidth="345.0">
+         <columns>
+            <TableColumn fx:id="colNombreS" prefWidth="123.0" text="Nombre" />
+            <TableColumn fx:id="colStockActualS" prefWidth="114.0" text="Stock Actual" />
+            <TableColumn fx:id="colPrecioS" prefWidth="107.0" text="Precio" />
+         </columns>
+      </TableView>
+      <Label layoutX="181.0" layoutY="442.0" text="Seleccione un producto y de click en &quot;Agregar Producto&quot; para agregar ese producto a su lista de productos seleccionados">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Label>
+      <Button layoutX="519.0" layoutY="787.0" mnemonicParsing="false" onAction="#clicAgregarProducto" prefHeight="40.0" prefWidth="223.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Agregar producto" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Button>
+      <Label layoutX="59.0" layoutY="143.0" text="Buscar proveedor:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfBuscarProveedor" layoutX="237.0" layoutY="138.0" onKeyReleased="#buscarProveedorPorRazonSocial" prefHeight="31.0" prefWidth="618.0" promptText="Razón social" />
+   </children>
 </AnchorPane>

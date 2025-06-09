@@ -198,7 +198,7 @@ public class FXMLPrincipalController implements Initializable {
     private void clicVentaACliente(ActionEvent event) {
         try{
         Stage escenarioAdmin = new Stage();
-        Parent vista = FXMLLoader.load(ExpendioBebidas.class.getResource("vista/FXMLRealizarVentaAClienteCliente.fxml"));
+        Parent vista = FXMLLoader.load(ExpendioBebidas.class.getResource("vista/FXMLRealizarVentaACliente.fxml"));
         Scene escena= new Scene(vista);
         escenarioAdmin.setScene(escena);
         escenarioAdmin.setTitle("Realizar venta a cliente");
@@ -228,7 +228,7 @@ public class FXMLPrincipalController implements Initializable {
     private void clickPedidoDeProductos(ActionEvent event) {
         try{
         Stage escenarioAdmin = new Stage();
-        Parent vista = FXMLLoader.load(ExpendioBebidas.class.getResource("vista/FXMLAdministrarProductos.fxml"));
+        Parent vista = FXMLLoader.load(ExpendioBebidas.class.getResource("vista/FXMLPedidoDeProductos.fxml"));
         Scene escena= new Scene(vista);
         escenarioAdmin.setScene(escena);
         escenarioAdmin.setTitle("Realizar pedido de productos");
