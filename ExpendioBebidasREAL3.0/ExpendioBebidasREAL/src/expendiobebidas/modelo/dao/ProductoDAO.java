@@ -13,11 +13,35 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/***
  *
  * @author reino
  */
 public class ProductoDAO {
+    
+    public static List<Producto> obtenerTodosLosProductos() throws SQLException{
+        List<Producto> productos = new ArrayList<>();
+        Connection conexionBD = Conexion.abrirConexion();
+        if(conexionBD != null){
+            String consulta= "SELECT idProducto, nombreProducto, precio, descripcion FROM producto"; 
+            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+            ResultSet resultado = sentencia.executeQuery();
+            
+            while(resultado.next()){
+               Producto producto = convertirRegistroProductoBasico(resultado);
+               productos.add(producto);
+            }
+            
+            resultado.close();
+            sentencia.close();
+            conexionBD.close();
+        }
+        else{
+             throw new SQLException("Sin conexion con la base de datos");
+        }
+        return productos;
+    }
+    
    public static Producto obtenerProductoMasVendido() throws SQLException{
         Producto productoMasVendido = null;
         Connection conexionBD = Conexion.abrirConexion();
@@ -79,36 +103,45 @@ public class ProductoDAO {
     }
 
     public static List<Producto> obtenerProductosNoVendidos(int idCliente) throws SQLException {
-    List<Producto> productos = new ArrayList<>();
-    Connection conexionBD = Conexion.abrirConexion();
-    if (conexionBD != null) {
-    String consulta= 
-            "SELECT p.nombreProducto, p.descripcion, p.precio " +
-        "FROM producto p " +
-        "WHERE p.idProducto NOT IN ( " +
-        "    SELECT dv.Producto_idProducto " +
-        "    FROM detalleventa dv " +
-        "    WHERE dv.Venta_Cliente_idCliente = ? " +
-        ");";;
+        List<Producto> productos = new ArrayList<>();
+        Connection conexionBD = Conexion.abrirConexion();
+        if (conexionBD != null) {
+        String consulta= 
+                "SELECT p.nombreProducto, p.descripcion, p.precio " +
+            "FROM producto p " +
+            "WHERE p.idProducto NOT IN ( " +
+            "    SELECT dv.Producto_idProducto " +
+            "    FROM detalleventa dv " +
+            "    WHERE dv.Venta_Cliente_idCliente = ? " +
+            ");";;
 
-    PreparedStatement stmt = conexionBD.prepareStatement(consulta);
-    stmt.setInt(1, idCliente);
-    ResultSet rs = stmt.executeQuery();
+        PreparedStatement stmt = conexionBD.prepareStatement(consulta);
+        stmt.setInt(1, idCliente);
+        ResultSet rs = stmt.executeQuery();
 
-    while (rs.next()) {
-        productos.add(new Producto(
-            rs.getString("nombreProducto"),
-            rs.getString("descripcion"),
-            rs.getDouble("precio")
-        ));
+        while (rs.next()) {
+            productos.add(new Producto(
+                rs.getString("nombreProducto"),
+                rs.getString("descripcion"),
+                rs.getDouble("precio")
+            ));
+            conexionBD.close();
+        }
+        }else{
+            throw new SQLException("Sin conexión con la base de datos");
+        }
+        return productos;
     }
-    }else{
-        throw new SQLException("Sin conexión con la base de datos");
-    }
-    conexionBD.close();
-    return productos;
-}
 
+    public static Producto convertirRegistroProductoBasico(ResultSet resultado) throws SQLException {
+        Producto producto = new Producto();
+        producto.setIdProducto(resultado.getInt("idProducto"));
+        producto.setNombreProducto(resultado.getString("nombreProducto"));
+        producto.setPrecio(resultado.getDouble("precio"));
+        producto.setDescripcion(resultado.getString("descripcion"));
+        return producto;
+    }
+    
     public static Producto convertirRegistroProducto(ResultSet resultado) throws SQLException{
         Producto producto = new Producto();
         producto.setIdProducto(resultado.getInt("idProducto"));
