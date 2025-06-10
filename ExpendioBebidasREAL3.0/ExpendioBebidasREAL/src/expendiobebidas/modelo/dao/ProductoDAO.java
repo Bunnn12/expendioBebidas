@@ -133,6 +133,34 @@ public class ProductoDAO {
         return productos;
     }
 
+    public static List<Producto> obtenerProductosConStockMinimo() throws SQLException {
+        List<Producto> lista = new ArrayList<>();
+        Connection conexionBD = Conexion.abrirConexion();
+    
+        if (conexionBD != null) {
+            String consulta = "SELECT idProducto, nombreProducto, stockMinimo, stockActual FROM producto WHERE stockActual <= stockMinimo";
+            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+            ResultSet resultado = sentencia.executeQuery();
+        
+            while (resultado.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(resultado.getInt("idProducto"));
+                producto.setNombreProducto(resultado.getString("nombreProducto"));
+                producto.setStockMinimo(resultado.getInt("stockMinimo"));
+                producto.setStockActual(resultado.getInt("stockActual"));
+                lista.add(producto);
+            }
+        
+            resultado.close();
+            sentencia.close();
+            conexionBD.close();
+        } else {
+            throw new SQLException("Sin conexión con la base de datos");
+        }
+    
+        return lista;
+    }
+    
     public static Producto convertirRegistroProductoBasico(ResultSet resultado) throws SQLException {
         Producto producto = new Producto();
         producto.setIdProducto(resultado.getInt("idProducto"));
