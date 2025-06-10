@@ -29,7 +29,7 @@
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font></Label>
-      <Button layoutX="1055.0" layoutY="222.0" mnemonicParsing="false" onAction="#clicInsertar" prefHeight="46.0" prefWidth="165.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Insertar" textFill="#065290">
+      <Button layoutX="1055.0" layoutY="196.0" mnemonicParsing="false" onAction="#clicInsertar" prefHeight="46.0" prefWidth="165.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Insertar" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -40,7 +40,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button layoutX="1055.0" layoutY="312.0" mnemonicParsing="false" onAction="#clicModificar" prefHeight="46.0" prefWidth="165.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Modificar " textFill="WHITE">
+      <Button layoutX="1055.0" layoutY="291.0" mnemonicParsing="false" onAction="#clicModificar" prefHeight="46.0" prefWidth="165.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Modificar " textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -94,6 +94,18 @@
             <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../recurso/anteriorIcono.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="1055.0" layoutY="377.0" mnemonicParsing="false" onAction="#clicEliminar" prefHeight="46.0" prefWidth="165.0" style="-fx-background-color: #ffffff; -fx-background-radius: 18;" text="Eliminar" textAlignment="RIGHT" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/eliminar.png" />
                </image>
             </ImageView>
          </graphic>
