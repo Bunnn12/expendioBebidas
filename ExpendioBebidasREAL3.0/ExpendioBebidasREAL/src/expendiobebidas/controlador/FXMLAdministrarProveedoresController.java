@@ -175,6 +175,24 @@ public class FXMLAdministrarProveedoresController implements Initializable {
         
     }
     
+    @FXML
+    private void clicEliminar(ActionEvent event) throws SQLException{
+        Proveedor seleccionado = tvProveedores.getSelectionModel().getSelectedItem();
+    
+        if (seleccionado != null) {
+            if (ProveedorDAO.tieneProductosAsociados(seleccionado.getIdProveedor())) {
+              Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "No se puede eiminar", "El proveedor seleccionado ya tiene productos asociados, por lo que no se puede eliminar");
+
+            } else {
+                ProveedorDAO.eliminarProveedor(seleccionado.getIdProveedor());
+                proveedores.remove(seleccionado);
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.INFORMATION, "Proveedor eliminado", "El proveedor ha sido eliminado exitosamente.");
+            }
+        } else {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Seleccione un proveedor", "Por favor seleccione un proveedor de la tabla.");
+        }
+    }
+    
     private boolean validarRazonSocial() {
         String razon = tfRazonSocial.getText().trim();
         if (razon.isEmpty()) {

@@ -99,5 +99,36 @@ public class ProveedorDAO {
             }
         }
     }
+     
+    public static boolean eliminarProveedor(int idProveedor) throws SQLException {
+        try (Connection conexionBD = Conexion.abrirConexion()) {
+            if (conexionBD != null) {
+                String consulta = "DELETE FROM proveedor WHERE idProveedor = ?";
+                try (PreparedStatement sentencia = conexionBD.prepareStatement(consulta)) {
+                    sentencia.setInt(1, idProveedor);
+                    int filasAfectadas = sentencia.executeUpdate();
+                    return filasAfectadas > 0;
+                }
+            } else {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "No hay conexión con la base de datos");
+                return false;
+            }
+        }
+    }
+    
+    public static boolean tieneProductosAsociados(int idProveedor) {
+        String query = "SELECT COUNT(*) FROM producto WHERE idProveedor = ?";
+        try (Connection conn = Conexion.abrirConexion();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, idProveedor);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
     
 }
