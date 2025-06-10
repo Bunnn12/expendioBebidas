@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -7,12 +8,115 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="775.0" prefWidth="1091.0" style="-fx-background-color: #9ed4f1;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="expendiobebidas.controlador.FXMLPedidoDeClienteController">
+<AnchorPane id="AnchorPane" prefHeight="894.0" prefWidth="1286.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLPedidoDeClienteController">
    <children>
-      <Label layoutX="349.0" layoutY="61.0" prefHeight="49.0" prefWidth="394.0" text="GESTOR DE PEDIDOS" textFill="#065290">
+      <Label layoutX="360.0" layoutY="27.0" prefHeight="49.0" prefWidth="568.0" text="REALIZAR PEDIDO DE CLIENTE" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="36.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvTodosProductos" layoutX="138.0" layoutY="456.0" prefHeight="322.0" prefWidth="344.0">
+        <columns>
+          <TableColumn fx:id="colNombreTP" prefWidth="209.0" text="Nombre " />
+          <TableColumn fx:id="colPrecioTP" prefWidth="134.0" text="Precio" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tvProductosPedido" layoutX="783.0" layoutY="441.0" prefHeight="322.0" prefWidth="435.0">
+         <columns>
+            <TableColumn fx:id="colNombrePedido" prefWidth="209.0" text="Nombre " />
+            <TableColumn fx:id="colPrecioPedido" prefWidth="134.0" text="Precio" />
+            <TableColumn fx:id="colCantidad" prefWidth="91.0" text="Cantidad" />
+         </columns>
+      </TableView>
+      <Button layoutX="138.0" layoutY="808.0" mnemonicParsing="false" onAction="#clicAgregarProducto" prefHeight="49.0" prefWidth="344.0" style="-fx-background-color: #ffffff;" text="Agregar producto a la lista" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="780.0" layoutY="808.0" mnemonicParsing="false" onAction="#clicRealizarPedido" prefHeight="49.0" prefWidth="435.0" style="-fx-background-color: #065290;" text="Realizar pedido" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="19.0" />
+         </font>
+      </Button>
+      <Label layoutX="908.0" layoutY="388.0" text="Lista de pedido" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="25.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="110.0" fitWidth="235.0" layoutX="1052.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="101.0" layoutY="361.0" text="Productos disponibles en la tienda" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="423.0" layoutY="82.0" text="Seleccione al cliente al que le desea realizar un pedido">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Label>
+      <Button layoutX="28.0" layoutY="42.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="40.0" prefWidth="165.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="REGRESAR" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/anteriorIcono.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <TextField fx:id="tfBuscarProducto" layoutX="255.0" layoutY="403.0" onKeyReleased="#buscarProductoPorNombre" prefHeight="22.0" prefWidth="355.0" promptText="Nombre del producto" />
+      <Label layoutX="101.0" layoutY="407.0" text="Buscar producto:" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="783.0" layoutY="778.0" text="Precio total del pedido:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbPrecioPedido" layoutX="953.0" layoutY="778.0" prefHeight="17.0" prefWidth="127.0">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font></Label>
+      <Label layoutX="101.0" layoutY="150.0" text="Clientes registrados:" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="101.0" layoutY="121.0" text="Buscar clliente:" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfBuscarCliente" layoutX="247.0" layoutY="116.0" onKeyReleased="#buscarClientePorRazonSocial" prefHeight="22.0" prefWidth="625.0" promptText="Razón social" />
+      <TableView fx:id="tvClientes" layoutX="101.0" layoutY="188.0" onMouseClicked="#seleccionarCliente" prefHeight="110.0" prefWidth="1111.0">
+         <columns>
+            <TableColumn fx:id="colRazonSocial" prefWidth="309.0" text="Razón Social" />
+            <TableColumn fx:id="colTelefono" prefWidth="248.0" text="Teléfono" />
+            <TableColumn fx:id="colCorreo" prefWidth="271.0" text="Correo" />
+            <TableColumn fx:id="colDireccion" prefWidth="282.0" text="Dirección" />
+         </columns>
+      </TableView>
+      <Label layoutX="99.0" layoutY="298.0" text="Cliente seleccionado:" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbClienteSeleccionado" layoutX="299.0" layoutY="298.0">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="255.0" layoutY="331.0" text="Seleccione un producto y de click en &quot;Agregar Producto a la lista&quot; para agregar ese producto a su lista de pedido">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
          </font>
       </Label>
    </children>

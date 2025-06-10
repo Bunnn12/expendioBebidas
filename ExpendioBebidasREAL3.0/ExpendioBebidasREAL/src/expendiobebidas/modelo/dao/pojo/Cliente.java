@@ -4,6 +4,9 @@
  */
 package expendiobebidas.modelo.dao.pojo;
 
+import expendiobebidas.modelo.dao.ClienteDAO;
+import java.sql.SQLException;
+
 /**
  *
  * @author reino
@@ -69,4 +72,5 @@ public class Cliente {
     public String toString() {
         return this.getRazonSocial();  
     }
+  
 }
