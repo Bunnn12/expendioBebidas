@@ -93,6 +93,37 @@ public class FXMLPrincipalUsuarioController implements Initializable {
 
     @FXML
     private void clickProductosConStockMinimo(ActionEvent event) {
+        
+    }
+
+    @FXML
+    private void clickRealizarVenta(ActionEvent event) {
+        try{
+        Stage escenarioAdmin = new Stage();
+        Parent vista = FXMLLoader.load(ExpendioBebidas.class.getResource("vista/FXMLBuscarClienteVenta.fxml"));
+        Scene escena= new Scene(vista);
+        escenarioAdmin.setScene(escena);
+        escenarioAdmin.setTitle("Realizar venta a cliente");
+        escenarioAdmin.initModality(Modality.APPLICATION_MODAL);
+        escenarioAdmin.showAndWait();
+        }catch(IOException e){
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se puede mostrar la ventana");
+        }
+    }
+
+    @FXML
+    private void clickRealizarPedido(ActionEvent event) {
+        try{
+        Stage escenarioAdmin = new Stage();
+        Parent vista = FXMLLoader.load(ExpendioBebidas.class.getResource("vista/FXMLRealizarPedidoPorEmpleado.fxml"));
+        Scene escena= new Scene(vista);
+        escenarioAdmin.setScene(escena);
+        escenarioAdmin.setTitle("Realizar pedidos");
+        escenarioAdmin.initModality(Modality.APPLICATION_MODAL);
+        escenarioAdmin.showAndWait();
+        }catch(IOException e){
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se puede mostrar la ventana");
+        }
     }
     
     

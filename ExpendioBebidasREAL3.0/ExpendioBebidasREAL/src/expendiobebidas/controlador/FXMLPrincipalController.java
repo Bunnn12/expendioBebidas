@@ -98,6 +98,7 @@ public class FXMLPrincipalController implements Initializable {
             ventanaRegistro.initOwner(lbSaludoUsuario.getScene().getWindow());
             ventanaRegistro.show();
         } catch (IOException e) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se puede mostrar la ventana");
             e.printStackTrace();
         }
     
@@ -114,7 +115,7 @@ public class FXMLPrincipalController implements Initializable {
             escenarioAdmin.initModality(Modality.APPLICATION_MODAL);
             escenarioAdmin.showAndWait();
         }catch(IOException e){
-            
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se puede mostrar la ventana");
         }
     }
 
@@ -129,7 +130,7 @@ public class FXMLPrincipalController implements Initializable {
             escenarioAdmin.initModality(Modality.APPLICATION_MODAL);
             escenarioAdmin.showAndWait();
             }catch(IOException e){
-            
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se puede mostrar la ventana");
         }
     }
 
@@ -144,7 +145,7 @@ public class FXMLPrincipalController implements Initializable {
             escenarioAdmin.initModality(Modality.APPLICATION_MODAL);
             escenarioAdmin.showAndWait();
         }catch(IOException e){
-            
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se puede mostrar la ventana");
         }
     }
 
@@ -159,7 +160,7 @@ public class FXMLPrincipalController implements Initializable {
         escenarioAdmin.initModality(Modality.APPLICATION_MODAL);
         escenarioAdmin.showAndWait();
         }catch(IOException e){
-            
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se puede mostrar la ventana");
         }
     }
 
@@ -174,7 +175,7 @@ public class FXMLPrincipalController implements Initializable {
         escenarioAdmin.initModality(Modality.APPLICATION_MODAL);
         escenarioAdmin.showAndWait();
         }catch(IOException e){
-            
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se puede mostrar la ventana");
         }
     }
 
@@ -190,7 +191,7 @@ public class FXMLPrincipalController implements Initializable {
         escenarioAdmin.initModality(Modality.APPLICATION_MODAL);
         escenarioAdmin.showAndWait();
         }catch(IOException e){
-            
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se puede mostrar la ventana");
         }
     }
 
@@ -198,14 +199,14 @@ public class FXMLPrincipalController implements Initializable {
     private void clicVentaACliente(ActionEvent event) {
         try{
         Stage escenarioAdmin = new Stage();
-        Parent vista = FXMLLoader.load(ExpendioBebidas.class.getResource("vista/FXMLRealizarVentaACliente.fxml"));
+        Parent vista = FXMLLoader.load(ExpendioBebidas.class.getResource("vista/FXMLBuscarClienteVenta.fxml"));
         Scene escena= new Scene(vista);
         escenarioAdmin.setScene(escena);
         escenarioAdmin.setTitle("Realizar venta a cliente");
         escenarioAdmin.initModality(Modality.APPLICATION_MODAL);
         escenarioAdmin.showAndWait();
         }catch(IOException e){
-            
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se puede mostrar la ventana");
         }
     }
 
@@ -220,7 +221,7 @@ public class FXMLPrincipalController implements Initializable {
         escenarioAdmin.initModality(Modality.APPLICATION_MODAL);
         escenarioAdmin.showAndWait();
         }catch(IOException e){
-            
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se puede mostrar la ventana");
         }
     }
 
@@ -235,7 +236,7 @@ public class FXMLPrincipalController implements Initializable {
         escenarioAdmin.initModality(Modality.APPLICATION_MODAL);
         escenarioAdmin.showAndWait();
         }catch(IOException e){
-            
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se puede mostrar la ventana");
         }
     }
 
@@ -250,7 +251,7 @@ public class FXMLPrincipalController implements Initializable {
         escenarioAdmin.initModality(Modality.APPLICATION_MODAL);
         escenarioAdmin.showAndWait();
         }catch(IOException e){
-            
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se puede mostrar la ventana");
         }
     }
        

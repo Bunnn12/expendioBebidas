@@ -35,12 +35,12 @@
             <Font name="Arial Rounded MT Bold" size="33.0" />
          </font>
       </Label>
-      <Button layoutX="220.0" layoutY="355.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="479.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Realizar venta" textFill="#065290">
+      <Button layoutX="220.0" layoutY="355.0" mnemonicParsing="false" onAction="#clickRealizarVenta" prefHeight="58.0" prefWidth="479.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Realizar venta" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="30.0" />
          </font>
       </Button>
-      <Button layoutX="220.0" layoutY="449.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="479.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Realizar pedido" textFill="WHITE">
+      <Button layoutX="220.0" layoutY="449.0" mnemonicParsing="false" onAction="#clickRealizarPedido" prefHeight="58.0" prefWidth="479.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Realizar pedido" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="30.0" />
          </font>
