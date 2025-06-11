@@ -85,30 +85,46 @@
       </TableView>
       <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="146.0" prefWidth="651.0" style="-fx-background-color: #ffffff;">
          <children>
-            <Button alignment="BOTTOM_CENTER" layoutX="23.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnRegresar" prefHeight="70.0" prefWidth="195.0" style="-fx-background-radius: 19; -fx-background-color: #ffffff; -fx-border-color: #065290; -fx-border-radius: 19;" text="REGRESAR" textFill="#065290">
+            <Button alignment="BOTTOM_CENTER" layoutX="23.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnRegresar" prefHeight="60.0" prefWidth="146.0" style="-fx-background-radius: 19; -fx-background-color: #ffffff; -fx-border-color: #065290; -fx-border-radius: 19;" text="REGRESAR" textFill="#065290">
                <font>
                   <Font name="Arial Rounded MT Bold" size="15.0" />
                </font>
             </Button>
-            <Label layoutX="232.0" layoutY="38.0" text="Cliente:">
+            <Label layoutX="189.0" layoutY="35.0" text="Cliente:">
                <font>
                   <Font name="Arial Rounded MT Bold" size="25.0" />
                </font>
             </Label>
-            <Label fx:id="lbNombreCliente" layoutX="338.0" layoutY="44.0" prefHeight="26.0" prefWidth="285.0">
+            <Label fx:id="lbNombreCliente" layoutX="290.0" layoutY="38.0" prefHeight="26.0" prefWidth="325.0">
                <font>
                   <Font name="Arial Rounded MT Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="111.0" text="Lista de productos elegidos:" textFill="#065290">
+            <Label layoutX="14.0" layoutY="121.0" text="Lista de productos elegidos:" textFill="#065290">
                <font>
                   <Font name="Arial Rounded MT Bold" size="20.0" />
                </font></Label>
-            <ImageView fitHeight="36.0" fitWidth="33.0" layoutX="104.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="27.0" fitWidth="28.0" layoutX="83.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../recurso/anteriorIcono.png" />
                </image>
             </ImageView>
+            <Label fx:id="lbFecha" layoutX="562.0" layoutY="12.0" text="Fecha">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="190.0" layoutY="77.0" text="Folio factura">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfFolioFactura" layoutX="290.0" layoutY="79.0" prefHeight="31.0" prefWidth="254.0" promptText="Número de folio" />
+            <Label layoutX="197.0" layoutY="93.0" text="(opcional):">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="15.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="14.0" layoutY="466.0" prefHeight="50.0" prefWidth="651.0" style="-fx-background-color: #ffffff;">
@@ -119,7 +135,7 @@
                </font>
             </Label>
          </children></AnchorPane>
-      <Button layoutX="998.0" layoutY="565.0" mnemonicParsing="false" onAction="#btnQuitarProducto" prefHeight="109.0" prefWidth="244.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Quitar producto" textFill="#065290">
+      <Button fx:id="btnIdQuitarProducto" layoutX="998.0" layoutY="565.0" mnemonicParsing="false" onAction="#btnQuitarProducto" prefHeight="109.0" prefWidth="244.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Quitar producto" textFill="#065290">
          <graphic>
             <ImageView fitHeight="90.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
