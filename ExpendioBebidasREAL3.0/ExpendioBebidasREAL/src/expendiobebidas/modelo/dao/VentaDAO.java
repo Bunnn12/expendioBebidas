@@ -178,16 +178,7 @@ public static ArrayList<Venta> obtenerResumenVentasPorSemana() throws SQLExcepti
     Connection conexionBD = Conexion.abrirConexion();
 
     if (conexionBD != null) {
-        String consulta =
-            "SELECT YEAR(v.fechaVenta) AS anio, " +
-            "WEEK(v.fechaVenta, 1) AS semana, " +
-            "COUNT(DISTINCT v.idVenta) AS totalVentas, " +
-            "SUM(dv.costoVenta) AS totalRecaudado " +
-            "FROM venta v " +
-            "JOIN detalleVenta dv ON v.idVenta = dv.Venta_idVenta " +
-            "AND v.Cliente_idCliente = dv.Venta_Cliente_idCliente " +
-            "GROUP BY anio, semana " +
-            "ORDER BY anio DESC, semana DESC;";
+        String consulta = "SELECT * FROM vistaVentasPorSemana ORDER BY anio DESC, semana DESC";
 
         PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
         ResultSet resultado = sentencia.executeQuery();
@@ -220,15 +211,7 @@ public static ArrayList<Venta> obtenerResumenVentasPorSemana() throws SQLExcepti
        Connection conexionBD = Conexion.abrirConexion();
 
        if (conexionBD != null) {
-           String consulta =
-               "SELECT YEAR(v.fechaVenta) AS anio, " +
-               "COUNT(DISTINCT v.idVenta) AS totalVentas, " +
-               "SUM(dv.costoVenta) AS totalRecaudado " +
-               "FROM venta v " +
-               "JOIN detalleVenta dv ON v.idVenta = dv.Venta_idVenta " +
-               "AND v.Cliente_idCliente = dv.Venta_Cliente_idCliente " +
-               "GROUP BY anio " +
-               "ORDER BY anio DESC;";
+           String consulta = "SELECT * FROM vistaVentasPorAnio ORDER BY anio DESC";
 
            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
            ResultSet resultado = sentencia.executeQuery();
@@ -260,16 +243,7 @@ public static ArrayList<Venta> obtenerResumenVentasPorSemana() throws SQLExcepti
        Connection conexionBD = Conexion.abrirConexion();
 
        if (conexionBD != null) {
-           String consulta =
-               "SELECT YEAR(v.fechaVenta) AS anio, " +
-               "MONTH(v.fechaVenta) AS mes, " +
-               "COUNT(DISTINCT v.idVenta) AS totalVentas, " +
-               "SUM(dv.costoVenta) AS totalRecaudado " +
-               "FROM venta v " +
-               "JOIN detalleVenta dv ON v.idVenta = dv.Venta_idVenta " +
-               "AND v.Cliente_idCliente = dv.Venta_Cliente_idCliente " +
-               "GROUP BY anio, mes " +
-               "ORDER BY anio DESC, mes DESC;";
+           String consulta = "SELECT * FROM vistaVentasPorMes ORDER BY anio DESC, mes DESC";
 
            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
            ResultSet resultado = sentencia.executeQuery();

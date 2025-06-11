@@ -8,8 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="787.0" prefWidth="1003.0" style="-fx-background-color: #9ed4f1;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="expendiobebidas.controlador.FXMLRealizarPedidoPorEmpleadoController">
+<AnchorPane id="AnchorPane" prefHeight="787.0" prefWidth="1003.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLRealizarPedidoPorEmpleadoController">
    <children>
       <ImageView fitHeight="534.0" fitWidth="650.0" layoutY="253.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -43,15 +42,29 @@
             <Font name="Arial Rounded MT Bold" size="22.0" />
          </font>
       </Label>
-      <Button layoutX="302.0" layoutY="406.0" mnemonicParsing="false" onAction="#clickRealizarPedidoDeCliente" prefHeight="80.0" prefWidth="399.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Realizar pedido de cliente" textFill="#065290">
+      <Button contentDisplay="TOP" layoutX="346.0" layoutY="368.0" mnemonicParsing="false" onAction="#clickRealizarPedidoDeCliente" prefHeight="133.0" prefWidth="312.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Realizar pedido de cliente" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="94.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/hacerPedido.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
-      <Button layoutX="309.0" layoutY="550.0" mnemonicParsing="false" onAction="#clickRealizarPedidoDeProductos" prefHeight="80.0" prefWidth="399.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Realizar pedidos de productos" textFill="WHITE">
+      <Button contentDisplay="TOP" layoutX="346.0" layoutY="575.0" mnemonicParsing="false" onAction="#clickRealizarPedidoDeProductos" prefHeight="133.0" prefWidth="312.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Realizar pedidos de productos" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="94.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/pedidoProductos.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
    </children>
 </AnchorPane>

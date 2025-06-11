@@ -117,6 +117,7 @@ public class FXMLBuscarClienteVentaController implements Initializable {
             escenarioBase.setScene(escenaPrincial);
             escenarioBase.setTitle("Realizar venta");
             escenarioBase.show();
+            escenarioBase.centerOnScreen();
         } catch (IOException ex) {
             Utilidad.mostrarAlertaSimple(
                 Alert.AlertType.ERROR,"Error al cargar","Lo sentimos, por el momento no se puede mostrar la interfaz de venta. Por favor, inténtelo más tarde."
