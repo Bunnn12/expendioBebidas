@@ -100,7 +100,6 @@ public class PedidoDAO {
             "JOIN detallepedido dp ON p.idPedido = dp.Pedido_idPedido " +
             "JOIN producto pr ON dp.Producto_idProducto = pr.idProducto " +
             "WHERE p.Proveedor_idProveedor = ? " +
-            "AND p.fechaPedido = CURDATE() " +
             "AND pr.stockActual <= pr.stockMinimo";
 
         PreparedStatement ps = conn.prepareStatement(consulta);

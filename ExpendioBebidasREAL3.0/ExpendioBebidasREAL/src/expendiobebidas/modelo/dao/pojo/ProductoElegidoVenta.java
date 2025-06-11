@@ -6,11 +6,10 @@ package expendiobebidas.modelo.dao.pojo;
 
 /**
  *
- * @author acrca
+ * @author reino
  */
 public class ProductoElegidoVenta {
-    
-    private int idProducto;
+        private int idProducto;
     private String nombreProducto;
     private String descripcion;
     private int cantidad;

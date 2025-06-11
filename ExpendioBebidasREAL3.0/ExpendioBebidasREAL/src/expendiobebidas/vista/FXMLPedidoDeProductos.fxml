@@ -76,7 +76,7 @@
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="916.0" layoutY="826.0" mnemonicParsing="false" onAction="#clicRealizarPedido" prefHeight="36.0" prefWidth="300.0" style="-fx-background-color: #065290; -fx-background-radius: ;" text="Realizar pedido" textFill="WHITE">
+      <Button layoutX="916.0" layoutY="826.0" mnemonicParsing="false" onAction="#clicRealizarPedido" prefHeight="36.0" prefWidth="300.0" style="-fx-background-color: #065290;" text="Realizar pedido" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="19.0" />
          </font>
@@ -98,7 +98,7 @@
             <Font name="Arial Rounded MT Bold" size="15.0" />
          </font>
       </Label>
-      <Button layoutX="487.0" layoutY="826.0" mnemonicParsing="false" onAction="#clicAgregarProducto" prefHeight="36.0" prefWidth="345.0" style="-fx-background-color: #ffffff; -fx-background-radius: ;" text="Agregar producto" textFill="#065290">
+      <Button layoutX="487.0" layoutY="826.0" mnemonicParsing="false" onAction="#clicAgregarProducto" prefHeight="36.0" prefWidth="345.0" style="-fx-background-color: #ffffff;" text="Agregar producto" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>

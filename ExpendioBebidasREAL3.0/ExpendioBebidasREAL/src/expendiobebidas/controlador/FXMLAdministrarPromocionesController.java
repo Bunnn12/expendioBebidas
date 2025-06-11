@@ -77,6 +77,7 @@ public class FXMLAdministrarPromocionesController implements Initializable {
     
     private ObservableList<Cliente> clientes;
     private ObservableList<Producto> productos;
+    private ObservableList<Promocion> promociones;
     @FXML
     private Label lbErrorDescrip;
     @FXML
@@ -89,6 +90,18 @@ public class FXMLAdministrarPromocionesController implements Initializable {
     private Label lbErrorProducto;
     @FXML
     private Label lbErrorCliente;
+    @FXML
+    private TableView<Promocion> tvPromociones;
+    @FXML
+    private TableColumn<?, ?> colEmisionPromo;
+    @FXML
+    private TableColumn<?, ?> colVencimientoPromo;
+    @FXML
+    private TextField tfBuscarPromo;
+    @FXML
+    private TableColumn<?, ?> colDescripcionPromo;
+    private Promocion promocionSeleccionada;
+
 
     /**
      * Initializes the controller class.
@@ -97,9 +110,10 @@ public class FXMLAdministrarPromocionesController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         configurarTablaClientes();
         configurarTablaProductos();
+        configurarTablaPromociones();
         cargarClientes();
         cargarProductos();
-        
+        cargarPromociones();
     }    
 
     private void configurarTablaClientes(){
@@ -138,7 +152,20 @@ public class FXMLAdministrarPromocionesController implements Initializable {
             cerrarVentana();
         }     
     }
+    private void configurarTablaPromociones() {
+    colDescripcionPromo.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+    colEmisionPromo.setCellValueFactory(new PropertyValueFactory<>("fechaEmision"));
+    colVencimientoPromo.setCellValueFactory(new PropertyValueFactory<>("fechaVencimiento"));
+}
 
+    private void cargarPromociones() {
+    try {
+        promociones = FXCollections.observableArrayList(PromocionDAO.obtenerPromociones());
+        tvPromociones.setItems(promociones);
+    } catch (SQLException e) {
+        Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error al cargar", "No se pudieron cargar las promociones.");
+    }
+}
     @FXML
     private void buscarProductoPorNombre(KeyEvent event) {
         String nombreBuscado = tfBuscarProducto.getText().toLowerCase();
@@ -212,6 +239,7 @@ public class FXMLAdministrarPromocionesController implements Initializable {
         if (PromocionDAO.insertarPromocion(nuevo)) {
             Utilidad.mostrarAlertaSimple(Alert.AlertType.INFORMATION, "Promocion insertada", "La promocion ha sido insertada correctamente");
             limpiarCampos();
+            cargarPromociones();
         }
         else{
             Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Promocion no insertada", "No se ha podido insertar la promocion, intenténtelo de nuevo más tarde");
@@ -220,10 +248,50 @@ public class FXMLAdministrarPromocionesController implements Initializable {
 
     @FXML
     private void clicModificar(ActionEvent event) {
+        if (!validarDatosLlenos() || promocionSeleccionada == null) {
+        return;
+    }
+
+    promocionSeleccionada.setDescripcion(tfDescripcion.getText().trim());
+    promocionSeleccionada.setDescuento(Integer.parseInt(tfDescuento.getText().trim()));
+    promocionSeleccionada.setFechaEmision(dpFechaEmision.getValue().toString());
+    promocionSeleccionada.setFechaVencimiento(dpFechaVencimiento.getValue().toString());
+    promocionSeleccionada.setCliente(tvClientes.getSelectionModel().getSelectedItem());
+    promocionSeleccionada.setProducto(tvProductos.getSelectionModel().getSelectedItem());
+
+    try {
+        if (PromocionDAO.actualizarPromocion(promocionSeleccionada)) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.INFORMATION, "Promoción actualizada", "La promoción ha sido modificada exitosamente.");
+            limpiarCampos();
+            cargarPromociones();
+        } else {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "No actualizada", "No se encontró la promoción para modificar.");
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "Ocurrió un error al modificar la promoción.");
+    }
     }
 
     @FXML
     private void clicEliminar(ActionEvent event) {
+        if (promocionSeleccionada == null) {
+        Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "No seleccionada", "Debes seleccionar una promoción para eliminar.");
+        return;
+    }
+
+    try {
+        if (PromocionDAO.eliminarPromocion(promocionSeleccionada.getIdPromocion())) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.INFORMATION, "Promoción eliminada", "La promoción ha sido eliminada correctamente.");
+            limpiarCampos();
+            cargarPromociones();
+        } else {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "No eliminada", "No se encontró la promoción para eliminar.");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "Ocurrió un error al intentar eliminar la promoción.");
+    }
     }
     
     private boolean validarDatosLlenos() {
@@ -266,7 +334,7 @@ public class FXMLAdministrarPromocionesController implements Initializable {
             }
        
        if (fechaVencim == null) {
-            lbErrorFechaEmi.setText("La fecha de vencimiento es obligatoria.");
+            lbErrorFechaVenci.setText("La fecha de vencimiento es obligatoria.");
             datosValidos = false;
         } else {
             lbErrorFechaVenci.setText("");
@@ -285,6 +353,11 @@ public class FXMLAdministrarPromocionesController implements Initializable {
         } else {
             lbErrorCliente.setText("");
         }
+        if (fechaEmision != null && fechaVencim != null && fechaEmision.isAfter(fechaVencim)) {
+            lbErrorFechaVenci.setText("La fecha de vencimiento debe ser después de la emisión.");
+            datosValidos = false;
+        }
+
 
        return datosValidos;
     }
@@ -303,6 +376,51 @@ public class FXMLAdministrarPromocionesController implements Initializable {
     @FXML
     private void btnRegresar(ActionEvent event) {
         cerrarVentana();
+    }
+
+    @FXML
+    private void buscarPromoPorNombre(KeyEvent event) {
+        String textoBusqueda = tfBuscarPromo.getText().toLowerCase();
+
+        if (textoBusqueda.isEmpty()) {
+            tvPromociones.setItems(promociones);
+            return;
+        }
+
+    ObservableList<Promocion> promocionesFiltradas = FXCollections.observableArrayList();
+    for (Promocion p : promociones) {
+        if (p.getDescripcion().toLowerCase().contains(textoBusqueda)) {
+            promocionesFiltradas.add(p);
+        }
+    }
+    tvPromociones.setItems(promocionesFiltradas);
+    }
+
+    @FXML
+    private void seleccionarPromocion(MouseEvent event) {
+         promocionSeleccionada = tvPromociones.getSelectionModel().getSelectedItem();
+    if (promocionSeleccionada != null) {
+        tfDescripcion.setText(promocionSeleccionada.getDescripcion());
+        tfDescuento.setText(String.valueOf(promocionSeleccionada.getDescuento()));
+        dpFechaEmision.setValue(LocalDate.parse(promocionSeleccionada.getFechaEmision()));
+        dpFechaVencimiento.setValue(LocalDate.parse(promocionSeleccionada.getFechaVencimiento()));
+
+        for (Cliente cliente : clientes) {
+            if (cliente.getIdCliente() == promocionSeleccionada.getCliente().getIdCliente()) {
+                tvClientes.getSelectionModel().select(cliente);
+                tvClientes.scrollTo(cliente);
+                break;
+            }
+        }
+
+        for (Producto producto : productos) {
+            if (producto.getIdProducto() == promocionSeleccionada.getProducto().getIdProducto()) {
+                tvProductos.getSelectionModel().select(producto);
+                tvProductos.scrollTo(producto);
+                break;
+            }
+        }
+    }
     }
 
     
