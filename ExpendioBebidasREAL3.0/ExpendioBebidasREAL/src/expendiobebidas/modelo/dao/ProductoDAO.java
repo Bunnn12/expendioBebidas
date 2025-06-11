@@ -149,30 +149,31 @@ public class ProductoDAO {
         producto.setTotalVendido(resultado.getInt("totalVendido"));
         return producto;
     }
+
     public static List<Producto> buscarProductoPorNombre(String nombre) throws SQLException {
-    List<Producto> productos = new ArrayList<>();
-    Connection conexionBD = Conexion.abrirConexion();
+        List<Producto> productos = new ArrayList<>();
+        Connection conexionBD = Conexion.abrirConexion();
 
-    if (conexionBD != null) {
-        String consulta = "SELECT idProducto, nombreProducto, precio, descripcion " +
-                          "FROM producto WHERE nombreProducto LIKE ?";
-        PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
-        sentencia.setString(1, "%" + nombre + "%");
-        ResultSet resultado = sentencia.executeQuery();
+        if (conexionBD != null) {
+            String consulta = "SELECT idProducto, nombreProducto, precio, descripcion " +
+                            "FROM producto WHERE nombreProducto LIKE ?";
+            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+            sentencia.setString(1, "%" + nombre + "%");
+            ResultSet resultado = sentencia.executeQuery();
 
-        while (resultado.next()) {
-            Producto producto = convertirRegistroProductoBasico(resultado);
-            productos.add(producto);
+            while (resultado.next()) {
+                Producto producto = convertirRegistroProductoBasico(resultado);
+                productos.add(producto);
+            }
+
+            resultado.close();
+            sentencia.close();
+            conexionBD.close();
+        } else {
+            throw new SQLException("Sin conexión con la base de datos");
         }
 
-        resultado.close();
-        sentencia.close();
-        conexionBD.close();
-    } else {
-        throw new SQLException("Sin conexión con la base de datos");
+        return productos;
     }
-
-    return productos;
-}
 
 }

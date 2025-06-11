@@ -23,9 +23,17 @@ public class ProductoPedido {
     public Producto getProducto() {
         return producto;
     }
+    
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
 
     public int getCantidad() {
         return cantidad;
+    }
+    
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     public void incrementarCantidad() {
@@ -33,12 +41,12 @@ public class ProductoPedido {
     }
 
     public double getPrecioTotal() {
-        return producto.getPrecio() * cantidad;
+        return producto.getPrecioConGanancia() * cantidad;
     }
 
-    // Métodos para las propiedades para la tabla
     public String getNombreProducto() {
         return producto.getNombreProducto();
     }
+    
 }
 

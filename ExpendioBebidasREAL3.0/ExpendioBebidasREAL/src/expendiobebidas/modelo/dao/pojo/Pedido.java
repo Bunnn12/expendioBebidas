@@ -11,6 +11,7 @@ package expendiobebidas.modelo.dao.pojo;
 public class Pedido {
     private int idPedido;
     private String fechaPedido;
+    private int idCliente;
 
     public Pedido() {
     }
@@ -34,6 +35,19 @@ public class Pedido {
 
     public void setFechaPedido(String fechaPedido) {
         this.fechaPedido = fechaPedido;
+    }
+    
+    @Override
+    public String toString() {
+        return "Pedido #" + idPedido + " - Fecha: " + fechaPedido;
+    }
+    
+    public int getIdCliente() {
+        return idCliente;
+    }
+    
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
     
 }

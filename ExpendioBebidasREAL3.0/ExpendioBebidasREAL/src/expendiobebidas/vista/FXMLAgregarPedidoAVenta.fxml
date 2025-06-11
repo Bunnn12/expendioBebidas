@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLAgregarPedidoAVentaController">
+   <children>
+      <Label layoutX="304.0" layoutY="50.0" text="LISTA DE PEDIDOS" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="24.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cbPedidos" layoutX="46.0" layoutY="207.0" prefHeight="28.0" prefWidth="184.0" />
+      <Label layoutX="47.0" layoutY="170.0" text="Seleccione un pedido:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="17.0" />
+         </font></Label>
+      <TableView fx:id="tvListaPedidos" layoutX="285.0" layoutY="134.0" prefHeight="273.0" prefWidth="473.0">
+        <columns>
+          <TableColumn fx:id="colNombreProd" prefWidth="210.0" text="Nombre" />
+          <TableColumn fx:id="colPrecio" prefWidth="131.0" text="Precio" />
+            <TableColumn fx:id="colCantidad" prefWidth="131.0" text="Cantidad" />
+        </columns>
+      </TableView>
+      <Button layoutX="593.0" layoutY="435.0" mnemonicParsing="false" onAction="#clicAgregarPedidoSelec" prefHeight="40.0" prefWidth="165.0" style="-fx-background-radius: 18; -fx-background-color: #065290;" text="Agregar pedido" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font></Button>
+      <ImageView fitHeight="125.0" fitWidth="201.0" layoutX="567.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image></ImageView>
+      <Button alignment="BOTTOM_CENTER" layoutX="21.0" layoutY="24.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="40.0" prefWidth="165.0" style="-fx-background-color: #ffffff; -fx-background-radius: 18;" text="REGRESAR" textAlignment="CENTER" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/anteriorIcono.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+   </children>
+</AnchorPane>

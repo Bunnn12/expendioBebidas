@@ -10,6 +10,7 @@ package expendiobebidas.modelo.dao.pojo;
  */
 public class ProductoElegidoVenta {
     
+    private int idProducto;
     private String nombreProducto;
     private String descripcion;
     private int cantidad;
@@ -24,6 +25,23 @@ public class ProductoElegidoVenta {
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
         this.subtotal = cantidad * precioUnitario;
+    }
+    
+    public ProductoElegidoVenta(int idProducto,String nombreProducto, String descripcion, int cantidad, double precioUnitario) {
+        this.idProducto = idProducto;
+        this.nombreProducto = nombreProducto;
+        this.descripcion = descripcion;
+        this.cantidad = cantidad;
+        this.precioUnitario = precioUnitario;
+        this.subtotal = cantidad * precioUnitario;
+    }
+    
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
     }
 
     public String getNombreProducto() {
