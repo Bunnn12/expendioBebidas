@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLProductosConStockMinimoController">
-    
+<AnchorPane id="AnchorPane" prefHeight="544.0" prefWidth="908.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLProductosStockMinimoController">
+   <children>
+      <ImageView fitHeight="161.0" fitWidth="332.0" layoutX="302.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lbTitulo" layoutX="163.0" layoutY="198.0" text="PRODUCTO(S) CON STOCK MÍNIMO" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="33.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvProductosStockMinimo" layoutX="145.0" layoutY="279.0" prefHeight="152.0" prefWidth="618.0">
+        <columns>
+          <TableColumn fx:id="colIdProducto" prefWidth="127.0" text="ID Producto" />
+          <TableColumn fx:id="colNombreProducto" prefWidth="227.0" text="Nombre del producto" />
+            <TableColumn fx:id="colStockMinimo" prefWidth="132.0" text="Stock Mínimo" />
+            <TableColumn fx:id="colStockActual" prefWidth="132.0" text="Stock Actual" />
+        </columns>
+      </TableView>
+   </children>
 </AnchorPane>
