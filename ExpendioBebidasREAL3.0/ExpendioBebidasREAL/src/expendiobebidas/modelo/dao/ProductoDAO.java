@@ -73,7 +73,7 @@ public class ProductoDAO {
         }
         return productoMasVendido;
     }
-    
+   /* 
     public static Producto obtenerProductoMenosVendido() throws SQLException {
         List<Producto> lista = new ArrayList<>();
         Connection conexionBD = Conexion.abrirConexion();
@@ -109,7 +109,7 @@ public class ProductoDAO {
     
         return lista;
     }
-
+*/
     public static List<Producto> obtenerProductosNoVendidos(int idCliente) throws SQLException {
         List<Producto> productos = new ArrayList<>();
         Connection conexionBD = Conexion.abrirConexion();
@@ -210,5 +210,37 @@ public class ProductoDAO {
 
     return productos;
 }
+    public static List<Producto> obtenerProductosPorProveedor(int idProveedor) throws SQLException {
+    List<Producto> productos = new ArrayList<>();
+    Connection conexionBD = Conexion.abrirConexion();
+
+    if (conexionBD != null) {
+        String consulta = "SELECT idProducto, nombreProducto, precio, descripcion, stockActual, stockMinimo " +
+                          "FROM producto WHERE idProveedor = ?";
+        PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+        sentencia.setInt(1, idProveedor);
+        ResultSet resultado = sentencia.executeQuery();
+
+        while (resultado.next()) {
+            Producto producto = new Producto();
+            producto.setIdProducto(resultado.getInt("idProducto"));
+            producto.setNombreProducto(resultado.getString("nombreProducto"));
+            producto.setPrecio(resultado.getDouble("precio"));
+            producto.setDescripcion(resultado.getString("descripcion"));
+            producto.setStockActual(resultado.getInt("stockActual"));
+            producto.setStockMinimo(resultado.getInt("stockMinimo"));
+            productos.add(producto);
+        }
+
+        resultado.close();
+        sentencia.close();
+        conexionBD.close();
+    } else {
+        throw new SQLException("Sin conexión con la base de datos");
+    }
+
+    return productos;
+}
+
 
 }

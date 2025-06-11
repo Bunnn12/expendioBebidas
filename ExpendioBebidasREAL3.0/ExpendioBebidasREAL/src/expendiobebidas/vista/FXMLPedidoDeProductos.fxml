@@ -37,7 +37,7 @@
             <Font name="Arial Rounded MT Bold" size="25.0" />
          </font>
       </Label>
-      <TableView fx:id="tvProveedores" layoutX="59.0" layoutY="209.0" onMouseClicked="#seleccionarProveedor" prefHeight="226.0" prefWidth="1138.0">
+      <TableView fx:id="tvProveedores" layoutX="59.0" layoutY="209.0" onMouseClicked="#seleccionarProveedor" prefHeight="148.0" prefWidth="1138.0">
          <columns>
             <TableColumn fx:id="colRazonSocial" prefWidth="271.0" text="Razón Social" />
             <TableColumn fx:id="colTelefono" prefWidth="258.0" text="Teléfono" />
@@ -50,53 +50,55 @@
             <Font name="Arial Rounded MT Bold" size="15.0" />
          </font>
       </Label>
-      <TableView fx:id="tvProductosStockMinimo" layoutX="60.0" layoutY="512.0" prefHeight="262.0" prefWidth="345.0">
+      <TableView fx:id="tvProductosStockMinimo" layoutX="27.0" layoutY="512.0" prefHeight="262.0" prefWidth="401.0">
         <columns>
           <TableColumn fx:id="colNombreSM" prefWidth="90.0" text="Nombre" />
-          <TableColumn fx:id="colStockActualSM" prefWidth="153.0" text="Stock Actual" />
-            <TableColumn fx:id="colPrecioSM" prefWidth="101.0" text="Precio" />
+          <TableColumn fx:id="colStockActualSM" prefWidth="110.0" text="Stock Actual" />
+            <TableColumn fx:id="colStockMinimoPSM" prefWidth="113.0" text="Stock Minimo" />
+            <TableColumn fx:id="colPrecioSM" prefWidth="87.0" text="Precio" />
         </columns>
       </TableView>
-      <TableView fx:id="tvTodosProductos" layoutX="458.0" layoutY="512.0" prefHeight="262.0" prefWidth="345.0">
+      <TableView fx:id="tvTodosProductos" layoutX="446.0" layoutY="512.0" prefHeight="262.0" prefWidth="427.0">
         <columns>
           <TableColumn fx:id="colNombreT" prefWidth="123.0" text="Nombre" />
-          <TableColumn fx:id="colStockActualT" prefWidth="114.0" text="Stock Actual" />
-            <TableColumn fx:id="colPrecioT" prefWidth="107.0" text="Precio" />
+          <TableColumn fx:id="colStockActualT" prefWidth="95.0" text="Stock Actual" />
+            <TableColumn fx:id="colStockMinimoT" prefWidth="121.0" text="Stock Minimo" />
+            <TableColumn fx:id="colPrecioT" prefWidth="87.0" text="Precio" />
         </columns>
       </TableView>
-      <Label layoutX="60.0" layoutY="469.0" text="Productos con stock mínimo" textFill="#065290">
+      <Label layoutX="166.0" layoutY="427.0" prefHeight="31.0" prefWidth="143.0" text="Lista de pedido" textFill="#065290">
          <font>
-            <Font name="Arial Rounded MT Bold" size="25.0" />
+            <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="504.0" layoutY="469.0" text="Todos los productos" textFill="#065290">
+      <Label layoutX="570.0" layoutY="431.0" text="Todos los productos" textFill="#065290">
          <font>
-            <Font name="Arial Rounded MT Bold" size="25.0" />
+            <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="890.0" layoutY="827.0" mnemonicParsing="false" onAction="#clicRealizarPedido" prefHeight="31.0" prefWidth="345.0" style="-fx-background-color: #065290; -fx-background-radius: ;" text="Realizar pedido" textFill="WHITE">
+      <Button layoutX="916.0" layoutY="826.0" mnemonicParsing="false" onAction="#clicRealizarPedido" prefHeight="36.0" prefWidth="300.0" style="-fx-background-color: #065290; -fx-background-radius: ;" text="Realizar pedido" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="19.0" />
          </font>
       </Button>
-      <Label layoutX="874.0" layoutY="469.0" text="Productos seleccionados" textFill="#065290">
+      <Label layoutX="908.0" layoutY="456.0" text="Productos seleccionados" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="25.0" />
          </font>
       </Label>
-      <TableView fx:id="tvProductosSeleccionados" layoutX="855.0" layoutY="512.0" prefHeight="262.0" prefWidth="345.0">
+      <TableView fx:id="tvProductosSeleccionados" layoutX="890.0" layoutY="512.0" prefHeight="262.0" prefWidth="345.0">
          <columns>
-            <TableColumn fx:id="colNombreS" prefWidth="123.0" text="Nombre" />
-            <TableColumn fx:id="colStockActualS" prefWidth="114.0" text="Stock Actual" />
-            <TableColumn fx:id="colPrecioS" prefWidth="107.0" text="Precio" />
+            <TableColumn fx:id="colNombrePedido" prefWidth="133.0" text="Nombre" />
+            <TableColumn fx:id="colPrecioPedido" prefWidth="100.0" text="Precio" />
+            <TableColumn fx:id="colCantidad" prefWidth="111.0" text="Cantidad" />
          </columns>
       </TableView>
-      <Label layoutX="181.0" layoutY="442.0" text="Seleccione un producto y de click en &quot;Agregar Producto&quot; para agregar ese producto a su lista de productos seleccionados">
+      <Label layoutX="47.0" layoutY="382.0" text="Seleccione un producto de la tabla de &quot;Todos los productos&quot; y de click en &quot;Agregar Producto&quot; para agregar ese producto a su lista de productos seleccionados">
          <font>
             <Font name="Arial Rounded MT Bold" size="15.0" />
          </font>
       </Label>
-      <Button layoutX="519.0" layoutY="787.0" mnemonicParsing="false" onAction="#clicAgregarProducto" prefHeight="40.0" prefWidth="223.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Agregar producto" textFill="#065290">
+      <Button layoutX="487.0" layoutY="826.0" mnemonicParsing="false" onAction="#clicAgregarProducto" prefHeight="36.0" prefWidth="345.0" style="-fx-background-color: #ffffff; -fx-background-radius: ;" text="Agregar producto" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -107,5 +109,26 @@
          </font>
       </Label>
       <TextField fx:id="tfBuscarProveedor" layoutX="237.0" layoutY="138.0" onKeyReleased="#buscarProveedorPorRazonSocial" prefHeight="31.0" prefWidth="618.0" promptText="Razón social" />
+      <TextField fx:id="tfBuscarProducto" layoutX="605.0" layoutY="466.0" onKeyReleased="#buscarProductoPorNombre" prefHeight="31.0" prefWidth="265.0" promptText="Nombre del producto" />
+      <Label layoutX="445.0" layoutY="471.0" text="Buscar producto:" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="466.0" prefHeight="31.0" prefWidth="345.0" text="Productos con stock debajo del mínimo" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="890.0" layoutY="788.0" text="Precio total:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbPrecioPedido" layoutX="1003.0" layoutY="788.0">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

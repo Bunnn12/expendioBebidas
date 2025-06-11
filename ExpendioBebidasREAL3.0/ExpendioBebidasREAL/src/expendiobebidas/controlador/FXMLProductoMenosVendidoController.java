@@ -35,7 +35,7 @@ import javafx.stage.Stage;
  * FXML Controller class
  *
  * @author rodri
- */
+ *//*
 public class FXMLProductoMenosVendidoController implements Initializable {
 
     @FXML
@@ -53,7 +53,7 @@ public class FXMLProductoMenosVendidoController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    @Override
+    /*@Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarProductoMenosVendidoTabla();
@@ -64,7 +64,7 @@ public class FXMLProductoMenosVendidoController implements Initializable {
         colNombreProducto.setCellValueFactory(new PropertyValueFactory("nombreProducto"));
         colTotal.setCellValueFactory(new PropertyValueFactory("totalVendido"));
     }
-       
+    /*   
     private void cargarProductoMenosVendidoTabla() {
         try {
             productoMenosVendido = FXCollections.observableArrayList();
@@ -80,8 +80,7 @@ public class FXMLProductoMenosVendidoController implements Initializable {
             cerrarVentana();
         }
     }
-
-    private void cerrarVentana() {
+     private void cerrarVentana() {
         ((Stage) tvProductoMenosVendido.getScene().getWindow()).close();
     }
 
@@ -90,3 +89,4 @@ public class FXMLProductoMenosVendidoController implements Initializable {
         cerrarVentana();
     }
 }
+*/
