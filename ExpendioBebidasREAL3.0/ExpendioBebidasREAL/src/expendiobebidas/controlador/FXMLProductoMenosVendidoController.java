@@ -49,6 +49,8 @@ public class FXMLProductoMenosVendidoController implements Initializable {
     ObservableList<Producto> productoMenosVendido;
     @FXML
     private Label lbTitulo;
+
+    ObservableList<Producto> listaProductos;
     
     /**
      * Initializes the controller class.
@@ -67,15 +69,12 @@ public class FXMLProductoMenosVendidoController implements Initializable {
     /*   
     private void cargarProductoMenosVendidoTabla() {
         try {
-            productoMenosVendido = FXCollections.observableArrayList();
-            Producto producto = ProductoDAO.obtenerProductoMenosVendido();  
-            if (producto != null) {
-                productoMenosVendido.add(producto);
-                tvProductoMenosVendido.setItems(productoMenosVendido);
-            }
+            List<Producto> productos = ProductoDAO.obtenerProductosMenosVendidos();
+            listaProductos = FXCollections.observableArrayList(productos);
+            tvProductoMenosVendido.setItems(listaProductos);
         } catch (SQLException e) {
             Utilidad.mostrarAlertaSimple(
-                Alert.AlertType.ERROR,"Error al cargar", "Lo sentimos, por el momento no se puede cargar la información del producto más vendido. Por favor, inténtelo más tarde."
+                Alert.AlertType.ERROR,"Error al cargar", "Lo sentimos, por el momento no se puede cargar la información del producto. Por favor, inténtelo más tarde."
             );
             cerrarVentana();
         }

@@ -45,7 +45,7 @@ public class FXMLPedidoDeClienteController implements Initializable {
     @FXML
     private TableColumn colNombreTP;
     @FXML
-    private TableColumn colPrecioTP;
+    private TableColumn <Producto, String> colPrecioTP;
     @FXML
     private TableColumn<ProductoPedido, String> colNombrePedido;
     @FXML
@@ -91,9 +91,10 @@ public class FXMLPedidoDeClienteController implements Initializable {
     
      private void configurarTablaTodosProductos(){
         colNombreTP.setCellValueFactory(new PropertyValueFactory("nombreProducto"));
-        colPrecioTP.setCellValueFactory(new PropertyValueFactory("precio"));
-     }
-       private void cargarInformacionTablaProductos(){
+        colPrecioTP.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPrecioConGananciaDosDecimales()));
+    }
+      
+    private void cargarInformacionTablaProductos(){
         try{
             productos = FXCollections.observableArrayList();
             List<Producto> productosDAO = ProductoDAO.obtenerTodosLosProductos();
@@ -104,61 +105,62 @@ public class FXMLPedidoDeClienteController implements Initializable {
             cerrarVentana();
         }    
     }
-       private void cerrarVentana(){
+       
+    private void cerrarVentana(){
            ((Stage) tvProductosPedido.getScene().getWindow()).close();
     }
        
-       private void actualizarTotal() {
+    private void actualizarTotal() {
         double total = productosPedido.stream()
-        .mapToDouble(pp -> pp.getProducto().getPrecio() * pp.getCantidad())
+        .mapToDouble(pp -> pp.getProducto().getPrecioConGanancia()* pp.getCantidad())
         .sum();
         lbPrecioPedido.setText(" $" + String.format("%.2f", total));
-}
+    }
 
-       private void configurarTablaProductosPedido() {
-    colNombrePedido.setCellValueFactory(cellData -> 
-        new SimpleStringProperty(cellData.getValue().getProducto().getNombreProducto())
-    );
-    colCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-    colPrecioPedido.setCellValueFactory(cellData -> 
+    private void configurarTablaProductosPedido() {
+        colNombrePedido.setCellValueFactory(cellData -> 
+        new SimpleStringProperty(cellData.getValue().getProducto().getNombreProducto()));
+        colCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+        colPrecioPedido.setCellValueFactory(cellData -> 
         new SimpleStringProperty(
             String.format("%.2f", 
-                cellData.getValue().getProducto().getPrecio() * cellData.getValue().getCantidad()
+                cellData.getValue().getProducto().getPrecioConGanancia()* cellData.getValue().getCantidad()
             )
         )
-    );
-}
+        );
+    }
 
 
     @FXML
     private void clicAgregarProducto(ActionEvent event) {
          Producto seleccionado = tvTodosProductos.getSelectionModel().getSelectedItem();
-    if (seleccionado != null) {
-        ProductoPedido encontrado = null;
-        for (ProductoPedido pp : productosPedido) {
-            if (pp.getProducto().getIdProducto() == seleccionado.getIdProducto()) {
-                encontrado = pp;
-                break;
+        if (seleccionado != null) {
+            ProductoPedido encontrado = null;
+            for (ProductoPedido pp : productosPedido) {
+                if (pp.getProducto().getIdProducto() == seleccionado.getIdProducto()) {
+                    encontrado = pp;
+                    break;
+                }
             }
-        }
 
-        if (encontrado != null) {
-            encontrado.incrementarCantidad();
+            if (encontrado != null) {
+                encontrado.incrementarCantidad();
+            } else {
+                productosPedido.add(new ProductoPedido(seleccionado));
+            }
+            tvProductosPedido.setItems(productosPedido);
+            tvProductosPedido.refresh();
+            actualizarTotal();
         } else {
-            productosPedido.add(new ProductoPedido(seleccionado));
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Selección requerida", "Debes seleccionar un producto para agregarlo");
         }
-        tvProductosPedido.setItems(productosPedido);
-        tvProductosPedido.refresh();
-        actualizarTotal();
-    } else {
-        Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Selección requerida", "Debes seleccionar un producto para agregarlo");
     }
-    }
+    
      private void configurarTablaClientes(){
-    colRazonSocial.setCellValueFactory(new PropertyValueFactory("razonSocial"));
-    colTelefono.setCellValueFactory(new PropertyValueFactory("telefono"));
-    colCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
-    colDireccion.setCellValueFactory(new PropertyValueFactory("direccion"));
+        colRazonSocial.setCellValueFactory(new PropertyValueFactory("razonSocial"));
+        colTelefono.setCellValueFactory(new PropertyValueFactory("telefono"));
+        colCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
+        colDireccion.setCellValueFactory(new PropertyValueFactory("direccion"));
     }
 
     private void cargarClientes(){
@@ -176,38 +178,38 @@ public class FXMLPedidoDeClienteController implements Initializable {
     @FXML
     private void clicRealizarPedido(ActionEvent event) {
         System.out.println("ID cliente seleccionado: " + (clienteSeleccionado != null ? clienteSeleccionado.getIdCliente() : "null"));
-         if (clienteSeleccionado == null) {
-        Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, 
-            "Cliente no seleccionado", 
-            "Por favor selecciona un cliente antes de realizar el pedido.");
-        return;
-    }
+        if (clienteSeleccionado == null) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, 
+                "Cliente no seleccionado", 
+                "Por favor selecciona un cliente antes de realizar el pedido.");
+            return;
+        }   
 
-    if (productosPedido.isEmpty()) {
-        Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, 
-            "Sin productos", 
-            "Agrega al menos un producto al pedido.");
-        return;
-    }
-
-    try {
-        boolean pedidoRealizado = PedidoDAO.insertarPedidoDeCliente(clienteSeleccionado.getIdCliente(), productosPedido);
-        if (pedidoRealizado) {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.INFORMATION, 
-                "Pedido realizado", 
-                "El pedido se registró exitosamente.");
-            cerrarVentana();
-        } else {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, 
-                "Error al registrar", 
-                "No se pudo registrar el pedido. Intenta más tarde.");
+        if (productosPedido.isEmpty()) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, 
+                "Sin productos", 
+                "Agrega al menos un producto al pedido.");
+            return;
         }
-    } catch (SQLException ex) {
-        Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, 
-            "Error de BD", 
-            "Hubo un error al guardar el pedido: " + ex.getMessage());
-        ex.printStackTrace();
-    }
+
+        try {
+            boolean pedidoRealizado = PedidoDAO.insertarPedidoDeCliente(clienteSeleccionado.getIdCliente(), productosPedido);
+            if (pedidoRealizado) {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.INFORMATION, 
+                    "Pedido realizado", 
+                    "El pedido se registró exitosamente.");
+                cerrarVentana();
+            } else {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, 
+                    "Error al registrar", 
+                    "No se pudo registrar el pedido. Intenta más tarde.");
+            }
+        } catch (SQLException ex) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, 
+                "Error de BD", 
+                "Hubo un error al guardar el pedido: " + ex.getMessage());
+            ex.printStackTrace();
+        }
        
     }
 
@@ -219,13 +221,13 @@ public class FXMLPedidoDeClienteController implements Initializable {
     @FXML
     private void buscarProductoPorNombre(KeyEvent event) {
         String texto = tfBuscarProducto.getText();
-    try {
-        List<Producto> productos = ProductoDAO.buscarProductoPorNombre(texto);
-        ObservableList<Producto> productosObservable = FXCollections.observableArrayList(productos);
-        tvTodosProductos.setItems(productosObservable);
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
+        try {
+            List<Producto> productos = ProductoDAO.buscarProductoPorNombre(texto);
+            ObservableList<Producto> productosObservable = FXCollections.observableArrayList(productos);
+            tvTodosProductos.setItems(productosObservable);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -249,11 +251,11 @@ public class FXMLPedidoDeClienteController implements Initializable {
 
     @FXML
     private void seleccionarCliente(MouseEvent event) {
-        Cliente clienteSeleccionado = tvClientes.getSelectionModel().getSelectedItem();
+        clienteSeleccionado = tvClientes.getSelectionModel().getSelectedItem();
         if (clienteSeleccionado != null) {
-        lbClienteSeleccionado.setText(clienteSeleccionado.getRazonSocial());
+            lbClienteSeleccionado.setText(clienteSeleccionado.getRazonSocial());
         } else {
-        lbClienteSeleccionado.setText("");  // Limpia el label si no hay selección
+            lbClienteSeleccionado.setText("");  // Limpia el label si no hay selección
         }
     }
     

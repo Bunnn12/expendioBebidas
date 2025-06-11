@@ -7,16 +7,21 @@ package expendiobebidas.controlador;
 import expendiobebidas.ExpendioBebidas;
 import expendiobebidas.modelo.dao.ProductoDAO;
 import expendiobebidas.modelo.dao.PromocionDAO;
+import expendiobebidas.modelo.dao.VentaDAO;
 import expendiobebidas.modelo.dao.pojo.Cliente;
 import expendiobebidas.modelo.dao.pojo.Producto;
 import expendiobebidas.modelo.dao.pojo.ProductoElegidoVenta;
+import expendiobebidas.modelo.dao.pojo.ProductoPedido;
 import expendiobebidas.modelo.dao.pojo.Promocion;
+import expendiobebidas.modelo.dao.pojo.Venta;
 import expendiobebidas.utilidades.Utilidad;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,6 +33,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -35,6 +41,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -88,6 +95,10 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
     private List<Promocion> promocionesActivasCliente;
     @FXML
     private Button btnIdQuitarProducto;
+    @FXML
+    private Label lbFecha;
+    @FXML
+    private TextField tfFolioFactura;
 
     /**
      * Initializes the controller class.
@@ -98,6 +109,7 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
         configurarTablaProductosElegidos();
         configurarTablaPromociones();
         cargarProductosTabla();
+        cargarFechaDeVenta();
     }    
     
     public void inicializarInformacion(Cliente clienteElegido){
@@ -110,6 +122,11 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
         if(clienteElegido != null){
             lbNombreCliente.setText(clienteElegido.toString());
         }
+    }
+    
+    private void cargarFechaDeVenta(){
+        LocalDate fechaActual = LocalDate.now();
+        lbFecha.setText(fechaActual.toString());
     }
     
     private void configurarTablaProductos() {
@@ -166,8 +183,38 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
         } else {
             Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Producto no seleccionado", "Debes seleccionar un producto para agregar.");
         }
-    }
+    }  
     
+    private void agregarProductosDePedido(List<ProductoPedido> productosPedido) {
+        if (productosPedido == null || productosPedido.isEmpty()) {
+            return;
+        }
+        
+       for (ProductoPedido pp : productosPedido) {
+            Producto producto = pp.getProducto();
+            // Buscar si ya está en la lista
+            boolean encontrado = false;
+            for (ProductoElegidoVenta pev : productosElegidos) {
+                if (pev.getIdProducto() == producto.getIdProducto()) {
+                    pev.setCantidad(pev.getCantidad() + pp.getCantidad());
+                    encontrado = true;
+                    break;
+                }
+            }
+            if (!encontrado) {
+                
+                productosElegidos.add(new ProductoElegidoVenta(
+                    producto.getIdProducto(),
+                    producto.getNombreProducto(),
+                    producto.getDescripcion(),
+                    pp.getCantidad(),
+                    producto.getPrecioConGanancia()
+                ));
+            }
+        }
+        tvProductosElegidos.refresh();
+        actualizarTotal();
+    }
     
     private void configurarTablaPromociones() {
         colNombreProdDesc.setCellValueFactory(new PropertyValueFactory<>("nombreProducto"));
@@ -230,7 +277,7 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
         }
 
         // Determinar si hay promoción activa para ese producto para el cliente
-        double precioUnitario = producto.getPrecioConGanancia(); // precio base con ganancia (sin descuento)
+        double precioUnitario = producto.getPrecioConGanancia();
         if (promocionesActivasCliente != null) {
             for (Promocion promo : promocionesActivasCliente) {
                 if (promo.getProducto() != null && promo.getProducto().getIdProducto() == idProducto) {
@@ -257,6 +304,7 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
             tvProductosElegidos.refresh();
         } else {
             ProductoElegidoVenta nuevoProductoElegido = new ProductoElegidoVenta(
+                producto.getIdProducto(),
                 producto.getNombreProducto(),
                 producto.getDescripcion(),
                 cantidad,
@@ -270,6 +318,42 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
     
     @FXML
     private void btnAgregarArticuloPedido(ActionEvent event) {
+        try {
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/expendiobebidas/vista/FXMLAgregarPedidoAVenta.fxml"));
+            Parent vista = loader.load();
+
+            FXMLAgregarPedidoAVentaController controller = loader.getController();
+
+            Stage escenario = new Stage();
+            escenario.setScene(new Scene(vista));
+            escenario.setTitle("Seleccionar Pedido");
+            escenario.initModality(Modality.APPLICATION_MODAL);
+            escenario.initOwner(tvProductos.getScene().getWindow());
+            escenario.showAndWait();
+
+            if (controller.getProductosSeleccionados() != null) {
+                agregarProductosDePedido(controller.getProductosSeleccionados());
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "No se pudo abrir el selector de pedidos");
+        }
+    }
+    
+    private void manejarSeleccionPedido(List<ProductoPedido> productosPedido) {
+        if (productosPedido != null && !productosPedido.isEmpty()) {
+            Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmacion.setTitle("Confirmar agregar pedido");
+            confirmacion.setHeaderText("¿Deseas agregar " + productosPedido.size() + " productos del pedido seleccionado?");
+            confirmacion.setContentText("Se agregarán a los productos actuales de la venta.");
+
+            Optional<ButtonType> resultado = confirmacion.showAndWait();
+            if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+                agregarProductosDePedido(productosPedido);
+            }
+        }
     }
     
     @FXML
@@ -309,6 +393,44 @@ public class FXMLRealizarVentaAClienteController implements Initializable {
     
     @FXML
     private void btnCobrar(ActionEvent event) {
+
+        if (productosElegidos.isEmpty()) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Venta vacía", "Debes agregar al menos un producto para realizar la venta.");
+            return;
+        }
+
+        // Validar folio de factura
+        String folioFactura = tfFolioFactura.getText().trim();
+
+        try {
+            Venta venta = new Venta();
+            venta.setFechaVenta(LocalDate.now().toString());
+            venta.setIdCliente(clienteElegido.getIdCliente());
+            venta.setFolioFactura(folioFactura.isEmpty() ? null : folioFactura);
+            List<ProductoElegidoVenta> productosVenta = new ArrayList<>(productosElegidos);
+
+            boolean exito = VentaDAO.registrarVenta(venta, productosVenta);
+
+            if (exito) {
+
+                // Limpiar campos para nueva venta
+                productosElegidos.clear();
+                lbTotal.setText("$ 0.00");
+                tfFolioFactura.clear();
+
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.INFORMATION, "Venta exitosa", "La venta se ha registrado correctamente.");
+
+                // Actualizar la lista de productos para reflejar cambios en stock
+                cargarProductosTabla();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (e.getMessage().contains("No hay suficiente stock")) {Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Stock insuficiente", e.getMessage());
+            } else {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error en base de datos", "Ocurrió un error al registrar la venta: " + e.getMessage());
+            }
+        }
     }   
 
     private void irBusquedaCliente(){

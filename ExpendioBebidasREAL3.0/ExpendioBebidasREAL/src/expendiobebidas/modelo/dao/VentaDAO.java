@@ -5,18 +5,125 @@
 package expendiobebidas.modelo.dao;
 
 import expendiobebidas.modelo.Conexion;
+import expendiobebidas.modelo.dao.pojo.ProductoElegidoVenta;
 import expendiobebidas.modelo.dao.pojo.Venta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author reino
  */
 public class VentaDAO {
+    
+    public static boolean registrarVenta(Venta venta, List<ProductoElegidoVenta> productos) throws SQLException {
+        Connection conexionBD = Conexion.abrirConexion();
+        if (conexionBD == null) {
+            throw new SQLException("Sin conexión a la base de datos");
+        }
+
+        try {
+            // Desactivar autocommit para manejar transacción
+            conexionBD.setAutoCommit(false);
+
+            // 1. Insertar en tabla venta
+            String sqlVenta = "INSERT INTO venta (fechaVenta, Cliente_idCliente, folioFactura) VALUES (?, ?, ?)";
+            PreparedStatement sentenciaVenta = conexionBD.prepareStatement(sqlVenta, PreparedStatement.RETURN_GENERATED_KEYS);
+            sentenciaVenta.setDate(1, java.sql.Date.valueOf(venta.getFechaVenta()));
+            sentenciaVenta.setInt(2, venta.getIdCliente());
+            sentenciaVenta.setString(3, venta.getFolioFactura());
+
+            int filasAfectadas = sentenciaVenta.executeUpdate();
+            if (filasAfectadas != 1) {
+                conexionBD.rollback();
+                return false;
+            }
+
+            // Obtener el ID de la venta recién insertada
+            ResultSet generatedKeys = sentenciaVenta.getGeneratedKeys();
+            int idVenta = 0;
+            if (generatedKeys.next()) {
+                idVenta = generatedKeys.getInt(1);
+            } else {
+                conexionBD.rollback();
+                return false;
+            }
+
+            // 2. Insertar detalles de venta
+            String sqlDetalle = "INSERT INTO detalleVenta (Venta_idVenta, Venta_Cliente_idCliente, Producto_idProducto, cantidadProducto, costoVenta) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement sentenciaDetalle = conexionBD.prepareStatement(sqlDetalle);
+
+            for (ProductoElegidoVenta producto : productos) {
+                sentenciaDetalle.setInt(1, idVenta);
+                sentenciaDetalle.setInt(2, venta.getIdCliente());
+                sentenciaDetalle.setInt(3, producto.getIdProducto());
+                sentenciaDetalle.setInt(4, producto.getCantidad());
+                sentenciaDetalle.setDouble(5, producto.getPrecioUnitario());
+                sentenciaDetalle.addBatch();
+            }
+
+            int[] resultados = sentenciaDetalle.executeBatch();
+            for (int resultado : resultados) {
+                if (resultado != PreparedStatement.SUCCESS_NO_INFO && resultado <= 0) {
+                    conexionBD.rollback();
+                    return false;
+                }
+            }
+
+            // 3. Actualizar stock en tabla producto
+            String sqlActualizarStock = "UPDATE producto SET stockActual = stockActual - ? WHERE idProducto = ?";
+            PreparedStatement sentenciaActualizarStock = conexionBD.prepareStatement(sqlActualizarStock);
+
+            for (ProductoElegidoVenta producto : productos) {
+                // Primero verificar que haya suficiente stock
+                int cantidadDisponible = verificarStockDisponible(conexionBD, producto.getIdProducto());
+                if (cantidadDisponible < producto.getCantidad()) {
+                    conexionBD.rollback();
+                    throw new SQLException("No hay suficiente stock para el producto: " + producto.getNombreProducto());
+                }
+
+                sentenciaActualizarStock.setInt(1, producto.getCantidad());
+                sentenciaActualizarStock.setInt(2, producto.getIdProducto());
+                sentenciaActualizarStock.addBatch();
+            }
+
+            resultados = sentenciaActualizarStock.executeBatch();
+            for (int resultado : resultados) {
+                if (resultado != PreparedStatement.SUCCESS_NO_INFO && resultado <= 0) {
+                    conexionBD.rollback();
+                    return false;
+                }
+            }
+
+            // Si todo salió bien, confirmar transacción
+            conexionBD.commit();
+            return true;
+
+        } catch (SQLException e) {
+            conexionBD.rollback();
+            throw e;
+        } finally {
+            conexionBD.setAutoCommit(true);
+            conexionBD.close();
+        }
+    }
+
+    private static int verificarStockDisponible(Connection conexion, int idProducto) throws SQLException {
+        String sql = "SELECT stockActual FROM producto WHERE idProducto = ?";
+        PreparedStatement sentencia = conexion.prepareStatement(sql);
+        sentencia.setInt(1, idProducto);
+        ResultSet resultado = sentencia.executeQuery();
+
+        if (resultado.next()) {
+            return resultado.getInt("stockActual");
+        }
+        return 0;
+    }
+    
     public static ArrayList<Venta> obtenerVentas() throws SQLException{
     ArrayList<Venta> ventas= new ArrayList<>();
     Connection conexionBD= Conexion.abrirConexion();

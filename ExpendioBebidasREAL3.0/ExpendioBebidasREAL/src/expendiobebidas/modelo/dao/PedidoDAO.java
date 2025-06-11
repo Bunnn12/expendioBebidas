@@ -4,6 +4,7 @@
  */
 package expendiobebidas.modelo.dao;
 import expendiobebidas.modelo.Conexion;
+import expendiobebidas.modelo.dao.pojo.Pedido;
 import expendiobebidas.modelo.dao.pojo.Producto;
 import expendiobebidas.modelo.dao.pojo.ProductoPedido;
 import java.sql.*;
@@ -17,6 +18,26 @@ import javafx.collections.ObservableList;
  * @author reino
  */
 public class PedidoDAO {
+    
+    public static ArrayList<Pedido> obtenerPedidos() throws SQLException{
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        Connection conexionBD = Conexion.abrirConexion();
+        if (conexionBD != null){
+            String consulta = "SELECT idPedidoCliente, fechaPedidoCliente, Cliente_idCliente FROM pedidoCliente";
+            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+            ResultSet resultado = sentencia.executeQuery();
+            while (resultado.next()){
+                pedidos.add(convertirRegistroPedidoCliente(resultado));
+            }
+            sentencia.close();
+            resultado.close();
+            conexionBD.close();
+        } else {
+            throw new SQLException("Sin conexión a la Base de Datos");
+        }
+        return pedidos;
+    }
+    
     public static boolean insertarPedidoDeCliente(int idCliente, List<ProductoPedido> productosPedido) throws SQLException {
         if (idCliente <= 0) {
             throw new IllegalArgumentException("El idCliente debe ser mayor que 0");
@@ -72,7 +93,6 @@ public class PedidoDAO {
    public static List<Producto> obtenerProductosDePedidosPorProveedor(int idProveedor) throws SQLException {
     List<Producto> productos = new ArrayList<>();
     Connection conn = Conexion.abrirConexion();
-
     if (conn != null) {
         String consulta = 
             "SELECT pr.idProducto, pr.nombreProducto, pr.precio, pr.stockActual, pr.stockMinimo " +
@@ -172,6 +192,58 @@ public static void generarPedidoPorProducto(int idProducto) throws SQLException 
 
     return exito;
 }
+    public static List<ProductoPedido> obtenerProductosDePedido(int idPedido, int idCliente) throws SQLException {
+        List<ProductoPedido> productosPedido = new ArrayList<>();
 
+        try (Connection conexionBD = Conexion.abrirConexion()) {
+            if (conexionBD == null) {
+                throw new SQLException("Sin conexión a la Base de Datos");
+            }
+
+            String sql = "SELECT dp.Producto_idProducto, dp.cantidadSolicitada, "
+                       + "p.nombreProducto, p.precio, p.descripcion, "
+                       + "p.stockMinimo, p.stockActual "
+                       + "FROM detallePedidoCliente dp "
+                       + "JOIN producto p ON dp.Producto_idProducto = p.idProducto "
+                       + "WHERE dp.PedidoCliente_idPedidoCliente = ? "
+                       + "AND dp.PedidoCliente_Cliente_idCliente = ?";
+
+            try (PreparedStatement ps = conexionBD.prepareStatement(sql)) {
+                ps.setInt(1, idPedido);
+                ps.setInt(2, idCliente);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Producto producto = new Producto();
+                        producto.setIdProducto(rs.getInt("Producto_idProducto"));
+                        producto.setNombreProducto(rs.getString("nombreProducto"));
+                        producto.setPrecio(rs.getDouble("precio"));
+                        producto.setDescripcion(rs.getString("descripcion"));
+                        producto.setStockMinimo(rs.getInt("stockMinimo"));
+                        producto.setStockActual(rs.getInt("stockActual"));
+
+                        ProductoPedido pp = new ProductoPedido();
+                        pp.setProducto(producto);
+                        pp.setCantidad(rs.getInt("cantidadSolicitada"));
+
+                        productosPedido.add(pp);
+                    }
+                }
+            }
+        }
+
+        return productosPedido;
+    }
+    
+    
+    private static Pedido convertirRegistroPedidoCliente(ResultSet resultado) throws SQLException{
+        
+        Pedido pedido = new Pedido();
+        pedido.setIdPedido(resultado.getInt("idPedidoCliente"));
+        pedido.setFechaPedido(resultado.getDate("fechaPedidoCliente").toString());
+        pedido.setIdCliente(resultado.getInt("Cliente_idCliente"));
+        return pedido;
+        
+    }
 
 }

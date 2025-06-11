@@ -18,124 +18,124 @@ import java.util.List;
  * @author reino
  */
 public class ProductoDAO {
-    
-    public static List<Producto> obtenerTodosLosProductos() throws SQLException{
+
+    public static List<Producto> obtenerTodosLosProductos() throws SQLException {
         List<Producto> productos = new ArrayList<>();
         Connection conexionBD = Conexion.abrirConexion();
-        if(conexionBD != null){
-            String consulta= "SELECT idProducto, nombreProducto, precio, descripcion FROM producto"; 
+        if (conexionBD != null) {
+            String consulta = "SELECT idProducto, nombreProducto, precio, descripcion FROM producto";
             PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
             ResultSet resultado = sentencia.executeQuery();
-            
-            while(resultado.next()){
-               Producto producto = convertirRegistroProductoBasico(resultado);
-               productos.add(producto);
+
+            while (resultado.next()) {
+                Producto producto = convertirRegistroProductoBasico(resultado);
+                productos.add(producto);
             }
-            
+
             resultado.close();
             sentencia.close();
             conexionBD.close();
-        }
-        else{
-             throw new SQLException("Sin conexion con la base de datos");
+        } else {
+            throw new SQLException("Sin conexion con la base de datos");
         }
         return productos;
     }
-    
-   public static Producto obtenerProductoMasVendido() throws SQLException{
+
+    public static Producto obtenerProductoMasVendido() throws SQLException {
         Producto productoMasVendido = null;
         Connection conexionBD = Conexion.abrirConexion();
-        if(conexionBD != null){
-            String consulta= "SELECT p.idProducto, p.nombreProducto, SUM(dv.cantidadProducto) AS totalVendido " +
-             "FROM producto p " +
-             "JOIN detalleVenta dv ON p.idProducto = dv.Producto_idProducto " +
-             "GROUP BY p.idProducto, p.nombreProducto " +
-             "HAVING SUM(dv.cantidadProducto) = ( " +
-             "    SELECT MAX(totalVendido) FROM ( " +
-             "        SELECT SUM(dv2.cantidadProducto) AS totalVendido " +
-             "        FROM producto p2 " +
-             "        JOIN detalleVenta dv2 ON p2.idProducto = dv2.Producto_idProducto " +
-             "        GROUP BY p2.idProducto, p2.nombreProducto " +
-             "    ) AS subquery " +
-             ")";
-            
+        if (conexionBD != null) {
+            String consulta = "SELECT p.idProducto, p.nombreProducto, SUM(dv.cantidadProducto) AS totalVendido " +
+                    "FROM producto p " +
+                    "JOIN detalleVenta dv ON p.idProducto = dv.Producto_idProducto " +
+                    "GROUP BY p.idProducto, p.nombreProducto " +
+                    "HAVING SUM(dv.cantidadProducto) = ( " +
+                    "    SELECT MAX(totalVendido) FROM ( " +
+                    "        SELECT SUM(dv2.cantidadProducto) AS totalVendido " +
+                    "        FROM producto p2 " +
+                    "        JOIN detalleVenta dv2 ON p2.idProducto = dv2.Producto_idProducto " +
+                    "        GROUP BY p2.idProducto, p2.nombreProducto " +
+                    "    ) AS subquery " +
+                    ")";
             PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
             ResultSet resultado = sentencia.executeQuery();
-            if(resultado.next()){
+            if (resultado.next()) {
                 productoMasVendido = convertirRegistroProducto(resultado);
             }
             resultado.close();
             sentencia.close();
             conexionBD.close();
-        }
-        else{
-             throw new SQLException("Sin conexion con la base de datos");
+        } else {
+            throw new SQLException("Sin conexion con la base de datos");
         }
         return productoMasVendido;
     }
-   /* 
-    public static Producto obtenerProductoMenosVendido() throws SQLException {
+
+    /*
+    public static List<Producto> obtenerProductoMenosVendido() throws SQLException {
         List<Producto> lista = new ArrayList<>();
         Connection conexionBD = Conexion.abrirConexion();
-    
+
         if (conexionBD != null) {
             String consulta =
-                "SELECT p.idProducto, p.nombreProducto, IFNULL(SUM(dv.cantidadProducto), 0) AS totalVendido " +
-                "FROM producto p " +
-                "LEFT JOIN detalleVenta dv ON p.idProducto = dv.Producto_idProducto " +
-                "GROUP BY p.idProducto, p.nombreProducto " +
-                "HAVING totalVendido = ( " +
-                "    SELECT MIN(totalVendidos) FROM ( " +
-                "        SELECT p2.idProducto, IFNULL(SUM(dv2.cantidadProducto), 0) AS totalVendidos " +
-                "        FROM producto p2 " +
-                "        LEFT JOIN detalleVenta dv2 ON p2.idProducto = dv2.Producto_idProducto " +
-                "        GROUP BY p2.idProducto " +
-                "    ) AS subconsulta " +
-                ")";
+                    "SELECT p.idProducto, p.nombreProducto, IFNULL(SUM(dv.cantidadProducto), 0) AS totalVendido " +
+                    "FROM producto p " +
+                    "LEFT JOIN detalleVenta dv ON p.idProducto = dv.Producto_idProducto " +
+                    "GROUP BY p.idProducto, p.nombreProducto " +
+                    "HAVING totalVendido = ( " +
+                    "    SELECT MIN(totalVendidos) FROM ( " +
+                    "        SELECT p2.idProducto, IFNULL(SUM(dv2.cantidadProducto), 0) AS totalVendidos " +
+                    "        FROM producto p2 " +
+                    "        LEFT JOIN detalleVenta dv2 ON p2.idProducto = dv2.Producto_idProducto " +
+                    "        GROUP BY p2.idProducto " +
+                    "    ) AS subconsulta " +
+                    ")";
             PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
             ResultSet resultado = sentencia.executeQuery();
-            
+
             while (resultado.next()) {
                 Producto producto = convertirRegistroProducto(resultado);
                 lista.add(producto);
             }
-            
+
             resultado.close();
             sentencia.close();
             conexionBD.close();
         } else {
             throw new SQLException("Sin conexión con la base de datos");
         }
-    
+
         return lista;
     }
-*/
+    */
+
     public static List<Producto> obtenerProductosNoVendidos(int idCliente) throws SQLException {
         List<Producto> productos = new ArrayList<>();
         Connection conexionBD = Conexion.abrirConexion();
         if (conexionBD != null) {
-        String consulta= 
-                "SELECT p.nombreProducto, p.descripcion, p.precio " +
-            "FROM producto p " +
-            "WHERE p.idProducto NOT IN ( " +
-            "    SELECT dv.Producto_idProducto " +
-            "    FROM detalleventa dv " +
-            "    WHERE dv.Venta_Cliente_idCliente = ? " +
-            ");";;
+            String consulta =
+                    "SELECT p.nombreProducto, p.descripcion, p.precio " +
+                    "FROM producto p " +
+                    "WHERE p.idProducto NOT IN ( " +
+                    "    SELECT dv.Producto_idProducto " +
+                    "    FROM detalleventa dv " +
+                    "    WHERE dv.Venta_Cliente_idCliente = ? " +
+                    ")";
+            PreparedStatement stmt = conexionBD.prepareStatement(consulta);
+            stmt.setInt(1, idCliente);
+            ResultSet rs = stmt.executeQuery();
 
-        PreparedStatement stmt = conexionBD.prepareStatement(consulta);
-        stmt.setInt(1, idCliente);
-        ResultSet rs = stmt.executeQuery();
-
-        while (rs.next()) {
-            productos.add(new Producto(
-                rs.getString("nombreProducto"),
-                rs.getString("descripcion"),
-                rs.getDouble("precio")
-            ));
-        }
-        conexionBD.close();
-        }else{
+            while (rs.next()) {
+                productos.add(new Producto(
+                        rs.getString("nombreProducto"),
+                        rs.getString("descripcion"),
+                        rs.getDouble("precio")
+                ));
+            }
+            rs.close();
+            stmt.close();
+            conexionBD.close();
+        } else {
             throw new SQLException("Sin conexión con la base de datos");
         }
         return productos;
@@ -144,12 +144,12 @@ public class ProductoDAO {
     public static List<Producto> obtenerProductosConStockMinimo() throws SQLException {
         List<Producto> lista = new ArrayList<>();
         Connection conexionBD = Conexion.abrirConexion();
-    
+
         if (conexionBD != null) {
             String consulta = "SELECT idProducto, nombreProducto, stockMinimo, stockActual FROM producto WHERE stockActual <= stockMinimo";
             PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
             ResultSet resultado = sentencia.executeQuery();
-        
+
             while (resultado.next()) {
                 Producto producto = new Producto();
                 producto.setIdProducto(resultado.getInt("idProducto"));
@@ -158,17 +158,17 @@ public class ProductoDAO {
                 producto.setStockActual(resultado.getInt("stockActual"));
                 lista.add(producto);
             }
-        
+
             resultado.close();
             sentencia.close();
             conexionBD.close();
         } else {
             throw new SQLException("Sin conexión con la base de datos");
         }
-    
+
         return lista;
     }
-    
+
     public static Producto convertirRegistroProductoBasico(ResultSet resultado) throws SQLException {
         Producto producto = new Producto();
         producto.setIdProducto(resultado.getInt("idProducto"));
@@ -177,70 +177,73 @@ public class ProductoDAO {
         producto.setDescripcion(resultado.getString("descripcion"));
         return producto;
     }
-    
-    public static Producto convertirRegistroProducto(ResultSet resultado) throws SQLException{
+
+    public static Producto convertirRegistroProducto(ResultSet resultado) throws SQLException {
         Producto producto = new Producto();
         producto.setIdProducto(resultado.getInt("idProducto"));
         producto.setNombreProducto(resultado.getString("nombreProducto"));
         producto.setTotalVendido(resultado.getInt("totalVendido"));
         return producto;
     }
+
     public static List<Producto> buscarProductoPorNombre(String nombre) throws SQLException {
-    List<Producto> productos = new ArrayList<>();
-    Connection conexionBD = Conexion.abrirConexion();
+        List<Producto> productos = new ArrayList<>();
+        Connection conexionBD = Conexion.abrirConexion();
 
-    if (conexionBD != null) {
-        String consulta = "SELECT idProducto, nombreProducto, precio, descripcion " +
-                          "FROM producto WHERE nombreProducto LIKE ?";
-        PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
-        sentencia.setString(1, "%" + nombre + "%");
-        ResultSet resultado = sentencia.executeQuery();
+        if (conexionBD != null) {
+            String consulta = "SELECT idProducto, nombreProducto, precio, descripcion " +
+                    "FROM producto WHERE nombreProducto LIKE ?";
+            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+            sentencia.setString(1, "%" + nombre + "%");
+            ResultSet resultado = sentencia.executeQuery();
 
-        while (resultado.next()) {
-            Producto producto = convertirRegistroProductoBasico(resultado);
-            productos.add(producto);
+            while (resultado.next()) {
+                Producto producto = convertirRegistroProductoBasico(resultado);
+                productos.add(producto);
+            }
+
+            resultado.close();
+            sentencia.close();
+            conexionBD.close();
+        } else {
+            throw new SQLException("Sin conexión con la base de datos");
         }
 
-        resultado.close();
-        sentencia.close();
-        conexionBD.close();
-    } else {
-        throw new SQLException("Sin conexión con la base de datos");
+        return productos;
     }
 
-    return productos;
-}
     public static List<Producto> obtenerProductosPorProveedor(int idProveedor) throws SQLException {
-    List<Producto> productos = new ArrayList<>();
-    Connection conexionBD = Conexion.abrirConexion();
+        List<Producto> productos = new ArrayList<>();
+        Connection conexionBD = Conexion.abrirConexion();
 
-    if (conexionBD != null) {
-        String consulta = "SELECT idProducto, nombreProducto, precio, descripcion, stockActual, stockMinimo " +
-                          "FROM producto WHERE idProveedor = ?";
-        PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
-        sentencia.setInt(1, idProveedor);
-        ResultSet resultado = sentencia.executeQuery();
+        if (conexionBD != null) {
+            String consulta = "SELECT idProducto, nombreProducto, precio, descripcion, stockActual, stockMinimo " +
+                    "FROM producto WHERE idProveedor = ?";
+            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+            sentencia.setInt(1, idProveedor);
+            ResultSet resultado = sentencia.executeQuery();
 
-        while (resultado.next()) {
-            Producto producto = new Producto();
-            producto.setIdProducto(resultado.getInt("idProducto"));
-            producto.setNombreProducto(resultado.getString("nombreProducto"));
-            producto.setPrecio(resultado.getDouble("precio"));
-            producto.setDescripcion(resultado.getString("descripcion"));
-            producto.setStockActual(resultado.getInt("stockActual"));
-            producto.setStockMinimo(resultado.getInt("stockMinimo"));
-            productos.add(producto);
+            while (resultado.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(resultado.getInt("idProducto"));
+                producto.setNombreProducto(resultado.getString("nombreProducto"));
+                producto.setPrecio(resultado.getDouble("precio"));
+                producto.setDescripcion(resultado.getString("descripcion"));
+                producto.setStockActual(resultado.getInt("stockActual"));
+                producto.setStockMinimo(resultado.getInt("stockMinimo"));
+                productos.add(producto);
+            }
+
+            resultado.close();
+            sentencia.close();
+            conexionBD.close();
+        } else {
+            throw new SQLException("Sin conexión con la base de datos");
         }
 
-        resultado.close();
-        sentencia.close();
-        conexionBD.close();
-    } else {
-        throw new SQLException("Sin conexión con la base de datos");
+        return productos;
     }
-
-    return productos;
 }
 
 
-}
+
