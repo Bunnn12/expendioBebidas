@@ -1,11 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLAdministrarPromocionesController">
-    
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLAdministrarPromocionesController">
+   <children>
+      <Label layoutX="420.0" layoutY="44.0" text="ADMINISTRADOR DE PROMOCIONES" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="31.0" />
+         </font>
+      </Label>
+      <Label layoutX="465.0" layoutY="108.0" text="Seleccione el cliente al que desea aplicar promoción:" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="259.0" layoutY="149.0" text="Buscar cliente:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="60.0" layoutY="387.0" text="Seleccione el producto al que desea aplicar promoción:" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="59.0" layoutY="433.0" text="Buscar producto:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="16.0" />
+         </font></Label>
+      <Button alignment="BOTTOM_CENTER" layoutX="30.0" layoutY="23.0" mnemonicParsing="false" onAction="#btnRegresar" prefHeight="58.0" prefWidth="161.0" style="-fx-background-color: #ffffff; -fx-background-radius: 18;" text="REGRESAR" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font></Button>
+      <Label layoutX="618.0" layoutY="474.0" text="Descripción:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="17.0" />
+         </font></Label>
+      <Label layoutX="624.0" layoutY="545.0" text="Descuento:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="17.0" />
+         </font></Label>
+      <Label layoutX="569.0" layoutY="615.0" text="Fecha de emisión:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="17.0" />
+         </font></Label>
+      <Label layoutX="531.0" layoutY="690.0" text="Fecha de vencimiento:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="17.0" />
+         </font></Label>
+      <TableView fx:id="tvClientes" layoutX="233.0" layoutY="187.0" onMouseClicked="#seleccionarCliente" prefHeight="170.0" prefWidth="911.0">
+        <columns>
+          <TableColumn fx:id="colRazonSocial" prefWidth="218.0" text="Razón Social" />
+          <TableColumn fx:id="colCorreo" prefWidth="209.0" text="Correo" />
+            <TableColumn fx:id="colTelefono" prefWidth="187.0" text="Teléfono" />
+            <TableColumn fx:id="colDireccion" prefWidth="296.0" text="Dirección" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tvProductos" layoutX="46.0" layoutY="476.0" onMouseClicked="#seleccionarProducto" prefHeight="299.0" prefWidth="467.0">
+        <columns>
+          <TableColumn fx:id="colNombre" prefWidth="159.0" text="Nombre" />
+          <TableColumn fx:id="colDescripcion" prefWidth="205.0" text="Descripción" />
+            <TableColumn fx:id="colPrecio" prefWidth="101.0" text="Precio" />
+        </columns>
+      </TableView>
+      <TextField fx:id="tfDescripcion" layoutX="729.0" layoutY="469.0" prefHeight="31.0" prefWidth="303.0" />
+      <TextField fx:id="tfDescuento" layoutX="729.0" layoutY="540.0" prefHeight="31.0" prefWidth="134.0" />
+      <TextField fx:id="tfBuscarProducto" layoutX="206.0" layoutY="427.0" onKeyReleased="#buscarProductoPorNombre" prefHeight="31.0" prefWidth="303.0" promptText="Nombre producto" />
+      <TextField fx:id="tfBuscarCliente" layoutX="399.0" layoutY="147.0" onKeyReleased="#buscarClientePorRazonSocial" prefHeight="31.0" prefWidth="584.0" promptText="Razon social" />
+      <DatePicker fx:id="dpFechaEmision" layoutX="729.0" layoutY="611.0" />
+      <DatePicker fx:id="dpFechaVencimiento" layoutX="729.0" layoutY="685.0" />
+      <Button layoutX="1081.0" layoutY="484.0" mnemonicParsing="false" onAction="#clicInsertar" prefHeight="47.0" prefWidth="161.0" style="-fx-background-color: #ffffff; -fx-background-radius: 18;" text="Insertar" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="37.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/agregar-usuario.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="1081.0" layoutY="571.0" mnemonicParsing="false" onAction="#clicModificar" prefHeight="47.0" prefWidth="161.0" style="-fx-background-color: #065290; -fx-background-radius: 18;" text="Modificar" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="47.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/editar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="1081.0" layoutY="654.0" mnemonicParsing="false" onAction="#clicEliminar" prefHeight="47.0" prefWidth="161.0" style="-fx-background-color: #ffffff; -fx-background-radius: 18;" text="Eliminar" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="37.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recurso/eliminar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="95.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/anteriorIcono.png" />
+         </image></ImageView>
+      <ImageView fitHeight="122.0" fitWidth="234.0" layoutX="1032.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recurso/logoBDExpendio.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lbErrorDescrip" layoutX="729.0" layoutY="509.0" />
+      <Label fx:id="lbErrorDescuento" layoutX="729.0" layoutY="575.0" />
+      <Label fx:id="lbErrorFechaEmi" layoutX="729.0" layoutY="654.0" />
+      <Label fx:id="lbErrorFechaVenci" layoutX="729.0" layoutY="726.0" />
+      <Label fx:id="lbErrorProducto" layoutX="828.0" layoutY="390.0" />
+      <Label fx:id="lbErrorCliente" layoutX="828.0" layoutY="417.0" />
+   </children>
 </AnchorPane>

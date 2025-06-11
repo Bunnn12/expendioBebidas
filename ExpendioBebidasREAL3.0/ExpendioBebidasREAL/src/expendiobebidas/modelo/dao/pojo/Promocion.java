@@ -15,6 +15,7 @@ public class Promocion {
     private String fechaEmision;
     private String fechaVencimiento;
     private Producto producto;
+    private Cliente cliente;
 
     public Promocion() {
     }
@@ -26,6 +27,16 @@ public class Promocion {
         this.fechaEmision = fechaEmision;
         this.fechaVencimiento = fechaVencimiento;
         this.producto = producto;
+    }
+    
+    public Promocion(int idPromocion, String descripcion, int descuento, String fechaEmision, String fechaVencimiento, Producto producto, Cliente cliente) {
+        this.idPromocion = idPromocion;
+        this.descripcion = descripcion;
+        this.descuento = descuento;
+        this.fechaEmision = fechaEmision;
+        this.fechaVencimiento = fechaVencimiento;
+        this.producto = producto;
+        this.cliente = cliente;
     }
 
     public int getIdPromocion() {
@@ -74,6 +85,14 @@ public class Promocion {
 
     public void setProducto(Producto producto) {
         this.producto = producto;
+    }
+    
+   public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
     
     public String getNombreProducto() {
