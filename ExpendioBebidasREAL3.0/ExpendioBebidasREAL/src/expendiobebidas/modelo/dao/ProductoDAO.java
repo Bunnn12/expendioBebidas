@@ -75,7 +75,7 @@ public class ProductoDAO {
     }
     
     public static Producto obtenerProductoMenosVendido() throws SQLException {
-        Producto productoMenosVendido = null;
+        List<Producto> lista = new ArrayList<>();
         Connection conexionBD = Conexion.abrirConexion();
     
         if (conexionBD != null) {
@@ -84,22 +84,30 @@ public class ProductoDAO {
                 "FROM producto p " +
                 "LEFT JOIN detalleVenta dv ON p.idProducto = dv.Producto_idProducto " +
                 "GROUP BY p.idProducto, p.nombreProducto " +
-                "ORDER BY totalVendido ASC " +
-                "LIMIT 1";
-            
+                "HAVING totalVendido = ( " +
+                "    SELECT MIN(totalVendidos) FROM ( " +
+                "        SELECT p2.idProducto, IFNULL(SUM(dv2.cantidadProducto), 0) AS totalVendidos " +
+                "        FROM producto p2 " +
+                "        LEFT JOIN detalleVenta dv2 ON p2.idProducto = dv2.Producto_idProducto " +
+                "        GROUP BY p2.idProducto " +
+                "    ) AS subconsulta " +
+                ")";
             PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
             ResultSet resultado = sentencia.executeQuery();
-            if (resultado.next()) {
-                productoMenosVendido = convertirRegistroProducto(resultado);
+            
+            while (resultado.next()) {
+                Producto producto = convertirRegistroProducto(resultado);
+                lista.add(producto);
             }
+            
             resultado.close();
             sentencia.close();
             conexionBD.close();
         } else {
             throw new SQLException("Sin conexión con la base de datos");
         }
-
-        return productoMenosVendido;
+    
+        return lista;
     }
 
     public static List<Producto> obtenerProductosNoVendidos(int idCliente) throws SQLException {
