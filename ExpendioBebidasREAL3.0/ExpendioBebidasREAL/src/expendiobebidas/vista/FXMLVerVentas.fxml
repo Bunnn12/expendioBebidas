@@ -40,7 +40,7 @@
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="31.0" layoutY="540.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="238.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Ventas por producto" textFill="WHITE">
+      <Button layoutX="31.0" layoutY="540.0" mnemonicParsing="false" onAction="#clicVentasPorProducto" prefHeight="50.0" prefWidth="238.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Ventas por producto" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
