@@ -44,7 +44,7 @@ public class FXMLVerVentasController implements Initializable {
 
     @FXML
     private TableView<Venta> tvVentas;
-  
+    private TableColumn<Venta, String> colProducto;
     private ObservableList<Venta> ventas;
     @FXML
     private TableColumn colSemana;
@@ -114,17 +114,27 @@ public class FXMLVerVentasController implements Initializable {
     }
 
     private void cargarVentasPorProductoTabla() {
-        try {
-            ventas = FXCollections.observableArrayList();
-            ArrayList<Venta> ventasDAO = VentaDAO.obtenerResumenVentasPorProducto();
-            ventas.addAll(ventasDAO);
-            tvVentas.setItems(ventas);
-            configurarTablaProducto(); // solo columnas necesarias
-        } catch (Exception e) {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error al cargar", "No se pudieron cargar las ventas por producto.");
-            cerrarVentana();
+    try {
+        ventas = FXCollections.observableArrayList();
+        ArrayList<Venta> ventasDAO = VentaDAO.obtenerResumenVentasPorProducto();
+        ventas.addAll(ventasDAO);
+        tvVentas.setItems(ventas);
+
+        boolean existeColumnaProducto = tvVentas.getColumns().stream()
+            .anyMatch(col -> "Producto".equals(col.getText()));
+
+        if (!existeColumnaProducto) {
+            TableColumn<Venta, String> colProducto = new TableColumn<>("Producto");
+            colProducto.setCellValueFactory(new PropertyValueFactory<>("nombreProducto"));
+            tvVentas.getColumns().add(0, colProducto);
         }
+
+    } catch (Exception e) {
+        Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error al cargar", "No se pudieron cargar las ventas por producto.");
+        cerrarVentana();
     }
+}
+
     
     private void cerrarVentana(){
         ((Stage) tvVentas.getScene().getWindow()).close();
@@ -181,15 +191,8 @@ public class FXMLVerVentasController implements Initializable {
     }
     }
 
-    private void agregarColumnaProducto() {
-        if (colProducto == null) {
-            colProducto = new TableColumn<>("Producto");
-            colProducto.setCellValueFactory(new PropertyValueFactory<>("nombreProducto"));
-        }
-
-        if (!tvVentas.getColumns().contains(colProducto)) {
-            tvVentas.getColumns().add(0, colProducto); // Puedes ajustar el índice si quieres otro orden
-        }
-    }    
-
 }
+
+
+
+
