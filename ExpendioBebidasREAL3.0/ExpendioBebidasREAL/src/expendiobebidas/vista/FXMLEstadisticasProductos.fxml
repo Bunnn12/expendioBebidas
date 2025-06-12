@@ -10,9 +10,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="850.0" prefWidth="1100.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLEstadisticasProductosController">
    <children>
-      <ImageView fitHeight="395.0" fitWidth="564.0" layoutX="552.0" layoutY="447.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="462.0" fitWidth="473.0" layoutX="46.0" layoutY="362.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../recurso/estadisticaGIF.gif" />
+            <Image url="@../recurso/estadisticas2.png" />
          </image>
       </ImageView>
       <Button layoutX="277.0" layoutY="442.0" mnemonicParsing="false" onAction="#clicProductoMasVendido" prefHeight="68.0" prefWidth="550.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="Ver producto más vendido" textFill="#065290">
@@ -27,7 +27,7 @@
          <font>
             <Font name="Arial Rounded MT Bold" size="33.0" />
          </font></Label>
-      <ImageView fitHeight="187.0" fitWidth="294.0" layoutX="414.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="187.0" fitWidth="294.0" layoutX="414.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../recurso/logoBDExpendio.png" />
          </image>
@@ -46,7 +46,7 @@
             <Font name="Arial Rounded MT Bold" size="20.0" />
          </font>
       </Button>
-      <Label layoutX="420.0" layoutY="292.0" text="Haz click sobre la opcion deseada">
+      <Label layoutX="421.0" layoutY="283.0" text="Haz click sobre la opcion deseada">
          <font>
             <Font name="Arial Black" size="15.0" />
          </font>
