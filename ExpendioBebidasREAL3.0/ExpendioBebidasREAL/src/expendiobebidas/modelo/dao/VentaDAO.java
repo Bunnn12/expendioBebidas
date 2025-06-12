@@ -270,5 +270,46 @@ public static ArrayList<Venta> obtenerResumenVentasPorSemana() throws SQLExcepti
         resumenVenta.setTotalRecaudado(resultado.getDouble("totalRecaudado")); 
             return resumenVenta;
     }
-  
+
+    public static ArrayList<Venta> obtenerResumenVentasPorProducto() throws SQLException {
+        ArrayList<Venta> resumen = new ArrayList<>();
+        Connection conexionBD = Conexion.abrirConexion();
+
+        if (conexionBD != null) {
+            String consulta = 
+                "SELECT " +
+                "p.idProducto, " +
+                "p.nombreProducto, " +
+                "SUM(dv.cantidadProducto) AS totalVentas, " +
+                "SUM(dv.cantidadProducto * dv.costoVenta) AS totalRecaudado " +
+                "FROM detalleVenta dv " +
+                "JOIN producto p ON dv.Producto_idProducto = p.idProducto " +
+                "GROUP BY p.idProducto, p.nombreProducto " +
+                "ORDER BY totalVentas DESC";
+
+            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+            ResultSet resultado = sentencia.executeQuery();
+
+            while (resultado.next()) {
+                resumen.add(convertirRegistroVentasPorProducto(resultado));
+            }
+
+            resultado.close();
+            sentencia.close();
+            conexionBD.close();
+        } else {
+            throw new SQLException("Sin conexión a la base de datos");
+        }
+
+        return resumen;
+    }
+    
+    private static Venta convertirRegistroVentasPorProducto(ResultSet resultado) throws SQLException {
+        Venta resumenVenta = new Venta();
+        resumenVenta.setNombreProducto(resultado.getString("nombreProducto"));
+        resumenVenta.setTotalVentas(resultado.getInt("totalVentas"));
+        resumenVenta.setTotalRecaudado(resultado.getDouble("totalRecaudado"));
+        return resumenVenta;
+    }
+    
 }
