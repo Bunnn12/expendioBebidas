@@ -27,7 +27,6 @@ public class ExpendioBebidas extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
     try {
-            // Depuración: ver si la carga del FXML falla
             System.out.println("Cargando FXML...");
             Parent vista = FXMLLoader.load(getClass().getResource("/expendiobebidas/vista/FXMLInicioSesion.fxml"));
 

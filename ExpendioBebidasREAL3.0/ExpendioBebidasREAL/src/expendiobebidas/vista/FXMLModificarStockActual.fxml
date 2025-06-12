@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: #9ed4f1; -fx-border-color: #065290;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLModificarStockActualController">
+   <children>
+      <PasswordField fx:id="pfContrasenia" layoutX="212.0" layoutY="235.0" prefHeight="30.0" prefWidth="213.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </PasswordField>
+      <Label layoutX="74.0" layoutY="161.0" text="Stock actual:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="74.0" layoutY="201.0" text="Usuario:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="75.0" layoutY="242.0" text="Contraseña:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfStockActual" layoutX="212.0" layoutY="155.0" prefHeight="23.0" prefWidth="213.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Label fx:id="lbTitulo" layoutX="155.0" layoutY="26.0" prefHeight="43.0" prefWidth="192.0" text="¡ESPERA!" textAlignment="CENTER" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="39.0" layoutY="83.0" prefHeight="57.0" prefWidth="422.0" text="Para cambiar el stock actual de un producto, debe ser un administrador. Por favor, introduce tu usuario y contraseña para verificar que es un administrador." wrapText="true">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfUsuario" layoutX="212.0" layoutY="195.0" prefHeight="23.0" prefWidth="213.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Button layoutX="184.0" layoutY="293.0" mnemonicParsing="false" onAction="#clicGuardarStockActual" prefHeight="0.0" prefWidth="127.0" style="-fx-background-color: #065290; -fx-background-radius: 19;" text="Guardar" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

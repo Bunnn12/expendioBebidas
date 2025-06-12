@@ -6,12 +6,14 @@ package expendiobebidas.modelo.dao;
 
 import expendiobebidas.modelo.Conexion;
 import expendiobebidas.modelo.dao.pojo.Producto;
+import expendiobebidas.utilidades.Utilidad;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Alert;
 
 /***
  *
@@ -70,8 +72,89 @@ public class ProductoDAO {
         }
         return productoMasVendido;
     }
+    public static ArrayList<Producto> obtenerProductos() throws SQLException {
+        ArrayList<Producto> productos = new ArrayList();
+        Connection conexionBD = Conexion.abrirConexion();
+        if (conexionBD != null){
+            String consulta = "SELECT idProducto, nombreProducto, descripcion, stockMinimo, stockActual, precio FROM producto";
+            PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+            ResultSet resultado = sentencia.executeQuery();
+            while (resultado.next()){
+                productos.add(convertirRegistroProductoCompleto(resultado));
+            }
+            sentencia.close();
+            resultado.close();
+            conexionBD.close();
+        } else {
+            throw new SQLException("Sin conexión a la Base de Datos");
+        }
+        return productos;
+    }
 
-    /*
+    public static boolean insertarProducto(Producto producto) throws SQLException {
+        Connection conexionBD = Conexion.abrirConexion();
+        PreparedStatement sentencia = null;
+    
+        if (conexionBD != null) {
+            String consulta = "INSERT INTO producto (nombreProducto, descripcion, stockMinimo, stockActual, precio) VALUES (?, ?, ?, ?, ?)";
+            try {
+                sentencia = conexionBD.prepareStatement(consulta);
+                sentencia.setString(1, producto.getNombreProducto());
+                sentencia.setString(2, producto.getDescripcion());
+                sentencia.setInt(3, producto.getStockMinimo());
+                sentencia.setInt(4, producto.getStockActual());
+                sentencia.setDouble(5, producto.getPrecio());
+
+                int filasAfectadas = sentencia.executeUpdate();
+                return filasAfectadas > 0;
+            } finally {
+                if (sentencia != null) {
+                    sentencia.close();
+                }
+                conexionBD.close(); 
+            }
+        } else {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "No hay conexión con la base de datos");
+            return false;
+        }
+    }
+    public static boolean eliminarProducto(int idProducto) throws SQLException {
+        try (Connection conexionBD = Conexion.abrirConexion()) {
+            if (conexionBD != null) {
+                String consulta = "DELETE FROM producto WHERE idProducto = ?";
+                try (PreparedStatement sentencia = conexionBD.prepareStatement(consulta)) {
+                    sentencia.setInt(1, idProducto);
+                    int filasAfectadas = sentencia.executeUpdate();
+                    return filasAfectadas > 0;
+                }
+            } else {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "No hay conexión con la base de datos");
+                return false;
+            }
+        }
+    }
+    public static boolean actualizarProducto(Producto producto) throws SQLException {
+        try (Connection conexionBD = Conexion.abrirConexion()) {
+            if (conexionBD != null) {
+                String consulta = "UPDATE producto SET nombreProducto = ?, descripcion = ?, "
+                        + "stockMinimo  = ?, stockActual = ?, precio = ? WHERE idProducto = ?";
+                try (PreparedStatement sentencia = conexionBD.prepareStatement(consulta)) {
+                    sentencia.setString(1, producto.getNombreProducto());
+                    sentencia.setString(2, producto.getDescripcion());
+                    sentencia.setInt(3, producto.getStockMinimo());
+                    sentencia.setInt(4, producto.getStockActual());
+                    sentencia.setDouble(5, producto.getPrecio());
+                    sentencia.setInt(6, producto.getIdProducto());
+
+                    int filasAfectadas = sentencia.executeUpdate();
+                    return filasAfectadas > 0;
+                }
+            } else {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "No hay conexión con la base de datos");
+                return false;
+            }
+        }
+    }
     public static List<Producto> obtenerProductoMenosVendido() throws SQLException {
         List<Producto> lista = new ArrayList<>();
         Connection conexionBD = Conexion.abrirConexion();
@@ -107,7 +190,6 @@ public class ProductoDAO {
 
         return lista;
     }
-    */
 
     public static List<Producto> obtenerProductosNoVendidos(int idCliente) throws SQLException {
         List<Producto> productos = new ArrayList<>();
@@ -185,6 +267,17 @@ public class ProductoDAO {
         producto.setTotalVendido(resultado.getInt("totalVendido"));
         return producto;
     }
+    
+   public static Producto convertirRegistroProductoCompleto(ResultSet resultado) throws SQLException {
+    Producto producto = new Producto();
+    producto.setIdProducto(resultado.getInt("idProducto"));
+    producto.setNombreProducto(resultado.getString("nombreProducto"));
+    producto.setDescripcion(resultado.getString("descripcion"));
+    producto.setStockMinimo(resultado.getInt("stockMinimo"));
+    producto.setStockActual(resultado.getInt("stockActual"));
+    producto.setPrecio(resultado.getDouble("precio"));
+    return producto;
+}
 
     public static List<Producto> buscarProductoPorNombre(String nombre) throws SQLException {
         List<Producto> productos = new ArrayList<>();
