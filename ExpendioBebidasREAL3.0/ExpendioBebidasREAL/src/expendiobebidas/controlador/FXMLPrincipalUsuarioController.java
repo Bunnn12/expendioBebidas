@@ -93,7 +93,17 @@ public class FXMLPrincipalUsuarioController implements Initializable {
 
     @FXML
     private void clickProductosConStockMinimo(ActionEvent event) {
-        
+        try {
+            Stage escenarioAdmin = new Stage();
+            Parent vista = FXMLLoader.load(ExpendioBebidas.class.getResource("vista/FXMLProductosConStockMinimo.fxml"));
+            Scene escena = new Scene(vista);
+            escenarioAdmin.setScene(escena);
+            escenarioAdmin.setTitle("Productos con stock mínimo");
+            escenarioAdmin.initModality(Modality.APPLICATION_MODAL);
+            escenarioAdmin.showAndWait();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
