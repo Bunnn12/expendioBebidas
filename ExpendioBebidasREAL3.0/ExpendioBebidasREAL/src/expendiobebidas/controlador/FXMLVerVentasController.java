@@ -75,6 +75,7 @@ public class FXMLVerVentasController implements Initializable {
         colTotalVentas.setCellValueFactory(new PropertyValueFactory("totalVentas"));
         
     }
+    
     private void cargarVentasPorSemanaTabla(){
         try{
         ventas= FXCollections.observableArrayList();
@@ -100,16 +101,29 @@ public class FXMLVerVentasController implements Initializable {
         }     
     }
     
-    private void cargarVentasPorMesTabla(){
-        try{
-        ventas= FXCollections.observableArrayList();
-        ArrayList<Venta> ventasDAO = VentaDAO.obtenerResumenVentasPorMes();
-        ventas.addAll(ventasDAO);
-        tvVentas.setItems(ventas);
-        }catch(SQLException e){
+    private void cargarVentasPorMesTabla() {
+        try {
+            ventas= FXCollections.observableArrayList();
+            ArrayList<Venta> ventasDAO = VentaDAO.obtenerResumenVentasPorMes();
+            ventas.addAll(ventasDAO);
+            tvVentas.setItems(ventas);
+        } catch(SQLException e) {
             Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error al cargar", "Lo sentimos, por el momento no se puede cargar la información de las ventas, por favor intentélo más tarde");
             cerrarVentana();
         }     
+    }
+
+    private void cargarVentasPorProductoTabla() {
+        try {
+            ventas = FXCollections.observableArrayList();
+            ArrayList<Venta> ventasDAO = VentaDAO.obtenerResumenVentasPorProducto();
+            ventas.addAll(ventasDAO);
+            tvVentas.setItems(ventas);
+            configurarTablaProducto(); // solo columnas necesarias
+        } catch (Exception e) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error al cargar", "No se pudieron cargar las ventas por producto.");
+            cerrarVentana();
+        }
     }
     
     private void cerrarVentana(){
@@ -131,6 +145,11 @@ public class FXMLVerVentasController implements Initializable {
         cargarVentasPorMesTabla();
     }
 
+    @FXML
+    private void clicVentasPorProducto(ActionEvent event) {
+        cargarVentasPorProductoTabla();
+    }
+    
     @FXML
     private void clicRegresar(ActionEvent event) {
         cerrarVentana();
@@ -161,5 +180,16 @@ public class FXMLVerVentasController implements Initializable {
 
     }
     }
+
+    private void agregarColumnaProducto() {
+        if (colProducto == null) {
+            colProducto = new TableColumn<>("Producto");
+            colProducto.setCellValueFactory(new PropertyValueFactory<>("nombreProducto"));
+        }
+
+        if (!tvVentas.getColumns().contains(colProducto)) {
+            tvVentas.getColumns().add(0, colProducto); // Puedes ajustar el índice si quieres otro orden
+        }
+    }    
 
 }
