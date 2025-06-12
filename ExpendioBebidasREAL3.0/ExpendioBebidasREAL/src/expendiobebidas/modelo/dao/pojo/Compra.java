@@ -14,6 +14,9 @@ public class Compra {
     private String folioFactura;
     private int cantidadProducto;
     private double costoCompra;
+    
+    private Pedido pedido; 
+    private Proveedor proveedor;
 
     public Compra() {
     }
@@ -64,5 +67,23 @@ public class Compra {
 
     public void setCostoCompra(double costoCompra) {
         this.costoCompra = costoCompra;
+    }
+
+    // ✅ GET y SET para Proveedor
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    // ✅ GET y SET para Pedido
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 }

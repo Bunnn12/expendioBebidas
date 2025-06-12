@@ -38,6 +38,7 @@ public class PedidoDAO {
         return pedidos;
     }
     
+    
     public static boolean insertarPedidoDeCliente(int idCliente, List<ProductoPedido> productosPedido) throws SQLException {
         if (idCliente <= 0) {
             throw new IllegalArgumentException("El idCliente debe ser mayor que 0");
@@ -244,5 +245,43 @@ public static void generarPedidoPorProducto(int idProducto) throws SQLException 
         return pedido;
         
     }
+
+   public static List<Pedido> obtenerPedidosPendientesPorProveedor(int idProveedor) throws SQLException {
+    List<Pedido> listaPedidos = new ArrayList<>();
+    Connection conexion = Conexion.abrirConexion();
+
+    if (conexion != null) {
+        String sql = "SELECT p.idPedido, p.fechaPedido " +
+                     "FROM pedido p " +
+                     "LEFT JOIN compra c ON c.Pedido_idPedido = p.idPedido " +
+                     "WHERE p.Proveedor_idProveedor = ? AND c.idCompra IS NULL";
+
+        PreparedStatement ps = conexion.prepareStatement(sql);
+        ps.setInt(1, idProveedor);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Pedido pedido = new Pedido();
+            pedido.setIdPedido(rs.getInt("idPedido"));
+            pedido.setFechaPedido(rs.getDate("fechaPedido").toString()); // como String
+
+            listaPedidos.add(pedido);
+        }
+
+        rs.close();
+        ps.close();
+        conexion.close();
+    } else {
+        throw new SQLException("Sin conexión con la base de datos");
+    }
+
+    return listaPedidos;
+}
+
+
+
+
+    
+
 
 }

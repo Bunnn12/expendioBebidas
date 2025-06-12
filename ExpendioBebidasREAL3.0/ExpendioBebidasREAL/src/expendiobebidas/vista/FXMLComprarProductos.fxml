@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="1100.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLComprarProductosController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="880.0" prefWidth="1311.0" style="-fx-background-color: #9ed4f1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="expendiobebidas.controlador.FXMLComprarProductosController">
    <children>
       <Button contentDisplay="TOP" layoutX="38.0" layoutY="34.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="44.0" prefWidth="147.0" style="-fx-background-color: #ffffff; -fx-background-radius: 19;" text="REGRESAR" textFill="#065290">
          <font>
@@ -20,66 +20,73 @@
             </ImageView>
          </graphic>
       </Button>
-      <ImageView fitHeight="184.0" fitWidth="347.0" layoutX="363.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="148.0" fitWidth="307.0" layoutX="526.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../recurso/logoBDExpendio.png" />
          </image>
       </ImageView>
-      <Label layoutX="345.0" layoutY="205.0" text="COMPRAR PRODUCTO(S)" textFill="#065290">
+      <Label layoutX="473.0" layoutY="182.0" text="COMPRAR PRODUCTO(S)" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="29.0" />
          </font>
       </Label>
-      <Label layoutX="35.0" layoutY="271.0" text="Proveedor:">
+      <Label layoutX="80.0" layoutY="485.0" text="Fecha de compra:">
          <font>
             <Font name="Arial Rounded MT Bold" size="21.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cbProveedor" layoutX="31.0" layoutY="302.0" prefHeight="25.0" prefWidth="286.0" />
-      <Label layoutX="405.0" layoutY="270.0" text="Fecha de compra:">
+      <DatePicker fx:id="dpFechaCompra" layoutX="278.0" layoutY="483.0" prefHeight="25.0" prefWidth="286.0" />
+      <Label layoutX="656.0" layoutY="486.0" text="Folio:">
          <font>
             <Font name="Arial Rounded MT Bold" size="21.0" />
          </font>
       </Label>
-      <DatePicker fx:id="dpFechaCompra" layoutX="401.0" layoutY="302.0" prefHeight="25.0" prefWidth="286.0" />
-      <Label layoutX="784.0" layoutY="270.0" text="Folio:">
+      <TextField fx:id="tfFolioFactura" layoutX="736.0" layoutY="484.0" prefHeight="25.0" prefWidth="286.0" />
+      <Label layoutX="80.0" layoutY="537.0" text="Pedidos pendientes del proveedor:">
          <font>
             <Font name="Arial Rounded MT Bold" size="21.0" />
          </font>
       </Label>
-      <TextField fx:id="tfFolioFactura" layoutX="778.0" layoutY="302.0" prefHeight="25.0" prefWidth="286.0" />
-      <Label layoutX="69.0" layoutY="357.0" text="Pedidos pendientes del proveedor:">
-         <font>
-            <Font name="Arial Rounded MT Bold" size="21.0" />
-         </font>
-      </Label>
-      <TableView fx:id="tvPedidosPendientes" layoutX="68.0" layoutY="391.0" prefHeight="184.0" prefWidth="418.0">
+      <TableView fx:id="tvPedidosPendientes" layoutX="80.0" layoutY="583.0" prefHeight="184.0" prefWidth="418.0">
         <columns>
-          <TableColumn fx:id="colFecha" prefWidth="206.0" text="Fecha" />
-          <TableColumn fx:id="colProductoPedidosPendientes" prefWidth="206.0" text="Producto" />
-            <TableColumn fx:id="colEstado" prefWidth="206.0" text="Estado" />
-            <TableColumn fx:id="colUnidades" prefWidth="206.0" text="Unidades" />
-            <TableColumn fx:id="colTotalPedidosPendientes" prefWidth="206.0" text="Total" />
+          <TableColumn fx:id="colFecha" prefWidth="417.0" text="Fecha del pedido" />
         </columns>
       </TableView>
-      <Label layoutX="611.0" layoutY="357.0" text="Detalle del pedido:">
+      <Label layoutX="813.0" layoutY="537.0" text="Detalle del pedido:">
          <font>
             <Font name="Arial Rounded MT Bold" size="21.0" />
          </font>
       </Label>
-      <TableView fx:id="tvDetallePedido" layoutX="613.0" layoutY="390.0" prefHeight="184.0" prefWidth="418.0">
+      <TableView fx:id="tvDetallePedido" layoutX="600.0" layoutY="577.0" prefHeight="184.0" prefWidth="618.0">
          <columns>
             <TableColumn fx:id="colProductoDetallePedido" prefWidth="206.0" text="Producto" />
             <TableColumn fx:id="colCantidadPedida" prefWidth="206.0" text="Cantidad Pedida" />
-            <TableColumn fx:id="colCantidadComprar" prefWidth="206.0" text="Cantidad a Comprar" />
-            <TableColumn fx:id="colPrecio" prefWidth="206.0" text="Precio" />
             <TableColumn fx:id="colTotalDetallePedido" prefWidth="206.0" text="Total" />
          </columns>
       </TableView>
-      <Button layoutX="390.0" layoutY="617.0" mnemonicParsing="false" onAction="#clicRealizarCompra" prefHeight="49.0" prefWidth="297.0" style="-fx-background-color: #065290;" text="Realizar compra" textFill="WHITE">
+      <Button layoutX="517.0" layoutY="807.0" mnemonicParsing="false" onAction="#clicRealizarCompra" prefHeight="49.0" prefWidth="297.0" style="-fx-background-color: #065290;" text="Realizar compra" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="19.0" />
          </font>
       </Button>
+      <TableView fx:id="tvProveedores" layoutX="87.0" layoutY="318.0" onMouseClicked="#seleccionarProveedor" prefHeight="148.0" prefWidth="1138.0">
+         <columns>
+            <TableColumn fx:id="colRazonSocial" prefWidth="271.0" text="Razón Social" />
+            <TableColumn fx:id="colTelefono" prefWidth="258.0" text="Teléfono" />
+            <TableColumn fx:id="colCorreo" prefWidth="265.0" text="Correo" />
+            <TableColumn fx:id="colDireccion" prefWidth="343.0" text="Dirección" />
+         </columns>
+      </TableView>
+      <TextField fx:id="tfBuscarProveedor" layoutX="278.0" layoutY="231.0" onKeyReleased="#buscarProveedorPorRazonSocial" prefHeight="31.0" prefWidth="618.0" promptText="Razón social" />
+      <Label layoutX="90.0" layoutY="236.0" text="Buscar proveedor:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="87.0" layoutY="279.0" text="Lista de proveedores:" textFill="#065290">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="25.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

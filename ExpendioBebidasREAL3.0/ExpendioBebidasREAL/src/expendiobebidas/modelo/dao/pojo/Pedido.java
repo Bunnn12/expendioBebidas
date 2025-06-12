@@ -49,5 +49,15 @@ public class Pedido {
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
+    private int idProveedor;
+
+    public int getIdProveedor() {
+        return idProveedor;
+}
+
+    public void setIdProveedor(int idProveedor) {
+        this.idProveedor = idProveedor;
+}
+
     
 }
