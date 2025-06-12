@@ -251,6 +251,7 @@ public class FXMLPrincipalController implements Initializable {
         escenarioAdmin.initModality(Modality.APPLICATION_MODAL);
         escenarioAdmin.showAndWait();
         }catch(IOException e){
+            e.printStackTrace();
             Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se puede mostrar la ventana");
         }
     }

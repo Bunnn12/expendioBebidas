@@ -278,10 +278,37 @@ public static void generarPedidoPorProducto(int idProducto) throws SQLException 
     return listaPedidos;
 }
 
+public static List<ProductoPedido> obtenerProductosDePedidoProveedor(int idPedido) throws SQLException {
+    List<ProductoPedido> productos = new ArrayList<>();
 
+    String consulta = "SELECT p.idProducto, p.nombreProducto, p.precio, dp.cantidadPedida " +
+                      "FROM detallePedido dp " +
+                      "JOIN producto p ON dp.Producto_idProducto = p.idProducto " +
+                      "WHERE dp.Pedido_idPedido = ?";
 
+    try (Connection conexion = Conexion.abrirConexion();
+         PreparedStatement sentencia = conexion.prepareStatement(consulta)) {
 
-    
+        sentencia.setInt(1, idPedido);
+
+        try (ResultSet resultado = sentencia.executeQuery()) {
+            while (resultado.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(resultado.getInt("idProducto"));
+                producto.setNombreProducto(resultado.getString("nombreProducto"));
+                producto.setPrecio(resultado.getDouble("precio"));
+
+                ProductoPedido productoPedido = new ProductoPedido();
+                productoPedido.setProducto(producto);
+                productoPedido.setCantidad(resultado.getInt("cantidadPedida"));
+
+                productos.add(productoPedido);
+            }
+        }
+    }
+
+    return productos;
+}
 
 
 }

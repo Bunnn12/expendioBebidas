@@ -47,7 +47,7 @@
             <Font name="Arial Rounded MT Bold" size="21.0" />
          </font>
       </Label>
-      <TableView fx:id="tvPedidosPendientes" layoutX="80.0" layoutY="583.0" prefHeight="184.0" prefWidth="418.0">
+      <TableView fx:id="tvPedidosPendientes" layoutX="80.0" layoutY="583.0" onMouseClicked="#seleccionarPedido" prefHeight="184.0" prefWidth="418.0">
         <columns>
           <TableColumn fx:id="colFecha" prefWidth="417.0" text="Fecha del pedido" />
         </columns>
@@ -57,11 +57,10 @@
             <Font name="Arial Rounded MT Bold" size="21.0" />
          </font>
       </Label>
-      <TableView fx:id="tvDetallePedido" layoutX="600.0" layoutY="577.0" prefHeight="184.0" prefWidth="618.0">
+      <TableView fx:id="tvDetallePedido" layoutX="805.0" layoutY="563.0" onMouseClicked="#seleccionarDetallePedido" prefHeight="184.0" prefWidth="412.0">
          <columns>
             <TableColumn fx:id="colProductoDetallePedido" prefWidth="206.0" text="Producto" />
             <TableColumn fx:id="colCantidadPedida" prefWidth="206.0" text="Cantidad Pedida" />
-            <TableColumn fx:id="colTotalDetallePedido" prefWidth="206.0" text="Total" />
          </columns>
       </TableView>
       <Button layoutX="517.0" layoutY="807.0" mnemonicParsing="false" onAction="#clicRealizarCompra" prefHeight="49.0" prefWidth="297.0" style="-fx-background-color: #065290;" text="Realizar compra" textFill="WHITE">
@@ -86,6 +85,16 @@
       <Label layoutX="87.0" layoutY="279.0" text="Lista de proveedores:" textFill="#065290">
          <font>
             <Font name="Arial Rounded MT Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="805.0" layoutY="757.0" text="Precio total del pedido:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbprecioTotalPedido" layoutX="987.0" layoutY="755.0">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
          </font>
       </Label>
    </children>

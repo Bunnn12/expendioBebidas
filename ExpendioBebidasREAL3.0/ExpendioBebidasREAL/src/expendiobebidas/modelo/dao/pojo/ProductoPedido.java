@@ -47,5 +47,7 @@ public class ProductoPedido {
     public String getNombreProducto() {
         return producto.getNombreProducto();
     }
-    
+     public double getTotal() {
+        return producto.getPrecio() * cantidad;
+    }
 }
