@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -35,7 +36,7 @@ import javafx.stage.Stage;
  * FXML Controller class
  *
  * @author rodri
- *//*
+ */
 public class FXMLProductoMenosVendidoController implements Initializable {
 
     @FXML
@@ -55,7 +56,7 @@ public class FXMLProductoMenosVendidoController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    /*@Override
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarProductoMenosVendidoTabla();
@@ -66,10 +67,10 @@ public class FXMLProductoMenosVendidoController implements Initializable {
         colNombreProducto.setCellValueFactory(new PropertyValueFactory("nombreProducto"));
         colTotal.setCellValueFactory(new PropertyValueFactory("totalVendido"));
     }
-    /*   
+      
     private void cargarProductoMenosVendidoTabla() {
         try {
-            List<Producto> productos = ProductoDAO.obtenerProductosMenosVendidos();
+            List<Producto> productos = ProductoDAO.obtenerProductoMenosVendido();
             listaProductos = FXCollections.observableArrayList(productos);
             tvProductoMenosVendido.setItems(listaProductos);
         } catch (SQLException e) {
@@ -88,4 +89,3 @@ public class FXMLProductoMenosVendidoController implements Initializable {
         cerrarVentana();
     }
 }
-*/
