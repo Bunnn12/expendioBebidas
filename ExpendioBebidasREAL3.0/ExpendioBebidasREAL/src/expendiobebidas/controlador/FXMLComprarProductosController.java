@@ -22,7 +22,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -66,8 +65,10 @@ public class FXMLComprarProductosController implements Initializable {
     private TableColumn<?, ?> colDireccion;
     @FXML
     private TextField tfBuscarProveedor;
+    
     private ObservableList<Proveedor> proveedores;
     private ObservableList<Pedido> pedidos;
+    
     @FXML
     private Label lbprecioTotalPedido;
 
@@ -84,48 +85,53 @@ public class FXMLComprarProductosController implements Initializable {
 
     @FXML
     private void clicRegresar(ActionEvent event) {
+        Stage stageActual = (Stage) tfBuscarProveedor.getScene().getWindow();
+        stageActual.close();
     }
 
     @FXML
     private void clicRealizarCompra(ActionEvent event) {
+        Proveedor proveedorSeleccionado = tvProveedores.getSelectionModel().getSelectedItem();
         Pedido pedidoSeleccionado = tvPedidosPendientes.getSelectionModel().getSelectedItem();
-    if (pedidoSeleccionado == null) {
-        Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Atención", "Debe seleccionar un pedido para realizar la compra.");
-        return;
-    }
-
-    if (dpFechaCompra.getValue() == null) {
-        Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Atención", "Debe seleccionar una fecha de compra.");
-        return;
-    }
-
-    String folioFactura = tfFolioFactura.getText();
-    if (folioFactura == null || folioFactura.trim().isEmpty()) {
-        Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Atención", "Debe ingresar el folio de la factura.");
-        return;
-    }
-
-    try {
-        boolean exito = CompraDAO.realizarCompraConTransaccion(
-            pedidoSeleccionado.getIdPedido(), 
-            dpFechaCompra.getValue(), 
-            folioFactura
-        );
-
-        if (exito) {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.INFORMATION, "Compra realizada", "La compra se ha registrado correctamente.");
-            cargarPedidosProveedor(pedidoSeleccionado.getIdProveedor());
-            tvDetallePedido.setItems(FXCollections.observableArrayList());
-            lbprecioTotalPedido.setText("Total: $0.00");
-            tfFolioFactura.clear();
-            dpFechaCompra.setValue(null);
-        } else {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "No se pudo registrar la compra.");
+        ProductoPedido productopedidoSeleccionado = tvDetallePedido.getSelectionModel().getSelectedItem();
+        
+        if (pedidoSeleccionado == null) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Atención", "Debe seleccionar un pedido para realizar la compra.");
+            return;
         }
-    } catch (SQLException e) {
-        Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error de base de datos", "Ocurrió un error al intentar realizar la compra.");
-        e.printStackTrace();
-    }
+
+        if (dpFechaCompra.getValue() == null) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Atención", "Debe seleccionar una fecha de compra.");
+            return;
+        }
+
+        String folioFactura = tfFolioFactura.getText();
+        if (folioFactura == null || folioFactura.trim().isEmpty()) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.WARNING, "Atención", "Debe ingresar el folio de la factura.");
+            return;
+        }
+
+        try {         
+            boolean exito = CompraDAO.realizarCompraConTransaccion(
+                    pedidoSeleccionado.getIdPedido(), dpFechaCompra.getValue(), folioFactura,
+                    productopedidoSeleccionado.getCantidad(),
+                    productopedidoSeleccionado.getProducto().getPrecio(),
+                    proveedorSeleccionado.getIdProveedor());
+
+            if (exito) {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.INFORMATION, "Compra realizada", "La compra se ha registrado correctamente.");
+                cargarPedidosProveedor(pedidoSeleccionado.getIdProveedor());
+                tvDetallePedido.setItems(FXCollections.observableArrayList());
+                lbprecioTotalPedido.setText("Total: $0.00");
+                tfFolioFactura.clear();
+                dpFechaCompra.setValue(null);
+            } else {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "No se pudo registrar la compra.");
+            }
+        } catch (SQLException e) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error de base de datos", "Ocurrió un error al intentar realizar la compra.");
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -154,22 +160,24 @@ public class FXMLComprarProductosController implements Initializable {
 
         tvProveedores.setItems(filtrados);
     }
-     private void cargarProveedores(){
-        try{
-        proveedores= FXCollections.observableArrayList();
-        ArrayList<Proveedor> proveedorDAO = ProveedorDAO.obtenerProveedores();
-        proveedores.addAll(proveedorDAO);
-        tvProveedores.setItems(proveedores);
-        }catch(SQLException e){
+    
+    private void cargarProveedores() {
+        try {
+            proveedores= FXCollections.observableArrayList();
+            ArrayList<Proveedor> proveedorDAO = ProveedorDAO.obtenerProveedores();
+            proveedores.addAll(proveedorDAO);
+            tvProveedores.setItems(proveedores);
+        } catch(SQLException e) {
             Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error al cargar", "Lo sentimos, por el momento no se puede cargar la información de los proveedores, por favor intentélo más tarde");
             cerrarVentana();
         }     
     }
-     private void cerrarVentana(){
-           ((Stage) tfBuscarProveedor.getScene().getWindow()).close();
+    
+    private void cerrarVentana() {
+        ((Stage) tfBuscarProveedor.getScene().getWindow()).close();
     }
      
-    private void configurarTablaProveedores(){
+    private void configurarTablaProveedores() {
         colRazonSocial.setCellValueFactory(new PropertyValueFactory("razonSocial"));
         colTelefono.setCellValueFactory(new PropertyValueFactory("telefono"));
         colCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
@@ -177,60 +185,56 @@ public class FXMLComprarProductosController implements Initializable {
     }
 
     public void cargarPedidosProveedor(int idProveedor) {
-    try {
-        List<Pedido> pedidos = PedidoDAO.obtenerPedidosPendientesPorProveedor(idProveedor);
-        System.out.println("Pedidos obtenidos: " + pedidos.size()); // << Aquí
-        ObservableList<Pedido> data = FXCollections.observableArrayList(pedidos);
-        tvPedidosPendientes.setItems(data);
-    } catch (SQLException ex) {
-        Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se pueden cargar los pedidos");
-        ex.printStackTrace();
+        try {
+            List<Pedido> pedidos = PedidoDAO.obtenerPedidosPendientesPorProveedor(idProveedor);
+            System.out.println("Pedidos obtenidos: " + pedidos.size()); // << Aquí
+            ObservableList<Pedido> data = FXCollections.observableArrayList(pedidos);
+            tvPedidosPendientes.setItems(data);
+        } catch (SQLException ex) {
+            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Sin conexión", "Lo sentimos, por el momento no se pueden cargar los pedidos");
+            ex.printStackTrace();
+        }
     }
-}
 
-    private void configurarTablaPedidosPendientes(){
-    colFecha.setCellValueFactory(new PropertyValueFactory<>("fechaPedido"));
-}
+    private void configurarTablaPedidosPendientes() {
+        colFecha.setCellValueFactory(new PropertyValueFactory<>("fechaPedido"));
+    }
 
- private void configurarTablaDetallePedido() {
-    colProductoDetallePedido.setCellValueFactory(new PropertyValueFactory<>("nombreProducto"));
-    colCantidadPedida.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-}
+    private void configurarTablaDetallePedido() {
+        colProductoDetallePedido.setCellValueFactory(new PropertyValueFactory<>("nombreProducto"));
+        colCantidadPedida.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+    }
 
     @FXML
     private void seleccionarPedido(MouseEvent event) {
         Pedido pedidoSeleccionado = tvPedidosPendientes.getSelectionModel().getSelectedItem();
-    if (pedidoSeleccionado != null) {
-        try {
-            List<ProductoPedido> detalles = PedidoDAO.obtenerProductosDePedidoProveedor(pedidoSeleccionado.getIdPedido());
-            ObservableList<ProductoPedido> data = FXCollections.observableArrayList(detalles);
-            tvDetallePedido.setItems(data);
+        if (pedidoSeleccionado != null) {
+            try {
+                List<ProductoPedido> detalles = PedidoDAO.obtenerProductosDePedidoProveedor(pedidoSeleccionado.getIdPedido());
+                ObservableList<ProductoPedido> data = FXCollections.observableArrayList(detalles);
+                tvDetallePedido.setItems(data);
 
-            // Calcular el precio total sumando el total de cada producto
-            double precioTotal = 0;
-            for (ProductoPedido producto : detalles) {
-                precioTotal += producto.getTotal(); // asumiendo que getTotal() devuelve el precio total por producto (cantidad * precio unitario)
+                // Calcular el precio total sumando el total de cada producto
+                double precioTotal = 0;
+                for (ProductoPedido producto : detalles) {
+                    precioTotal += producto.getTotal(); // asumiendo que getTotal() devuelve el precio total por producto (cantidad * precio unitario)
+                }
+
+                // Mostrar el precio total en el label
+                lbprecioTotalPedido.setText(String.format("Total: $%.2f", precioTotal));
+
+            } catch (SQLException e) {
+                Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "No se pudieron cargar los detalles del pedido");
+                e.printStackTrace();
             }
-
-            // Mostrar el precio total en el label
-            lbprecioTotalPedido.setText(String.format("Total: $%.2f", precioTotal));
-
-        } catch (SQLException e) {
-            Utilidad.mostrarAlertaSimple(Alert.AlertType.ERROR, "Error", "No se pudieron cargar los detalles del pedido");
-            e.printStackTrace();
+        } else {
+            // Si no hay pedido seleccionado, limpiar detalles y el label
+            tvDetallePedido.setItems(FXCollections.observableArrayList());
+            lbprecioTotalPedido.setText("Total: $0.00");
         }
-    } else {
-        // Si no hay pedido seleccionado, limpiar detalles y el label
-        tvDetallePedido.setItems(FXCollections.observableArrayList());
-        lbprecioTotalPedido.setText("Total: $0.00");
-    }
     }
 
     @FXML
     private void seleccionarDetallePedido(MouseEvent event) {
     }
-
-
 }
-
-
