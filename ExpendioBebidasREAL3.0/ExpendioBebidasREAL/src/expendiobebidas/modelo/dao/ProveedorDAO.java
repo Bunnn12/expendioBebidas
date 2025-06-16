@@ -20,7 +20,7 @@ import javafx.scene.control.Alert;
  */
 public class ProveedorDAO {
      public static ArrayList<Proveedor> obtenerProveedores() throws SQLException{
-        ArrayList<Proveedor> proveedores = new ArrayList();
+        ArrayList<Proveedor> proveedores = new ArrayList<>();
         Connection conexionBD = Conexion.abrirConexion();
         if (conexionBD != null){
             String consulta = "SELECT idProveedor, razonSocial, telefono, correo, direccion FROM proveedor";
@@ -49,7 +49,6 @@ public class ProveedorDAO {
         proveedor.setDireccion(resultado.getString("direccion"));
 
         return proveedor;
-        
     }
         
     public static boolean insertarProveedor(Proveedor proveedor) throws SQLException {
