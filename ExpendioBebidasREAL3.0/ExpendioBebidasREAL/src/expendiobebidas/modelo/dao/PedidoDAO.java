@@ -11,7 +11,6 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.collections.ObservableList;
 
 /**
  *
@@ -53,7 +52,7 @@ public class PedidoDAO {
         boolean exito = false;
         conn.setAutoCommit(false);
         try {
-            String sqlPedido = "INSERT INTO pedidoCliente(fechaPedidoCliente, Cliente_idCliente) VALUES (CURDATE(), ?)";
+            String sqlPedido = "INSERT INTO pedidocliente(fechaPedidoCliente, Cliente_idCliente) VALUES (CURDATE(), ?)";
             PreparedStatement psPedido = conn.prepareStatement(sqlPedido, Statement.RETURN_GENERATED_KEYS);
             psPedido.setInt(1, idCliente);
             psPedido.executeUpdate();
@@ -87,111 +86,111 @@ public class PedidoDAO {
             conn.setAutoCommit(true);
             conn.close();
         }
-
         return exito;
     }
     
-   public static List<Producto> obtenerProductosDePedidosPorProveedor(int idProveedor) throws SQLException {
-    List<Producto> productos = new ArrayList<>();
-    Connection conn = Conexion.abrirConexion();
-    if (conn != null) {
-        String consulta = 
-            "SELECT pr.idProducto, pr.nombreProducto, pr.precio, pr.stockActual, pr.stockMinimo " +
-            "FROM pedido p " +
-            "JOIN detallepedido dp ON p.idPedido = dp.Pedido_idPedido " +
-            "JOIN producto pr ON dp.Producto_idProducto = pr.idProducto " +
-            "WHERE p.Proveedor_idProveedor = ? " +
-            "AND pr.stockActual <= pr.stockMinimo";
+    public static List<Producto> obtenerProductosDePedidosPorProveedor(int idProveedor) throws SQLException {
+        List<Producto> productos = new ArrayList<>();
+        Connection conn = Conexion.abrirConexion();
+        if (conn != null) {
+            String consulta = 
+                "SELECT pr.idProducto, pr.nombreProducto, pr.precio, pr.stockActual, pr.stockMinimo " +
+                "FROM pedido p " +
+                "JOIN detallepedido dp ON p.idPedido = dp.Pedido_idPedido " +
+                "JOIN producto pr ON dp.Producto_idProducto = pr.idProducto " +
+                "WHERE p.Proveedor_idProveedor = ? " +
+                "AND pr.stockActual <= pr.stockMinimo";
 
-        PreparedStatement ps = conn.prepareStatement(consulta);
-        ps.setInt(1, idProveedor);
-        ResultSet rs = ps.executeQuery();
+            PreparedStatement ps = conn.prepareStatement(consulta);
+            ps.setInt(1, idProveedor);
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            Producto producto = new Producto();
-            producto.setIdProducto(rs.getInt("idProducto"));
-            producto.setNombreProducto(rs.getString("nombreProducto"));
-            producto.setPrecio(rs.getDouble("precio"));
-            producto.setStockActual(rs.getInt("stockActual"));
-            producto.setStockMinimo(rs.getInt("stockMinimo"));
-            productos.add(producto);
+            while (rs.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(rs.getInt("idProducto"));
+                producto.setNombreProducto(rs.getString("nombreProducto"));
+                producto.setPrecio(rs.getDouble("precio"));
+                producto.setStockActual(rs.getInt("stockActual"));
+                producto.setStockMinimo(rs.getInt("stockMinimo"));
+                productos.add(producto);
+            }
+
+            rs.close();
+            ps.close();
+            conn.close();
+        } else {
+            throw new SQLException("Sin conexión con la base de datos");
         }
+        return productos;
+    }
+   
+    public static void generarPedidoPorProducto(int idProducto) throws SQLException {
+        Connection conn = Conexion.abrirConexion();
 
-        rs.close();
-        ps.close();
-        conn.close();
-    } else {
-        throw new SQLException("Sin conexión con la base de datos");
+        if (conn != null) {
+            String sql = "{CALL gestionar_pedidos_proveedor(?)}";
+            CallableStatement cs = conn.prepareCall(sql);
+            cs.setInt(1, idProducto);
+            cs.execute();
+            cs.close();
+            conn.close();
+        } else {
+            throw new SQLException("Sin conexión a la base de datos");
+        }
     }
 
-    return productos;
-}
-public static void generarPedidoPorProducto(int idProducto) throws SQLException {
-    Connection conn = Conexion.abrirConexion();
-
-    if (conn != null) {
-        String sql = "{CALL gestionar_pedidos_proveedor(?)}";
-        CallableStatement cs = conn.prepareCall(sql);
-        cs.setInt(1, idProducto);
-        cs.execute();
-        cs.close();
-        conn.close();
-    } else {
-        throw new SQLException("Sin conexión a la base de datos");
-    }
-}
     public static boolean insertarPedido(int idProveedor, List<ProductoPedido> productosPedido) throws SQLException {
-    if (idProveedor <= 0) {
-        throw new IllegalArgumentException("El idProveedor debe ser mayor que 0");
-    }
-    if (productosPedido == null || productosPedido.isEmpty()) {
-        throw new IllegalArgumentException("La lista de productos no puede estar vacía");
-    }
-
-    Connection conn = Conexion.abrirConexion();
-    if (conn == null) throw new SQLException("Sin conexión a la base de datos");
-
-    boolean exito = false;
-    conn.setAutoCommit(false);
-    try {
-        // Insertar pedido
-        String sqlPedido = "INSERT INTO pedido (fechaPedido, Proveedor_idProveedor) VALUES (CURDATE(), ?)";
-        PreparedStatement psPedido = conn.prepareStatement(sqlPedido, Statement.RETURN_GENERATED_KEYS);
-        psPedido.setInt(1, idProveedor);
-        psPedido.executeUpdate();
-
-        ResultSet rs = psPedido.getGeneratedKeys();
-        if (!rs.next()) throw new SQLException("No se generó idPedido");
-        int idPedido = rs.getInt(1);
-        rs.close();
-        psPedido.close();
-
-        // Insertar detalles
-        String sqlDetalle = "INSERT INTO detallePedido (Pedido_idPedido, Producto_idProducto, cantidadPedida) VALUES (?, ?, ?)";
-        PreparedStatement psDetalle = conn.prepareStatement(sqlDetalle);
-
-        for (ProductoPedido pp : productosPedido) {
-            psDetalle.setInt(1, idPedido);
-            psDetalle.setInt(2, pp.getProducto().getIdProducto());
-            psDetalle.setInt(3, pp.getCantidad());
-            psDetalle.addBatch();
+        if (idProveedor <= 0) {
+            throw new IllegalArgumentException("El idProveedor debe ser mayor que 0");
+        }
+        if (productosPedido == null || productosPedido.isEmpty()) {
+            throw new IllegalArgumentException("La lista de productos no puede estar vacía");
         }
 
-        psDetalle.executeBatch();
-        psDetalle.close();
+        Connection conn = Conexion.abrirConexion();
+        if (conn == null) throw new SQLException("Sin conexión a la base de datos");
 
-        conn.commit();
-        exito = true;
-    } catch (SQLException ex) {
-        conn.rollback();
-        throw ex;
-    } finally {
-        conn.setAutoCommit(true);
-        conn.close();
+        boolean exito = false;
+        conn.setAutoCommit(false);
+        try {
+            // Insertar pedido
+            String sqlPedido = "INSERT INTO pedido (fechaPedido, Proveedor_idProveedor) VALUES (CURDATE(), ?)";
+            PreparedStatement psPedido = conn.prepareStatement(sqlPedido, Statement.RETURN_GENERATED_KEYS);
+            psPedido.setInt(1, idProveedor);
+            psPedido.executeUpdate();
+
+            ResultSet rs = psPedido.getGeneratedKeys();
+            if (!rs.next()) throw new SQLException("No se generó idPedido");
+            int idPedido = rs.getInt(1);
+            rs.close();
+            psPedido.close();
+
+            // Insertar detalles
+            String sqlDetalle = "INSERT INTO detallePedido (Pedido_idPedido, Producto_idProducto, cantidadPedida) VALUES (?, ?, ?)";
+            PreparedStatement psDetalle = conn.prepareStatement(sqlDetalle);
+
+            for (ProductoPedido pp : productosPedido) {
+                psDetalle.setInt(1, idPedido);
+                psDetalle.setInt(2, pp.getProducto().getIdProducto());
+                psDetalle.setInt(3, pp.getCantidad());
+                psDetalle.addBatch();
+            }
+
+            psDetalle.executeBatch();
+            psDetalle.close();
+
+            conn.commit();
+            exito = true;
+        } catch (SQLException ex) {
+            conn.rollback();
+            throw ex;
+        } finally {
+            conn.setAutoCommit(true);
+            conn.close();
+        }
+        return exito;
     }
-
-    return exito;
-}
+    
     public static List<ProductoPedido> obtenerProductosDePedido(int idPedido, int idCliente) throws SQLException {
         List<ProductoPedido> productosPedido = new ArrayList<>();
 
@@ -231,84 +230,77 @@ public static void generarPedidoPorProducto(int idProducto) throws SQLException 
                 }
             }
         }
-
         return productosPedido;
     }
     
     
-    private static Pedido convertirRegistroPedidoCliente(ResultSet resultado) throws SQLException{
-        
+    private static Pedido convertirRegistroPedidoCliente(ResultSet resultado) throws SQLException {
         Pedido pedido = new Pedido();
         pedido.setIdPedido(resultado.getInt("idPedidoCliente"));
         pedido.setFechaPedido(resultado.getDate("fechaPedidoCliente").toString());
         pedido.setIdCliente(resultado.getInt("Cliente_idCliente"));
-        return pedido;
-        
+        return pedido;    
     }
 
-   public static List<Pedido> obtenerPedidosPendientesPorProveedor(int idProveedor) throws SQLException {
-    List<Pedido> listaPedidos = new ArrayList<>();
-    Connection conexion = Conexion.abrirConexion();
+    public static List<Pedido> obtenerPedidosPendientesPorProveedor(int idProveedor) throws SQLException {
+        List<Pedido> listaPedidos = new ArrayList<>();
+        Connection conexion = Conexion.abrirConexion();
 
-    if (conexion != null) {
-        String sql = "SELECT p.idPedido, p.fechaPedido " +
-                     "FROM pedido p " +
-                     "LEFT JOIN compra c ON c.Pedido_idPedido = p.idPedido " +
-                     "WHERE p.Proveedor_idProveedor = ? AND c.idCompra IS NULL";
+        if (conexion != null) {
+            String sql = "SELECT p.idPedido, p.fechaPedido " +
+                        "FROM pedido p " +
+                        "LEFT JOIN compra c ON c.Pedido_idPedido = p.idPedido " +
+                        "WHERE p.Proveedor_idProveedor = ? AND c.idCompra IS NULL";
 
-        PreparedStatement ps = conexion.prepareStatement(sql);
-        ps.setInt(1, idProveedor);
-        ResultSet rs = ps.executeQuery();
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, idProveedor);
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            Pedido pedido = new Pedido();
-            pedido.setIdPedido(rs.getInt("idPedido"));
-            pedido.setFechaPedido(rs.getDate("fechaPedido").toString()); // como String
+            while (rs.next()) {
+                Pedido pedido = new Pedido();
+                pedido.setIdPedido(rs.getInt("idPedido"));
+                pedido.setFechaPedido(rs.getDate("fechaPedido").toString()); // como String
 
-            listaPedidos.add(pedido);
+                listaPedidos.add(pedido);
+            }
+
+            rs.close();
+            ps.close();
+            conexion.close();
+        } else {
+            throw new SQLException("Sin conexión con la base de datos");
         }
-
-        rs.close();
-        ps.close();
-        conexion.close();
-    } else {
-        throw new SQLException("Sin conexión con la base de datos");
+        return listaPedidos;
     }
 
-    return listaPedidos;
-}
+    public static List<ProductoPedido> obtenerProductosDePedidoProveedor(int idPedido) throws SQLException {
+        List<ProductoPedido> productos = new ArrayList<>();
 
-public static List<ProductoPedido> obtenerProductosDePedidoProveedor(int idPedido) throws SQLException {
-    List<ProductoPedido> productos = new ArrayList<>();
+        String consulta = "SELECT p.idProducto, p.nombreProducto, p.precio, dp.cantidadPedida " +
+                        "FROM detallePedido dp " +
+                        "JOIN producto p ON dp.Producto_idProducto = p.idProducto " +
+                        "WHERE dp.Pedido_idPedido = ?";
 
-    String consulta = "SELECT p.idProducto, p.nombreProducto, p.precio, dp.cantidadPedida " +
-                      "FROM detallePedido dp " +
-                      "JOIN producto p ON dp.Producto_idProducto = p.idProducto " +
-                      "WHERE dp.Pedido_idPedido = ?";
+        try (Connection conexion = Conexion.abrirConexion();
+            PreparedStatement sentencia = conexion.prepareStatement(consulta)) {
 
-    try (Connection conexion = Conexion.abrirConexion();
-         PreparedStatement sentencia = conexion.prepareStatement(consulta)) {
+            sentencia.setInt(1, idPedido);
 
-        sentencia.setInt(1, idPedido);
+            try (ResultSet resultado = sentencia.executeQuery()) {
+                while (resultado.next()) {
+                    Producto producto = new Producto();
+                    producto.setIdProducto(resultado.getInt("idProducto"));
+                    producto.setNombreProducto(resultado.getString("nombreProducto"));
+                    producto.setPrecio(resultado.getDouble("precio"));
 
-        try (ResultSet resultado = sentencia.executeQuery()) {
-            while (resultado.next()) {
-                Producto producto = new Producto();
-                producto.setIdProducto(resultado.getInt("idProducto"));
-                producto.setNombreProducto(resultado.getString("nombreProducto"));
-                producto.setPrecio(resultado.getDouble("precio"));
+                    ProductoPedido productoPedido = new ProductoPedido();
+                    productoPedido.setProducto(producto);
+                    productoPedido.setCantidad(resultado.getInt("cantidadPedida"));
 
-                ProductoPedido productoPedido = new ProductoPedido();
-                productoPedido.setProducto(producto);
-                productoPedido.setCantidad(resultado.getInt("cantidadPedida"));
-
-                productos.add(productoPedido);
+                    productos.add(productoPedido);
+                }
             }
         }
+        return productos;
     }
-
-    return productos;
-}
-
-
 }
